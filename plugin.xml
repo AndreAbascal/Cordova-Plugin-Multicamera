@@ -49,12 +49,10 @@
 			</resources>
 		</config-file>
 		<config-file target="res/values/strings.xml" parent="/*">
-			<resources>
-				<string name="picture">Picture</string>
-				<string name="description_info">Info</string>
-				<string name="request_permission">This sample needs camera permission.</string>
-				<string name="camera_error">This device doesn\'t support Camera2 API.</string>
-			</resources>
+			<string name="picture">Picture</string>
+			<string name="description_info">Info</string>
+			<string name="request_permission">This sample needs camera permission.</string>
+			<string name="camera_error">This device doesn\'t support Camera2 API.</string>
 		</config-file>
 		<config-file target="res/values/styles.xml" parent="/*">
 			<resources>
