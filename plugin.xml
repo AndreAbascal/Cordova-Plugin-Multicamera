@@ -43,9 +43,26 @@
 		<source-file src="src/android/Camera2BasicFragment.java" target-dir="src/cordova/plugin/multicamera" />
 		<source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugin/multicamera" />
 		<source-file src="src/android/MultiCamera.java" target-dir="src/cordova/plugin/multicamera" />
-		<source-file src="src/android/res/values/colors.xml" target-dir="res/values" />
-		<source-file src="src/android/res/values/strings.xml" target-dir="res/values" />
-		<source-file src="src/android/res/values/styles.xml" target-dir="res/values" />
+		<config-file target="res/values/colors.xml" parent="/*">
+			<resources>
+				<color name="control_background">#cc4285f4</color>
+			</resources>
+		</config-file>
+		<config-file target="res/values/strings.xml" parent="/*">
+			<resources>
+				<string name="picture">Picture</string>
+				<string name="description_info">Info</string>
+				<string name="request_permission">This sample needs camera permission.</string>
+				<string name="camera_error">This device doesn\'t support Camera2 API.</string>
+			</resources>
+		</config-file>
+		<config-file target="res/values/styles.xml" parent="/*">
+			<resources>
+				<style name="MaterialTheme" parent="Theme.AppCompat.Light.NoActionBar">
+					<item name="android:windowFullscreen">true</item>
+				</style>
+			</resources>
+		</config-file>
 	</platform>
 
 </plugin>
