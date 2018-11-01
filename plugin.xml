@@ -37,8 +37,9 @@
 		<source-file src="src/android/Camera2BasicFragment.java" target-dir="src/cordova/plugin/googlepay" />
 		<source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugin/googlepay" />
 		<source-file src="src/android/MultiCamera.java" target-dir="src/cordova/plugin/googlepay" />
-		<source-file src="src/android/xml/activity_camera.xml" target-dir="res/xml" />
-		<source-file src="src/android/xml/fragment_camera2_basic.xml" target-dir="res/xml" />
+		<source-file src="src/android/xml/activity_camera.xml" target-dir="res/layout" />
+		<source-file src="src/android/xml/fragment_camera2_basic.xml" target-dir="res/layout" />
+		<source-file src="src/android/xml/styles.xml" target-dir="res/values" />
 	</platform>
 
 </plugin>
