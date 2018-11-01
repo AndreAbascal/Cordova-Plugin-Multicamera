@@ -3,12 +3,12 @@
 	<name>MultiCamera</name>
 	<description>Cordova plugin for taking multiple pictures with your camera</description>
 	<license>MIT</license>
-	<keywords>cordova,android,google,pay,googlepay,google-pay</keywords>
-	<repo>https://github.com/AndreAbascal/cordova-plugin-googlepay.git</repo>
-	<issue>https://github.com/AndreAbascal/cordova-plugin-googlepay/issues</issue>
+	<keywords>cordova,android,multiple,pictures,camera,multicamera</keywords>
+	<repo>https://github.com/AndreAbascal/cordova-plugin-multicamera.git</repo>
+	<issue>https://github.com/AndreAbascal/cordova-plugin-multicamera/issues</issue>
 
 	<engines>
-		<engine name="cordova" version=">=4.0.0"/>
+		<engine name="cordova-android" version=">=6.3.0"/>
 	</engines>
 
 	<js-module name="MultiCamera" src="www/MultiCamera.js">
@@ -28,7 +28,7 @@
         </config-file>
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="MultiCamera">
-				<param name="android-package" value="cordova.plugin.googlepay.MultiCamera"/>
+				<param name="android-package" value="cordova.plugin.multicamera.MultiCamera"/>
 			</feature>
 		</config-file>
 
@@ -39,11 +39,13 @@
 			</activity>
 		</config-file>
 
-		<source-file src="src/android/AutoFitTextureView.java" target-dir="src/cordova/plugin/googlepay" />
-		<source-file src="src/android/Camera2BasicFragment.java" target-dir="src/cordova/plugin/googlepay" />
-		<source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugin/googlepay" />
-		<source-file src="src/android/MultiCamera.java" target-dir="src/cordova/plugin/googlepay" />
-		<resource-file src="src/android/res" target="res"/>
+		<source-file src="src/android/AutoFitTextureView.java" target-dir="src/cordova/plugin/multicamera" />
+		<source-file src="src/android/Camera2BasicFragment.java" target-dir="src/cordova/plugin/multicamera" />
+		<source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugin/multicamera" />
+		<source-file src="src/android/MultiCamera.java" target-dir="src/cordova/plugin/multicamera" />
+		<source-file src="src/android/res/values/colors.xml" target-dir="res/values" />
+		<source-file src="src/android/res/values/strings.xml" target-dir="res/values" />
+		<source-file src="src/android/res/values/styles.xml" target-dir="res/values" />
 	</platform>
 
 </plugin>
