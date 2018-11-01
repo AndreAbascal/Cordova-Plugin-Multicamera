@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<plugin id="cordova-plugin-googlepay" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-multicamera" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>MultiCamera</name>
 	<description>Cordova plugin for taking multiple pictures with your camera</description>
 	<license>MIT</license>
@@ -16,9 +16,10 @@
 	</js-module>
 
 	<platform name="android">
-		<framework src="com.google.android.gms:play-services-wallet:15.0.0" />
-		<framework src="com.android.support:support-v4:24.1.1" />
-		<framework src="com.android.support:appcompat-v7:24.1.1" />
+		<framework src="com.android.support:support-v4:27.0.2" />
+		<framework src="com.android.support:support-v13:27.0.2" />
+		<framework src="com.android.support:cardview-v7:27.0.2" />
+		<framework src="com.android.support:appcompat-v7:27.0.2" />
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="MultiCamera">
 				<param name="android-package" value="cordova.plugin.googlepay.MultiCamera"/>
@@ -26,16 +27,18 @@
 		</config-file>
 
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
-			<activity android:name="cordova.plugin.googlepay.GooglePayWrapper"
-				android:label="GooglePayWrapper"
-				android:theme="@android:style/Theme.Translucent.NoTitleBar">
+			<activity android:name="cordova.plugin.multicamera.CameraActivity"
+				android:label="MultiCamera"
+				android:theme="@android:style/Theme.AppCompat.Light.NoActionBar">
 			</activity>
 		</config-file>
 
-		<source-file src="src/android/Constants.java" target-dir="src/cordova/plugin/googlepay" />
+		<source-file src="src/android/AutoFitTextureView.java" target-dir="src/cordova/plugin/googlepay" />
+		<source-file src="src/android/Camera2BasicFragment.java" target-dir="src/cordova/plugin/googlepay" />
+		<source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugin/googlepay" />
 		<source-file src="src/android/MultiCamera.java" target-dir="src/cordova/plugin/googlepay" />
-		<source-file src="src/android/GooglePayWrapper.java" target-dir="src/cordova/plugin/googlepay" />
-		<source-file src="src/android/PaymentsUtil.java" target-dir="src/cordova/plugin/googlepay" />
+		<source-file src="src/android/xml/activity_camera.xml" target-dir="res/xml" />
+		<source-file src="src/android/xml/fragment_camera2_basic.xml" target-dir="res/xml" />
 	</platform>
 
 </plugin>

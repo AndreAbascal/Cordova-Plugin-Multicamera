@@ -35,7 +35,7 @@ public class MultiCamera extends CordovaPlugin {
 
     public static final String TAG = "MultiCamera";
 
-    public static final int OpenCamera = 1;
+    public static final int open = 1;
 
     private static final String ActivityName = "cordova.plugin.multicamera.CameraActivity";
 
@@ -72,18 +72,18 @@ public class MultiCamera extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         callback = callbackContext;
-        if(action.equals("OpenCamera")) {
+        if(action.equals("open")) {
             try {
                 Intent intent = new Intent(ActivityName);
                 // Send some info to the activity to retrieve it later
-                intent.putExtra("action", MultiCamera.OpenCamera);
-                cordova.startActivityForResult((CordovaPlugin) this, intent, MultiCamera.OpenCamera);
+                intent.putExtra("action", MultiCamera.open);
+                cordova.startActivityForResult((CordovaPlugin) this, intent, MultiCamera.open);
 
                 PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
                 result.setKeepCallback(true);
                 callback.sendPluginResult(result);
 
-                Log.d(TAG, "OpenCamera started");
+                Log.d(TAG, "Open started");
             } catch(Exception ignore) {}
         } else {
             return false;   // Returning false results in a "MethodNotFound" error
@@ -104,7 +104,7 @@ public class MultiCamera extends CordovaPlugin {
         Bundle extras = data.getExtras(); //Get data sent by the Intent
 
         switch(requestCode) {
-            case MultiCamera.OpenCamera:
+            case MultiCamera.open:
                 if(resultCode == cordova.getActivity().RESULT_OK) {
                     boolean result = extras.getString("data").equals("true");
                     Log.d(TAG, "OpenCamera: "+result);

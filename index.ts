@@ -47,11 +47,11 @@ import { Observable } from 'rxjs/Observable';
 export class MultiCamera extends IonicNativePlugin {
 
   /**
-   * Open 7camera
+   * open 7camera
    * @return {Promise<any>} Returns a promise that resolves when something happens
    */
   @Cordova({  callbackOrder: 'reverse' })
-  openCamera(options: any): Promise<any> {
+  open(options: any): Promise<any> {
     return; // We add return; here to avoid any IDE / Compiler errors
   }
 

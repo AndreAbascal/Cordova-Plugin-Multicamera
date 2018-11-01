@@ -25,5 +25,5 @@ export declare class MultiCamera extends IonicNativePlugin {
      * Open 7camera
      * @return {Promise<any>} Returns a promise that resolves when something happens
      */
-    openCamera(options: any): Promise<any>;
+    open(options: any): Promise<any>;
 }
