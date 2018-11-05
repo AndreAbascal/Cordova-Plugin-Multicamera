@@ -81,8 +81,7 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-public class Camera2BasicFragment extends Fragment
-        implements View.OnClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
+public class Camera2BasicFragment extends Fragment implements View.OnClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     /**
      * Conversion from screen rotation to JPEG orientation.
@@ -446,10 +445,10 @@ public class Camera2BasicFragment extends Fragment
                     ImageView imgView = new ImageView(getContext());
                     imgView.setImageBitmap(myBitmap);
                     imgView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    // HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(android.R.id.hsv);
-					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(activity.getResources("hsv", "id", activity.getPackageName()));
-                    LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(hsv.getWidth()/3, LinearLayout.LayoutParams.MATCH_PARENT);
                     Context ctx = getContext();
+                    // HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(android.R.id.hsv);
+					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(ctx.getResources().getIdentifier("hsv", "id", ctx.getPackageName()));
+                    LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(hsv.getWidth()/3, LinearLayout.LayoutParams.MATCH_PARENT);
                     layout.setMargins(dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx));
                     imgView.setLayoutParams(layout);
                     LinearLayout ln = (LinearLayout) activity.findViewById(R.id.gallery);
