@@ -77,18 +77,28 @@ public class MultiCamera extends CordovaPlugin {
 		Log.d(TAG,"action: "+action);
         callback = callbackContext;
         if(action.equals("open")) {
+			Log.d(TAG,"Sim, action = "+action);
             try {
+				Log.d(TAG,"Antes de criar o Intent.");
+				Log.d(TAG,"Atividade: "+ActivityName);
                 Intent intent = new Intent(ActivityName);
+				Log.d(TAG,"Antes de criar o Intent");
                 // Send some info to the activity to retrieve it later
+				Log.d(TAG,"intent.putExtra('action'): "+MultiCamera.open);
                 intent.putExtra("action", MultiCamera.open);
+				Log.d(TAG,"Antes do cordova.startActivityForResult.");
                 cordova.startActivityForResult((CordovaPlugin) this, intent, MultiCamera.open);
-
+				Log.d(TAG,"Antes do result.");
                 PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
+				Log.d(TAG,"Depois do result.");
                 result.setKeepCallback(true);
+				Log.d(TAG,"Depois do result.setKeepCallback.");
                 callback.sendPluginResult(result);
-
+				Log.d(TAG,"Depois do callback.sendPluginResult.");
                 Log.d(TAG, "Open started");
-            } catch(Exception ignore) {}
+            } catch(Exception ignore) {
+
+			}
         } else {
             return false;   // Returning false results in a "MethodNotFound" error
         }
