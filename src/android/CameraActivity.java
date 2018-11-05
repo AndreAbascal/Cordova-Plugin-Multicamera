@@ -71,8 +71,7 @@ public class CameraActivity extends AppCompatActivity {
 		Log.d(TAG,"CameraActivity onActivityResult 2");
 		for (String key : extras.keySet()) {
 			Object value = extras.get(key);
-			Log.d(TAG, "onActivityResult Bundle extras -> "+String.format("%s %s (%s)", key,
-					value.toString(), value.getClass().getName()));
+			Log.d(TAG, "onActivityResult Bundle extras -> "+String.format("%s %s (%s)", key,value.toString(), value.getClass().getName()));
 		}
 		Log.d(TAG,"CameraActivity onActivityResult 3");
 	}
