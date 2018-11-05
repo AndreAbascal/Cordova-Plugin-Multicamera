@@ -59,4 +59,18 @@ public class CameraActivity extends AppCompatActivity {
         }
 	}
 
+	private void sendActivityResult(int resultCode, String response) {
+        Intent intent = new Intent();
+        intent.putExtra("data", response);
+        setResult(resultCode, intent);
+        finish();// Exit of this activity !
+    }
+
+    private void sendActivityResult(int resultCode,JSONObject response) {
+        Intent intent = new Intent();
+        intent.putExtra("data", response.toString());
+        setResult(resultCode, intent);
+        finish();// Exit of this activity !
+    }
+
 }
