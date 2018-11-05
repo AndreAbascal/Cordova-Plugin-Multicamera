@@ -20,16 +20,22 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 public class CameraActivity extends AppCompatActivity {
-
+	public static final String TAG = "MultiCamera";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+		Log.d(TAG,"CameraActivity onCreate");
         super.onCreate(savedInstanceState);
+		Log.d(TAG,"CameraActivity 2");
         // setContentView(R.layout.activity_camera);
 		setContentView(CameraActivity.this.getResources().getIdentifier("activity_camera", "layout", CameraActivity.this.getPackageName()));
+		Log.d(TAG,"CameraActivity 3");
         if (null == savedInstanceState) {
+			Log.d(TAG,"CameraActivity 4");
             // getSupportFragmentManager().beginTransaction().replace(R.id.container, Camera2BasicFragment.newInstance()).commit();
 			getSupportFragmentManager().beginTransaction().replace(CameraActivity.this.getResources().getIdentifier("container", "id", CameraActivity.this.getPackageName()), Camera2BasicFragment.newInstance()).commit();
-        }
+        }else{
+			Log.d(TAG,"CameraActivity 5");
+		}
     }
 
 }

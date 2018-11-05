@@ -518,27 +518,50 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         return new Camera2BasicFragment();
     }
 
+	@Override
+	protected void onAttach(Activity activity) {
+		Log.d(TAG, "Camera2BasicFragment onAttach");
+        super.onAttach(activity);
+    }
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		Log.d(TAG, "Camera2BasicFragment onCreate");
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // return inflater.inflate(R.layout.fragment_camera2_basic, container, false);
+		Log.d(TAG, "Camera2BasicFragment onCreateView");
 		return inflater.inflate(getActivity().getResources().getIdentifier("fragment_camera2_basic", "layout", getActivity().getPackageName()),container,false);
     }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
+		Log.d(TAG, "Camera2BasicFragment onViewCreated");
         // view.findViewById(R.id.picture).setOnClickListener(this);
 		view.findViewById(getActivity().getResources().getIdentifier("picture", "id", getActivity().getPackageName())).setOnClickListener(this);
+		Log.d(TAG, "Camera2BasicFragment onViewCreated 2");
         // mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
 		mTextureView = (AutoFitTextureView) view.findViewById(getActivity().getResources().getIdentifier("texture", "id", getActivity().getPackageName()));
+		Log.d(TAG, "Camera2BasicFragment onViewCreated 3");
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+		Log.d(TAG, "Camera2BasicFragment onActivityCreated");
         super.onActivityCreated(savedInstanceState);
+		Log.d(TAG, "Camera2BasicFragment onActivityCreated 2");
         mFile = new File(getActivity().getExternalFilesDir(null), System.currentTimeMillis()+".jpg");
+		Log.d(TAG, "Camera2BasicFragment onActivityCreated 3");
         Log.d(TAG,"ANDRE - mFile: "+mFile.toString());
     }
+
+	@Override
+	public void onStart(){
+		super.onStart();
+	}
 
     @Override
     public void onResume() {
