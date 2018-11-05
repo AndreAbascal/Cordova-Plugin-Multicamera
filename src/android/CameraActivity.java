@@ -56,11 +56,25 @@ public class CameraActivity extends AppCompatActivity {
 			Log.d(TAG,"CameraActivity onStart 4");
             for (String key : extras.keySet()) {
                 Object value = extras.get(key);
-                Log.d(TAG, "Bundle extras -> "+String.format("%s %s (%s)", key,
+                Log.d(TAG, " onStartBundle extras -> "+String.format("%s %s (%s)", key,
                         value.toString(), value.getClass().getName()));
             }
 			Log.d(TAG,"CameraActivity onStart 5");
         }
+	}
+	@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.d(TAG,"CameraActivity onActivityResult");
+		Log.d(TAG,"CameraActivity requestCode: "+requestCode);
+		Log.d(TAG,"CameraActivity resultCode: "+resultCode);
+		Bundle extras = data.getExtras();
+		Log.d(TAG,"CameraActivity onActivityResult 2");
+		for (String key : extras.keySet()) {
+			Object value = extras.get(key);
+			Log.d(TAG, "onActivityResult Bundle extras -> "+String.format("%s %s (%s)", key,
+					value.toString(), value.getClass().getName()));
+		}
+		Log.d(TAG,"CameraActivity onActivityResult 3");
 	}
 
 	private void sendActivityResult(int resultCode, String response) {
