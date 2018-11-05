@@ -97,7 +97,8 @@ public class MultiCamera extends CordovaPlugin {
 				Log.d(TAG,"Depois do callback.sendPluginResult.");
                 Log.d(TAG, "Open started");
             } catch(Exception ex) {
-				Log.d(TAG, "execute Exception: "+ex.printStackTrace());
+				Log.d(TAG, "execute Exception");
+				ex.printStackTrace();
 			}
         } else {
             return false;   // Returning false results in a "MethodNotFound" error
