@@ -1,12 +1,12 @@
 import { IonicNativePlugin } from '@ionic-native/core';
 /**
- * @name MultiCamera
+ * @name @ionic-native/ Multi Camera
  * @description
  * This plugin does something
  *
  * @usage
  * ```typescript
- * import { MultiCamera } from 'Multi-camera';
+ * import { MultiCamera } from '@ionic-native/ionic-native-multi-camera';
  *
  *
  * constructor(private multiCamera: MultiCamera) { }
@@ -14,7 +14,7 @@ import { IonicNativePlugin } from '@ionic-native/core';
  * ...
  *
  *
- * this.multiCamera.functionName('Hello', 123)
+ * this.MultiCamera.functionName('Hello', 123)
  *   .then((res: any) => console.log(res))
  *   .catch((error: any) => console.error(error));
  *
@@ -22,7 +22,7 @@ import { IonicNativePlugin } from '@ionic-native/core';
  */
 export declare class MultiCamera extends IonicNativePlugin {
     /**
-     * Open 7camera
+     * open 7camera
      * @return {Promise<any>} Returns a promise that resolves when something happens
      */
     open(options: any): Promise<any>;

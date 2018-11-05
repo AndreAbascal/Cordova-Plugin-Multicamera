@@ -11,7 +11,6 @@
  */
 import { Injectable } from '@angular/core';
 import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
 
 /**
  * @name @ionic-native/ Multi Camera
@@ -36,12 +35,10 @@ import { Observable } from 'rxjs/Observable';
  */
 @Plugin({
   pluginName: 'MultiCamera',
-  plugin: '', // npm package name, example: cordova-plugin-camera
-  pluginRef: '', // the variable reference to call the plugin, example: navigator.geolocation
-  repo: '', // the github repository URL for the plugin
-  install: '', // OPTIONAL install command, in case the plugin requires variables
-  installVariables: [], // OPTIONAL the plugin requires variables
-  platforms: [] // Array of platforms supported, example: ['Android', 'iOS']
+  plugin: 'cordova-plugin-multicamera', // npm package name, example: cordova-plugin-camera
+  pluginRef: 'MultiCamera', // the variable reference to call the plugin, example: navigator.geolocation
+  repo: 'https://github.com/AndreAbascal/Cordova-Plugin-Multicamera', // the github repository URL for the plugin
+  platforms: ['Android'] // Array of platforms supported, example: ['Android', 'iOS']
 })
 @Injectable()
 export class MultiCamera extends IonicNativePlugin {

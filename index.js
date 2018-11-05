@@ -46,15 +46,15 @@ var MultiCamera = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * Open 7camera
+     * open 7camera
      * @return {Promise<any>} Returns a promise that resolves when something happens
      */
     /**
-       * Open 7camera
+       * open 7camera
        * @return {Promise<any>} Returns a promise that resolves when something happens
        */
-    MultiCamera.prototype.openCamera = /**
-       * Open 7camera
+    MultiCamera.prototype.open = /**
+       * open 7camera
        * @return {Promise<any>} Returns a promise that resolves when something happens
        */
     function (options) {
@@ -68,7 +68,7 @@ var MultiCamera = (function (_super) {
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", Promise)
-    ], MultiCamera.prototype, "openCamera", null);
+    ], MultiCamera.prototype, "open", null);
     /**
      * @name @ionic-native/ Multi Camera
      * @description
@@ -93,17 +93,13 @@ var MultiCamera = (function (_super) {
     MultiCamera = __decorate([
         Plugin({
             pluginName: 'MultiCamera',
-            plugin: '',
+            plugin: 'cordova-plugin-multicamera',
             // npm package name, example: cordova-plugin-camera
-            pluginRef: '',
+            pluginRef: 'MultiCamera',
             // the variable reference to call the plugin, example: navigator.geolocation
-            repo: '',
+            repo: 'https://github.com/AndreAbascal/Cordova-Plugin-Multicamera',
             // the github repository URL for the plugin
-            install: '',
-            // OPTIONAL install command, in case the plugin requires variables
-            installVariables: [],
-            // OPTIONAL the plugin requires variables
-            platforms: [] // Array of platforms supported, example: ['Android', 'iOS']
+            platforms: ['Android'] // Array of platforms supported, example: ['Android', 'iOS']
         })
     ], MultiCamera);
     return MultiCamera;
