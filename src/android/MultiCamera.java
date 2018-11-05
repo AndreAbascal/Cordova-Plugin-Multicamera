@@ -45,6 +45,7 @@ public class MultiCamera extends CordovaPlugin {
      * Constructor.
      */
     public MultiCamera() {
+		Log.d(TAG,"MultiCamera constructor!");
     }
 
     /**
@@ -56,6 +57,7 @@ public class MultiCamera extends CordovaPlugin {
      */
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+		Log.d(TAG,"MultiCamera initialize!");
         super.initialize(cordova, webView);
 
         Log.d(TAG, "Initializing MultiCamera");
@@ -71,6 +73,7 @@ public class MultiCamera extends CordovaPlugin {
      */
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+		Log.d(TAG,"MultiCamera exec!");
         callback = callbackContext;
         if(action.equals("open")) {
             try {
@@ -101,6 +104,7 @@ public class MultiCamera extends CordovaPlugin {
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.d(TAG,"MultiCamera onActivityResult!");
         Bundle extras = data.getExtras(); //Get data sent by the Intent
 
         switch(requestCode) {
@@ -125,6 +129,7 @@ public class MultiCamera extends CordovaPlugin {
     //--------------------------------------------------------------------------
 
     private void sendError(String error) {
+		Log.d(TAG,"MultiCamera sendError!");
         Log.w(TAG, error);
         callback.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, error));
     }
