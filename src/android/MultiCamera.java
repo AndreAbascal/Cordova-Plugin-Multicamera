@@ -74,6 +74,7 @@ public class MultiCamera extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		Log.d(TAG,"MultiCamera exec!");
+		Log.d(TAG,"action: "+action);
         callback = callbackContext;
         if(action.equals("open")) {
             try {
