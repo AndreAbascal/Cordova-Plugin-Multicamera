@@ -446,7 +446,8 @@ public class Camera2BasicFragment extends Fragment
                     ImageView imgView = new ImageView(getContext());
                     imgView.setImageBitmap(myBitmap);
                     imgView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(android.R.id.hsv);
+                    // HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(android.R.id.hsv);
+					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(activity.getResources("hsv", "id", activity.getPackageName()));
                     LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(hsv.getWidth()/3, LinearLayout.LayoutParams.MATCH_PARENT);
                     Context ctx = getContext();
                     layout.setMargins(dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx));
