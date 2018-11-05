@@ -452,7 +452,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     layout.setMargins(dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx));
                     imgView.setLayoutParams(layout);
                     // LinearLayout ln = (LinearLayout) activity.findViewById(R.id.gallery);
-					LinearLayout ln = (LinearLayout) activity.findViewById(activity.findViewById(ctx.getResources().getIdentifier("gallery", "id", ctx.getPackageName())))
+					LinearLayout ln = (LinearLayout) activity.findViewById(activity.findViewById(ctx.getResources().getIdentifier("gallery", "id", ctx.getPackageName())));
                     ln.addView(imgView);
                     Log.d("showImageView","ORIGINAL IMAGE: "+imgView.getDrawable().getIntrinsicWidth()+"x"+imgView.getDrawable().getIntrinsicHeight());
                     Log.d("showImageView","IMAGEVIEW: "+imgView.getMeasuredWidth()+"x"+imgView.getMeasuredHeight());
