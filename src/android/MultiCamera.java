@@ -104,7 +104,7 @@ public class MultiCamera extends CordovaPlugin {
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d(TAG,"MultiCamera onActivityResult!");
+		Log.d(TAG,"MultiCamera onActivityResult... requestCode: "+requestCode+" | resultCode: "+resultCode);
         Bundle extras = data.getExtras(); //Get data sent by the Intent
 
         switch(requestCode) {
