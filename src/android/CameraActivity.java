@@ -23,10 +23,13 @@ public class CameraActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+		Context context = CameraActivity.this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera);
+        // setContentView(R.layout.activity_camera);
+		setContentView(context.getResources().getIdentifier("activity_camera", "layout", context.getPackageName()));
         if (null == savedInstanceState) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, Camera2BasicFragment.newInstance()).commit();
+            // getSupportFragmentManager().beginTransaction().replace(R.id.container, Camera2BasicFragment.newInstance()).commit();
+			getSupportFragmentManager().beginTransaction().replace(context.getResources().getIdentifier("container", "id", context.getPackageName()), Camera2BasicFragment.newInstance()).commit();
         }
     }
 

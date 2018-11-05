@@ -451,7 +451,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(hsv.getWidth()/3, LinearLayout.LayoutParams.MATCH_PARENT);
                     layout.setMargins(dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx));
                     imgView.setLayoutParams(layout);
-                    LinearLayout ln = (LinearLayout) activity.findViewById(R.id.gallery);
+                    // LinearLayout ln = (LinearLayout) activity.findViewById(R.id.gallery);
+					LinearLayout ln = (LinearLayout) activity.findViewById(activity.findViewById(ctx.getResources().getIdentifier("gallery", "id", ctx.getPackageName())))
                     ln.addView(imgView);
                     Log.d("showImageView","ORIGINAL IMAGE: "+imgView.getDrawable().getIntrinsicWidth()+"x"+imgView.getDrawable().getIntrinsicHeight());
                     Log.d("showImageView","IMAGEVIEW: "+imgView.getMeasuredWidth()+"x"+imgView.getMeasuredHeight());
@@ -519,13 +520,16 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_camera2_basic, container, false);
+        // return inflater.inflate(R.layout.fragment_camera2_basic, container, false);
+		return inflater.inflate(getActivity().getResources().getIdentifier("fragment_camera2_basic", "layout", getActivity().getPackageName()),container,false);
     }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-        view.findViewById(R.id.picture).setOnClickListener(this);
-        mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
+        // view.findViewById(R.id.picture).setOnClickListener(this);
+		view.findViewById(getActivity().getResources().getIdentifier("picture", "id", getActivity().getPackageName())).setOnClickListener(this);
+        // mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
+		mTextureView = (AutoFitTextureView) view.findViewById(getActivity().getResources().getIdentifier("texture", "id", getActivity().getPackageName()));
     }
 
     @Override
@@ -579,8 +583,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                ErrorDialog.newInstance(getString(R.string.request_permission))
-                        .show(getChildFragmentManager(), FRAGMENT_DIALOG);
+                // ErrorDialog.newInstance(getString(R.string.request_permission)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
+				ErrorDialog.newInstance(getActivity().getResources().getIdentifier("request_permission", "string", getActivity().getPackageName())).show(getChildFragmentManager(), FRAGMENT_DIALOG);
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -701,8 +705,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         } catch (NullPointerException e) {
             // Currently an NPE is thrown when the Camera2API is used but not supported on the
             // device this code runs.
-            ErrorDialog.newInstance(getString(R.string.camera_error))
-                    .show(getChildFragmentManager(), FRAGMENT_DIALOG);
+            // ErrorDialog.newInstance(getString(R.string.camera_error)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
+			ErrorDialog.newInstance(getActivity().getResources().getIdentifier("camera_error", "string", getActivity().getPackageName())).show(getChildFragmentManager(), FRAGMENT_DIALOG);
         }
     }
 
@@ -1000,16 +1004,19 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
+		Activity activity = getActivity();
+		int idPicture = activity.getResources().getIdentifier("picture", "id", activity.getPackageName());
+		int idInfo = activity.getResources().getIdentifier("info", "id", activity.getPackageName());
         switch (view.getId()) {
-            case R.id.picture: {
+            case idPicture: {
                 takePicture();
                 break;
             }
-            case R.id.info: {
-                Activity activity = getActivity();
+            case idInfo: {
                 if (null != activity) {
                     new AlertDialog.Builder(activity)
-                            .setMessage(R.string.intro_message)
+                            // .setMessage(R.string.intro_message)
+							.setMessage(activity.getResources().getIdentifier("intro_message", "string", activity.getPackageName()))
                             .setPositiveButton(android.R.string.ok, null)
                             .show();
                 }
@@ -1128,7 +1135,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Fragment parent = getParentFragment();
             return new AlertDialog.Builder(getActivity())
-                    .setMessage(R.string.request_permission)
+                    // .setMessage(R.string.request_permission)
+					.setMessage(getActivity().getResources().getIdentifier("request_permission", "string", getActivity().getPackageName()))
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
