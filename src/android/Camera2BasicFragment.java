@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -447,12 +448,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     imgView.setScaleType(ImageView.ScaleType.FIT_XY);
                     Context ctx = getContext();
                     // HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(android.R.id.hsv);
-					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(ctx.getResources().getIdentifier("hsv", "id", ctx.getPackageName()));
+					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
                     LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(hsv.getWidth()/3, LinearLayout.LayoutParams.MATCH_PARENT);
                     layout.setMargins(dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx));
                     imgView.setLayoutParams(layout);
                     // LinearLayout ln = (LinearLayout) activity.findViewById(R.id.gallery);
-					LinearLayout ln = (LinearLayout) activity.findViewById(activity.findViewById(ctx.getResources().getIdentifier("gallery", "id", ctx.getPackageName())));
+					LinearLayout ln = (LinearLayout) activity.findViewById(activity.getResources().getIdentifier("gallery", "id", activity.getPackageName()));
                     ln.addView(imgView);
                     Log.d("showImageView","ORIGINAL IMAGE: "+imgView.getDrawable().getIntrinsicWidth()+"x"+imgView.getDrawable().getIntrinsicHeight());
                     Log.d("showImageView","IMAGEVIEW: "+imgView.getMeasuredWidth()+"x"+imgView.getMeasuredHeight());
@@ -709,7 +710,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             // Currently an NPE is thrown when the Camera2API is used but not supported on the
             // device this code runs.
             // ErrorDialog.newInstance(getString(R.string.camera_error)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
-			Activity activity = getActivity();
 			Resources resources = activity.getResources();
 			int idCameraerror = resources.getIdentifier("camera_error", "string", activity.getPackageName());
 			ErrorDialog.newInstance(getString(idCameraerror)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
