@@ -20,6 +20,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.content.Intent;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class CameraActivity extends AppCompatActivity {
 	public static final String TAG = "MultiCamera";
