@@ -19,6 +19,7 @@ package cordova.plugin.multicamera;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.content.Intent;
 
 public class CameraActivity extends AppCompatActivity {
 	public static final String TAG = "MultiCamera";
@@ -66,7 +67,7 @@ public class CameraActivity extends AppCompatActivity {
         finish();// Exit of this activity !
     }
 
-    private void sendActivityResult(int resultCode,JSONObject response) {
+    private void sendActivityResultJSON(int resultCode,JSONObject response) {
         Intent intent = new Intent();
         intent.putExtra("data", response.toString());
         setResult(resultCode, intent);
