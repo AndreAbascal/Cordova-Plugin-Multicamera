@@ -54,13 +54,14 @@
 			<string name="request_permission">This sample needs camera permission.</string>
 			<string name="camera_error">This device doesn\'t support Camera2 API.</string>
 		</config-file>
-		<config-file target="res/values/styles.xml" parent="/*">
+		<source-file src="src/android/res/values/styles.xml" target-dir="res/values" />
+		<!-- <config-file target="res/values/styles.xml" parent="/*">
 			<resources>
 				<style name="MaterialTheme" parent="Theme.AppCompat.Light.NoActionBar">
 					<item name="android:windowFullscreen">true</item>
 				</style>
 			</resources>
-		</config-file>
+		</config-file> -->
 	</platform>
 
 </plugin>
