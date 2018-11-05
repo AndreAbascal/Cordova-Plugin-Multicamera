@@ -518,18 +518,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         return new Camera2BasicFragment();
     }
 
-	@Override
-	protected void onAttach(Activity activity) {
-		Log.d(TAG, "Camera2BasicFragment onAttach");
-        super.onAttach(activity);
-    }
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		Log.d(TAG, "Camera2BasicFragment onCreate");
-        super.onCreate(savedInstanceState);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // return inflater.inflate(R.layout.fragment_camera2_basic, container, false);

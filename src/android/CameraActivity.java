@@ -18,6 +18,7 @@ package cordova.plugin.multicamera;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 public class CameraActivity extends AppCompatActivity {
 	public static final String TAG = "MultiCamera";
