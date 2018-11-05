@@ -583,8 +583,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+				Activity activity = getActivity();
+				Resources resources = activity.getResources();
+				int idRequestPermission = resources.getIdentifier("request_permission", "string", activity.getPackageName());
                 // ErrorDialog.newInstance(getString(R.string.request_permission)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
-				ErrorDialog.newInstance(getActivity().getResources().getIdentifier("request_permission", "string", getActivity().getPackageName())).show(getChildFragmentManager(), FRAGMENT_DIALOG);
+				ErrorDialog.newInstance(getString(idRequestPermission)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -706,7 +709,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             // Currently an NPE is thrown when the Camera2API is used but not supported on the
             // device this code runs.
             // ErrorDialog.newInstance(getString(R.string.camera_error)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
-			ErrorDialog.newInstance(getActivity().getResources().getIdentifier("camera_error", "string", getActivity().getPackageName())).show(getChildFragmentManager(), FRAGMENT_DIALOG);
+			Activity activity = getActivity();
+			Resources resources = activity.getResources();
+			int idCameraerror = resources.getIdentifier("camera_error", "string", activity.getPackageName());
+			ErrorDialog.newInstance(getString(idCameraerror)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
+			// ErrorDialog.newInstance(getActivity().getResources().getIdentifier("camera_error", "string", getActivity().getPackageName())).show(getChildFragmentManager(), FRAGMENT_DIALOG);
         }
     }
 
@@ -1007,7 +1014,15 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		Activity activity = getActivity();
 		int idPicture = activity.getResources().getIdentifier("picture", "id", activity.getPackageName());
 		int idInfo = activity.getResources().getIdentifier("info", "id", activity.getPackageName());
-        switch (view.getId()) {
+		if(view.getId() == idPicture){
+			takePicture();
+		}else if(view.getId() == idInfo && null != activity){
+			new AlertDialog.Builder(activity)
+				.setMessage(activity.getResources().getIdentifier("intro_message", "string", activity.getPackageName()))
+				.setPositiveButton(android.R.string.ok, null)
+				.show();
+		}
+        /*switch (view.getId()) {
             case idPicture: {
                 takePicture();
                 break;
@@ -1022,7 +1037,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 }
                 break;
             }
-        }
+        }*/
     }
 
     private void setAutoFlash(CaptureRequest.Builder requestBuilder) {
