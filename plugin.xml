@@ -34,7 +34,7 @@
 
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
 			<activity android:name="cordova.plugin.multicamera.CameraActivity"
-				android:label="MultiCamera"
+				android:label="CameraActivity"
 				android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 			</activity>
 		</config-file>
