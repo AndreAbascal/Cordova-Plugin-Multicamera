@@ -89,23 +89,34 @@ public class CameraActivity extends AppCompatActivity {
 			Object value = extras.get(key);
 			Log.d(TAG, "onActivityResult Bundle extras -> "+String.format("%s %s (%s)", key,value.toString(), value.getClass().getName()));
 		}
+		Log.d(TAG,"CameraActivity onActivityResult 3");
 		switch(requestCode){
 			case ERROR_CODE:
 			case SUCCESS_CODE:
 				switch(resultCode){
 					case AppCompatActivity.RESULT_OK:
-						Log.d(TAG, "payment token: user cancelled");
-						String imgString = this.images.toString();
-						JSONObject obj = new JSONObject();
-						obj.put("fotos",this.images.toString());
-						sendActivityResult(AppCompatActivity.RESULT_OK, obj.toString());
+						Log.d(TAG,"CameraActivity onActivityResult 4");
+						try {
+							Log.d(TAG,"CameraActivity onActivityResult 5");
+							String imgString = this.images.toString();
+							Log.d(TAG,"CameraActivity onActivityResult 6");
+							JSONObject obj = new JSONObject();
+							Log.d(TAG,"CameraActivity onActivityResult 7");
+							obj.put("fotos",this.images.toString());
+							Log.d(TAG,"CameraActivity onActivityResult 8");
+							sendActivityResult(AppCompatActivity.RESULT_OK, obj.toString());
+						} catch(Exception ex) {
+							Log.d(TAG,"CameraActivity onActivityResult exception");
+							ex.printStackTrace();
+						}
 						break;
 					case AppCompatActivity.RESULT_CANCELED:
+						Log.d(TAG,"CameraActivity onActivityResult 9");
 						Log.d(TAG, "Resultado cancelado!");
                         sendActivityResult(AppCompatActivity.RESULT_CANCELED, "user cancelled");
 						break;
 					default:
-						Log.d(TAG, "payment token: user cancelled");
+						Log.d(TAG,"CameraActivity onActivityResult 10");
                         sendActivityResult(AppCompatActivity.RESULT_CANCELED, "user cancelled");
 						break;
 
