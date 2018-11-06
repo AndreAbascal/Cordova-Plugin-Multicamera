@@ -286,7 +286,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 							try {
 								output.close();
 								String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
-								addBase64(encodedImage);
+								addFile(rFile.getAbsolutePath());
+								// addBase64(encodedImage);
 								// this.images.put(encodedImage);
 							} catch (IOException e) {
 								e.printStackTrace();
@@ -1130,7 +1131,14 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		Button confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
 		confirm.setClickable(true);
 		confirm.setEnabled(true);
-		// this.images.put(encodedImage);
+	}
+
+	public void addFile(String absolutePath){
+		CameraActivity ca = ((CameraActivity) getActivity());
+		ca.adicionarArquivo(absolutePath);
+		Button confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
+		confirm.setClickable(true);
+		confirm.setEnabled(true);
 	}
 
     /**

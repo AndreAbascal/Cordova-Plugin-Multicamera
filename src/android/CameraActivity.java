@@ -26,9 +26,13 @@ import org.json.JSONObject;
 
 public class CameraActivity extends AppCompatActivity {
 	public JSONArray images = new JSONArray();
+	public JSONArray files = new JSONArray();
 	private static final int ERROR_CODE = 0;
 	private static final int SUCCESS_CODE = 1;
 	public static final String TAG = "CordovaPluginMulticamera";
+	public void adicionarArquivo(String absolutePath){
+		this.files.put(absolutePath);
+	}
 	public void adicionarImagem(String encodedImage){
 		this.images.put(encodedImage);
 	}
@@ -98,12 +102,13 @@ public class CameraActivity extends AppCompatActivity {
 						Log.d(TAG,"CameraActivity onActivityResult 4");
 						try {
 							Log.d(TAG,"CameraActivity onActivityResult 5");
-							Log.d(TAG,"CameraActivity tirei "+this.images.length()+" foto(s)");
-							String imgString = this.images.toString();
+							// Log.d(TAG,"CameraActivity tirei "+this.images.length()+" foto(s)");
+							Log.d(TAG,"CameraActivity tirei "+this.files.length()+" foto(s)");
 							Log.d(TAG,"CameraActivity onActivityResult 6");
 							JSONObject obj = new JSONObject();
 							Log.d(TAG,"CameraActivity onActivityResult 7");
-							obj.put("fotos",this.images.toString());
+							// obj.put("fotos",this.images.toString());
+							obj.put("fotos",this.files.toString());
 							Log.d(TAG,"CameraActivity onActivityResult 8");
 							sendActivityResult(AppCompatActivity.RESULT_OK, obj.toString());
 						} catch(Exception ex) {
@@ -123,9 +128,6 @@ public class CameraActivity extends AppCompatActivity {
 
 				}
 		}
-		// sendActivityResult(Activity.RESULT_OK, obj);
-		// this.sendActivityResultJSON(1,this.images);
-		// Log.d(TAG,"CameraActivity onActivityResult 3");
 	}
 
 	public void sendActivityResult(int resultCode, String response) {
