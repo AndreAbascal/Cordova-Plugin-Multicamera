@@ -569,7 +569,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-		final Activity activity = getActivity();
+		// final Activity activity = getActivity();
+		final CameraActivity activity = ((CameraActivity) getActivity());
 		Log.d(TAG, "Camera2BasicFragment onViewCreated");
         // view.findViewById(R.id.picture).setOnClickListener(this);
 		view.findViewById(activity.getResources().getIdentifier("picture", "id", activity.getPackageName())).setOnClickListener(this);
@@ -580,7 +581,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		back.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
-				activity.sendActivityResult(Activity.RESULT_CANCELED, "[]");
+				// CameraActivity ca = ((CameraActivity) getActivity());
+				ca.sendActivityResult(Activity.RESULT_CANCELED, "[]");
 				activity.finish();
 			}
 		});
@@ -590,6 +592,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		confirm.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
+				// CameraActivity ca = ((CameraActivity) getActivity());
 				activity.sendActivityResult(Activity.RESULT_OK, activity.images.toString());
 				activity.finish();
 			}
