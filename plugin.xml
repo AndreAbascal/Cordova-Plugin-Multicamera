@@ -36,6 +36,9 @@
 			<activity android:name="cordova.plugin.multicamera.CameraActivity"
 				android:label="CameraActivity"
 				android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+				<intent-filter>
+        			<category android:name="android.intent.category.DEFAULT"/>
+    			</intent-filter>
 			</activity>
 		</config-file>
 
