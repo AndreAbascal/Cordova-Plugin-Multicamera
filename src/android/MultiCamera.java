@@ -142,7 +142,7 @@ public class MultiCamera extends CordovaPlugin {
                 if(resultCode == cordova.getActivity().RESULT_OK) {
 					Log.d(TAG,"MultiCamera onActivityResult 4");
                     // boolean result = extras.getString("data").equals("true");
-                    Log.d(TAG,"MultiCamera onActivityResult result: "+result);
+                    Log.d(TAG,"MultiCamera onActivityResult extras: "+extras.toString());
                     callback.sendPluginResult(new PluginResult(PluginResult.Status.OK, extras.getString("data")));
 					Log.d(TAG,"MultiCamera onActivityResult 5");
                 } else if(resultCode == 0) {
