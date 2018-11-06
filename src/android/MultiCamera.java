@@ -134,6 +134,10 @@ public class MultiCamera extends CordovaPlugin {
 		Log.d(TAG,"MultiCamera onActivityResult... 4");
         switch(requestCode) {
             case MultiCamera.open:
+				Bundle extras = new Bundle();
+				if(data != null){
+					extras = data.getExtras();
+				}
 				Log.d(TAG,"MultiCamera onActivityResult 3");
                 if(resultCode == cordova.getActivity().RESULT_OK) {
 					Log.d(TAG,"MultiCamera onActivityResult 4");

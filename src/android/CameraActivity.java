@@ -93,20 +93,20 @@ public class CameraActivity extends AppCompatActivity {
 			case ERROR_CODE:
 			case SUCCESS_CODE:
 				switch(resultCode){
-					case Activity.RESULT_OK:
+					case AppCompatActivity.RESULT_OK:
 						Log.d(TAG, "payment token: user cancelled");
 						String imgString = this.images.toString();
 						JSONObject obj = new JSONObject();
 						obj.add("fotos",this.images.toString());
-						sendActivityResult(Activity.RESULT_OK, obj);
+						sendActivityResult(AppCompatActivity.RESULT_OK, obj);
 						break;
-					case Activity.RESULT_CANCELED:
+					case AppCompatActivity.RESULT_CANCELED:
 						Log.d(TAG, "Resultado cancelado!");
-                        sendActivityResult(Activity.RESULT_CANCELED, "user cancelled");
+                        sendActivityResult(AppCompatActivity.RESULT_CANCELED, "user cancelled");
 						break;
 					default:
 						Log.d(TAG, "payment token: user cancelled");
-                        sendActivityResult(Activity.RESULT_CANCELED, "user cancelled");
+                        sendActivityResult(AppCompatActivity.RESULT_CANCELED, "user cancelled");
 						break;
 
 				}
