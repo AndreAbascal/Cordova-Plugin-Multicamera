@@ -567,12 +567,29 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
+		final Activity activity = getActivity();
 		Log.d(TAG, "Camera2BasicFragment onViewCreated");
         // view.findViewById(R.id.picture).setOnClickListener(this);
-		view.findViewById(getActivity().getResources().getIdentifier("picture", "id", getActivity().getPackageName())).setOnClickListener(this);
+		view.findViewById(activity.getResources().getIdentifier("picture", "id", activity.getPackageName())).setOnClickListener(this);
 		Log.d(TAG, "Camera2BasicFragment onViewCreated 2");
         // mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
-		mTextureView = (AutoFitTextureView) view.findViewById(getActivity().getResources().getIdentifier("texture", "id", getActivity().getPackageName()));
+		mTextureView = (AutoFitTextureView) view.findViewById(activity.getResources().getIdentifier("texture", "id", activity.getPackageName()));
+		Button back = activity.findViewById(activity.getResources().getIdentifier("back", "id", activity.getPackageName()));
+		back.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				activity.finish();
+			}
+		});
+		Button confirm = activity.findViewById(activity.getResources().getIdentifier("confirm", "id", activity.getPackageName()));
+		confirm.setClickable(false);
+		confirm.setEnabled(false);
+		confirm.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				activity.finish();
+			}
+		});
 		Log.d(TAG, "Camera2BasicFragment onViewCreated 3");
     }
 
@@ -1099,7 +1116,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     }
 
 	public void addBase64(String encodedImage){
-		((CameraActivity) getActivity()).adicionarImagem(encodedImage);
+		CameraActivity ca = ((CameraActivity) getActivity());
+		ca.adicionarImagem(encodedImage);
+		Button confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
+		confirm.setClickable(true);
+		confirm.setEnabled(true);
 		// this.images.put(encodedImage);
 	}
 
