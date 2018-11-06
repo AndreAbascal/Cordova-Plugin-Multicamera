@@ -46,21 +46,28 @@
 		<source-file src="src/android/Camera2BasicFragment.java" target-dir="src/cordova/plugin/multicamera" />
 		<source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugin/multicamera" />
 		<source-file src="src/android/MultiCamera.java" target-dir="src/cordova/plugin/multicamera" />
-		<!--<config-file target="res/values/colors.xml" parent="/*">
+		<!-- <config-file target="res/values/colors.xml" parent="/*">
 			<resources>
 				<color name="control_background">#cc4285f4</color>
 			</resources>
-		</config-file>
+		</config-file> -->
 		<config-file target="res/values/strings.xml" parent="/*">
 			<string name="picture">Picture</string>
 			<string name="description_info">Info</string>
 			<string name="request_permission">This sample needs camera permission.</string>
 			<string name="camera_error">This device doesn\'t support Camera2 API.</string>
 		</config-file>
+		<source-file src="src/android/res/values/colors.xml" target-dir="res/values" />
 		<source-file src="src/android/res/values/styles.xml" target-dir="res/values" />
 		<source-file src="src/android/res/layout/activity_camera.xml" target-dir="res/layout" />
-		<source-file src="src/android/res/layout/fragment_camera2_basic.xml" target-dir="res/layout" />-->
-		<source-file src="src/android/res" target-dir="res" />
+		<source-file src="src/android/res/layout/fragment_camera2_basic.xml" target-dir="res/layout" />
+		<source-file src="src/android/res/drawable/baseline_arrow_back_24.xml" target-dir="res/drawable" />
+		<source-file src="src/android/res/drawable/baseline_done_24.xml" target-dir="res/drawable" />
+		<source-file src="src/android/res/drawable-xxxhdpi/lens.png" target-dir="res/drawable-xxxhdpi" />
+		<source-file src="src/android/res/drawable-xxhdpi/lens.png" target-dir="res/drawable-xxhdpi" />
+		<source-file src="src/android/res/drawable-xhdpi/lens.png" target-dir="res/drawable-xhdpi" />
+		<source-file src="src/android/res/drawable-hdpi/lens.png" target-dir="res/drawable-hdpi" />
+		<source-file src="src/android/res/drawable-mdpi/lens.png" target-dir="res/drawable-mdpi" />
 		<!-- <config-file target="res/values/styles.xml" parent="/*">
 			<resources>
 				<style name="MaterialTheme" parent="Theme.AppCompat.Light.NoActionBar">
