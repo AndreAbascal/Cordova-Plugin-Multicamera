@@ -25,8 +25,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class CameraActivity extends AppCompatActivity {
+	public JSONArray images = new JSONArray();
 	public static final String TAG = "MultiCamera";
     @Override
+	public void adicionarImagem(String encodedImage){
+		this.images.put(encodedImage);
+	}
     protected void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG,"CameraActivity onCreate");
         super.onCreate(savedInstanceState);
@@ -65,6 +69,7 @@ public class CameraActivity extends AppCompatActivity {
 	@Override
 	public void onPause(){
 		Log.d(TAG,"CameraActivity onPause!");
+		this.sendActivityResultJSON(1,this.images);
 		super.onPause();
 	}
 	@Override
@@ -95,7 +100,7 @@ public class CameraActivity extends AppCompatActivity {
         finish();// Exit of this activity !
     }
 
-    private void sendActivityResultJSON(int resultCode,JSONObject response) {
+    private void sendActivityResultJSON(int resultCode,JSONArray response) {
 		Log.d(TAG,"CameraActivity sendActivityResultJSON... resultCode: "+resultCode);
 		Log.d(TAG,"CameraActivity sendActivityResultJSON... response: "+response.toString());
         Intent intent = new Intent();
