@@ -55,6 +55,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -82,6 +83,8 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
+import org.json.JSONArray;
+
 public class Camera2BasicFragment extends Fragment implements View.OnClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     /**
@@ -90,6 +93,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static final int REQUEST_CAMERA_PERMISSION = 1;
     private static final String FRAGMENT_DIALOG = "dialog";
+	private JSONArray images = new JSONArray();
 
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
@@ -577,6 +581,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     @Override
     public void onPause() {
         Log.d(TAG,"onPause!");
+		Log.d(TAG,"Tirei "+this.images.length()+" foto(s)");
         closeCamera();
         stopBackgroundThread();
         super.onPause();
@@ -1096,6 +1101,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 if (null != output) {
                     try {
                         output.close();
+						String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
+						this.images.put(encodedImage);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
