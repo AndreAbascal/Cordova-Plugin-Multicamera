@@ -28,7 +28,7 @@ public class CameraActivity extends AppCompatActivity {
 	public JSONArray images = new JSONArray();
 	private static final int ERROR_CODE = 0;
 	private static final int SUCCESS_CODE = 1;
-	public static final String TAG = "MultiCamera";
+	public static final String TAG = "CordovaPluginMulticamera";
 	public void adicionarImagem(String encodedImage){
 		this.images.put(encodedImage);
 	}

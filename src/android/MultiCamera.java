@@ -34,7 +34,7 @@ import android.util.Log;
 
 public class MultiCamera extends CordovaPlugin {
 
-    public static final String TAG = "MultiCamera";
+    public static final String TAG = "CordovaPluginMulticamera";
 
     public static final int open = 1;
 
@@ -147,7 +147,8 @@ public class MultiCamera extends CordovaPlugin {
 					Log.d(TAG,"MultiCamera onActivityResult 5");
                 } else {
 					Log.d(TAG,"MultiCamera onActivityResult 6");
-                    callback.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
+                    // callback.sendPluginResult(new PluginResult(PluginResult.Status.OK, null));
+					sendError(extras.getString("data"));
 				}
 
                 return;
