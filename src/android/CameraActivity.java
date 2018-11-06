@@ -27,10 +27,10 @@ import org.json.JSONObject;
 public class CameraActivity extends AppCompatActivity {
 	public JSONArray images = new JSONArray();
 	public static final String TAG = "MultiCamera";
-    @Override
 	public void adicionarImagem(String encodedImage){
 		this.images.put(encodedImage);
 	}
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG,"CameraActivity onCreate");
         super.onCreate(savedInstanceState);
