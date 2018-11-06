@@ -257,8 +257,44 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
         @Override
         public void onImageAvailable(ImageReader reader) {
-//            mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile));
-            mBackgroundHandler.post(new ImageSaver(reader.acquireLatestImage(), mFile));
+			// mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile));
+            // mBackgroundHandler.post(new ImageSaver(reader.acquireLatestImage(), mFile));
+			mBackgroundHandler.post(new Runnable() {
+				private final Image rImage;
+				/**
+				* The file we save the image into.
+				*/
+				private final File rFile;
+				@Override
+				public void run () {
+					rImage = reader.acquireLatestImage();
+					rFile = mFile;
+					ByteBuffer buffer = rImage.getPlanes()[0].getBuffer();
+					byte[] bytes = new byte[buffer.remaining()];
+					buffer.get(bytes);
+					FileOutputStream output = null;
+					try {
+						output = new FileOutputStream(rFile);
+						output.write(bytes);
+					} catch (IOException e) {
+						e.printStackTrace();
+					} finally {
+						rImage.close();
+						if (null != output) {
+							try {
+								output.close();
+								String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
+								addBase64(encodedImage);
+								// this.images.put(encodedImage);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+					// make operation on UI - on example
+					// on progress bar.
+				}
+			});
         }
 
     };
@@ -1083,9 +1119,9 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
         ImageSaver(Image image, File file) {
             mImage = image;
-            Log.d(TAG,"ANDRE - mImage: "+mImage.getWidth()+"x"+mImage.getHeight());
-            Log.d(TAG,"ANDRE - File: "+file.toString());
-            Log.d(TAG,"ANDRE - File absolutePath: "+file.getAbsolutePath());
+            // Log.d(TAG,"ANDRE - mImage: "+mImage.getWidth()+"x"+mImage.getHeight());
+            // Log.d(TAG,"ANDRE - File: "+file.toString());
+            // Log.d(TAG,"ANDRE - File absolutePath: "+file.getAbsolutePath());
             mFile = file;
         }
 
