@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -81,7 +82,9 @@ public class MultiCamera extends CordovaPlugin {
             try {
 				Log.d(TAG,"Antes de criar o Intent.");
 				Log.d(TAG,"Atividade: "+ActivityName);
-                Intent intent = new Intent(ActivityName);
+				Context context = cordova.getActivity().getApplicationContext();
+                // Intent intent = new Intent(ActivityName);
+				Intent intent = new Intent(context, CameraActivity.class);
 				Log.d(TAG,"Antes de criar o Intent");
                 // Send some info to the activity to retrieve it later
 				Log.d(TAG,"intent.putExtra('action'): "+MultiCamera.open);
