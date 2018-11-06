@@ -68,6 +68,7 @@
 		<source-file src="src/android/res/drawable-xhdpi/lens.png" target-dir="res/drawable-xhdpi" />
 		<source-file src="src/android/res/drawable-hdpi/lens.png" target-dir="res/drawable-hdpi" />
 		<source-file src="src/android/res/drawable-mdpi/lens.png" target-dir="res/drawable-mdpi" />
+		<resource-file src="src/android/res/drawable-hdpi/lens.png" target="res/drawable-hdpi/lens.png" />
 		<!-- <config-file target="res/values/styles.xml" parent="/*">
 			<resources>
 				<style name="MaterialTheme" parent="Theme.AppCompat.Light.NoActionBar">
