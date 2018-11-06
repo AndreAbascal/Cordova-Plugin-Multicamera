@@ -98,7 +98,7 @@ public class CameraActivity extends AppCompatActivity {
 						String imgString = this.images.toString();
 						JSONObject obj = new JSONObject();
 						obj.put("fotos",this.images.toString());
-						sendActivityResult(AppCompatActivity.RESULT_OK, obj);
+						sendActivityResult(AppCompatActivity.RESULT_OK, obj.toString());
 						break;
 					case AppCompatActivity.RESULT_CANCELED:
 						Log.d(TAG, "Resultado cancelado!");
