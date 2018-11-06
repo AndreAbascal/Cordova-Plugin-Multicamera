@@ -580,6 +580,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		back.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
+				activity.sendActivityResult(Activity.RESULT_CANCELED, "[]");
 				activity.finish();
 			}
 		});
@@ -589,6 +590,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		confirm.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
+				activity.sendActivityResult(Activity.RESULT_OK, activity.images.toString());
 				activity.finish();
 			}
 		});

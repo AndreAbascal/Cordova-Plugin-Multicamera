@@ -117,8 +117,8 @@ public class CameraActivity extends AppCompatActivity {
                         sendActivityResult(AppCompatActivity.RESULT_CANCELED, "user cancelled");
 						break;
 					default:
-						Log.d(TAG,"CameraActivity onActivityResult 10");
-                        sendActivityResult(AppCompatActivity.RESULT_CANCELED, "user cancelled");
+						Log.d(TAG,"CameraActivity onActivityResult default");
+                        sendActivityResult(resultCode, "Unknown");
 						break;
 
 				}
