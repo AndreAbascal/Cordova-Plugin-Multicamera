@@ -120,12 +120,18 @@ public class MultiCamera extends CordovaPlugin {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Log.d(TAG,"MultiCamera onActivityResult... requestCode: "+requestCode+" | resultCode: "+resultCode);
-		Bundle extras = data.getExtras();
-		for (String key : extras.keySet()) {
-			Object value = extras.get(key);
-			Log.d(TAG, "MultiCamera onActivityResult Bundle extras -> "+String.format("%s %s (%s)", key,value.toString(), value.getClass().getName()));
+		if(data != null){
+			Log.d(TAG,"MultiCamera onActivityResult... 1");
+			Bundle extras = data.getExtras();
+			Log.d(TAG,"MultiCamera onActivityResult... 2");
+			for (String key : extras.keySet()) {
+				Log.d(TAG,"MultiCamera onActivityResult... xyz");
+				Object value = extras.get(key);
+				Log.d(TAG, "MultiCamera onActivityResult Bundle extras -> "+String.format("%s %s (%s)", key,value.toString(), value.getClass().getName()));
+			}
+			Log.d(TAG,"MultiCamera onActivityResult 3");
 		}
-		Log.d(TAG,"MultiCamera onActivityResult 2");
+		Log.d(TAG,"MultiCamera onActivityResult... 4");
         switch(requestCode) {
             case MultiCamera.open:
 				Log.d(TAG,"MultiCamera onActivityResult 3");

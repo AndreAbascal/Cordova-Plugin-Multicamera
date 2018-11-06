@@ -26,6 +26,8 @@ import org.json.JSONObject;
 
 public class CameraActivity extends AppCompatActivity {
 	public JSONArray images = new JSONArray();
+	private static final int ERROR_CODE = 0;
+	private static final int SUCCESS_CODE = 1;
 	public static final String TAG = "MultiCamera";
 	public void adicionarImagem(String encodedImage){
 		this.images.put(encodedImage);
@@ -69,7 +71,6 @@ public class CameraActivity extends AppCompatActivity {
 	@Override
 	public void onPause(){
 		Log.d(TAG,"CameraActivity onPause!");
-		this.sendActivityResultJSON(1,this.images);
 		super.onPause();
 	}
 	@Override
@@ -88,7 +89,35 @@ public class CameraActivity extends AppCompatActivity {
 			Object value = extras.get(key);
 			Log.d(TAG, "onActivityResult Bundle extras -> "+String.format("%s %s (%s)", key,value.toString(), value.getClass().getName()));
 		}
-		Log.d(TAG,"CameraActivity onActivityResult 3");
+		switch(requestCode){
+			case ERROR_CODE:
+			case SUCCESS_CODE:
+				switch(resultCode){
+					case Activity.RESULT_OK:
+						Log.d(TAG, "payment token: user cancelled");
+						if(this.images && this.images.getLength()){
+							JSONObject obj = new JSONObject();
+							obj.put("fotos",this.images.toString());
+							sendActivityResult(Activity.RESULT_OK, obj);
+						})
+						JSONObject obj = new JSONObject();
+						obj,put("fotos")
+                        sendActivityResult(Activity.RESULT_OK, obj);
+						break;
+					case Activity.RESULT_CANCELED:
+						Log.d(TAG, "Resultado cancelado!");
+                        sendActivityResult(Activity.RESULT_CANCELED, "user cancelled");
+						break;
+					default:
+						Log.d(TAG, "payment token: user cancelled");
+                        sendActivityResult(Activity.RESULT_CANCELED, "user cancelled");
+						break;
+
+				}
+		}
+		// sendActivityResult(Activity.RESULT_OK, obj);
+		// this.sendActivityResultJSON(1,this.images);
+		// Log.d(TAG,"CameraActivity onActivityResult 3");
 	}
 
 	private void sendActivityResult(int resultCode, String response) {
@@ -104,9 +133,13 @@ public class CameraActivity extends AppCompatActivity {
 		Log.d(TAG,"CameraActivity sendActivityResultJSON... resultCode: "+resultCode);
 		Log.d(TAG,"CameraActivity sendActivityResultJSON... response: "+response.toString());
         Intent intent = new Intent();
+		Log.d(TAG,"CameraActivity sendActivityResultJSON 1");
         intent.putExtra("data", response.toString());
+		Log.d(TAG,"CameraActivity sendActivityResultJSON 2");
         setResult(resultCode, intent);
+		Log.d(TAG,"CameraActivity sendActivityResultJSON 3");
         finish();// Exit of this activity !
+		Log.d(TAG,"CameraActivity sendActivityResultJSON 4");
     }
 
 }
