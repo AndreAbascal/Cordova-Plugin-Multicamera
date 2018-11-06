@@ -33,6 +33,7 @@ public class CameraActivity extends AppCompatActivity {
 		Log.d(TAG,"CameraActivity 2");
         // setContentView(R.layout.activity_camera);
 		setContentView(this.getResources().getIdentifier("activity_camera", "layout", this.getPackageName()));
+		cordova.getActivity().getResources()
 		Log.d(TAG,"CameraActivity 3");
         if (null == savedInstanceState) {
 			Log.d(TAG,"CameraActivity 4");
@@ -61,6 +62,16 @@ public class CameraActivity extends AppCompatActivity {
             }
 			Log.d(TAG,"CameraActivity onStart 5");
         }
+	}
+	@Override
+	public void onPause(){
+		Log.d(TAG,"CameraActivity onPause!");
+		super.onPause();
+	}
+	@Override
+	public void onStop(){
+		Log.d(TAG,"CameraActivity onStop!");
+		super.onStop();
 	}
 	@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
