@@ -593,7 +593,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			@Override
 			public void onClick(View arg0) {
 				// CameraActivity ca = ((CameraActivity) getActivity());
-				activity.sendActivityResult(Activity.RESULT_OK, activity.images.toString());
+				// activity.sendActivityResult(Activity.RESULT_OK, activity.images.toString());
+				activity.sendActivityResult(Activity.RESULT_OK, "[]");
 				// activity.finish();
 			}
 		});
