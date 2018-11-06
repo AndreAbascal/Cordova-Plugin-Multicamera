@@ -167,8 +167,7 @@ public class MultiCamera extends CordovaPlugin {
     //--------------------------------------------------------------------------
 
     private void sendError(String error) {
-		Log.d(TAG,"MultiCamera sendError!");
-        Log.w(TAG, error);
+		Log.d(TAG,"MultiCamera sendError: "+error);
         callback.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, error));
     }
 }
