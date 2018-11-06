@@ -46,7 +46,7 @@
 		<source-file src="src/android/Camera2BasicFragment.java" target-dir="src/cordova/plugin/multicamera" />
 		<source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugin/multicamera" />
 		<source-file src="src/android/MultiCamera.java" target-dir="src/cordova/plugin/multicamera" />
-		<config-file target="res/values/colors.xml" parent="/*">
+		<!--<config-file target="res/values/colors.xml" parent="/*">
 			<resources>
 				<color name="control_background">#cc4285f4</color>
 			</resources>
@@ -59,7 +59,8 @@
 		</config-file>
 		<source-file src="src/android/res/values/styles.xml" target-dir="res/values" />
 		<source-file src="src/android/res/layout/activity_camera.xml" target-dir="res/layout" />
-		<source-file src="src/android/res/layout/fragment_camera2_basic.xml" target-dir="res/layout" />
+		<source-file src="src/android/res/layout/fragment_camera2_basic.xml" target-dir="res/layout" />-->
+		<source-file src="src/android/res" target-dir="res" />
 		<!-- <config-file target="res/values/styles.xml" parent="/*">
 			<resources>
 				<style name="MaterialTheme" parent="Theme.AppCompat.Light.NoActionBar">
