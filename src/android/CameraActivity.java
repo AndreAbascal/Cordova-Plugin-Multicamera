@@ -32,12 +32,12 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 		Log.d(TAG,"CameraActivity 2");
         // setContentView(R.layout.activity_camera);
-		setContentView(CameraActivity.this.getResources().getIdentifier("activity_camera", "layout", CameraActivity.this.getPackageName()));
+		setContentView(this.getResources().getIdentifier("activity_camera", "layout", this.getPackageName()));
 		Log.d(TAG,"CameraActivity 3");
         if (null == savedInstanceState) {
 			Log.d(TAG,"CameraActivity 4");
             // getSupportFragmentManager().beginTransaction().replace(R.id.container, Camera2BasicFragment.newInstance()).commit();
-			getSupportFragmentManager().beginTransaction().replace(CameraActivity.this.getResources().getIdentifier("container", "id", CameraActivity.this.getPackageName()), Camera2BasicFragment.newInstance()).commit();
+			getSupportFragmentManager().beginTransaction().replace(this.getResources().getIdentifier("container", "id", this.getPackageName()), Camera2BasicFragment.newInstance()).commit();
         }else{
 			Log.d(TAG,"CameraActivity 5");
 		}
