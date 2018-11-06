@@ -1063,6 +1063,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         }
     }
 
+	public void addBase64(String encodedImage){
+		this.images.put(encodedImage);
+	}
+
     /**
      * Saves a JPEG {@link Image} into the specified {@link File}.
      */
@@ -1102,7 +1106,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     try {
                         output.close();
 						String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
-						this.images.put(encodedImage);
+						addBase64(encodedImage);
+						// this.images.put(encodedImage);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
