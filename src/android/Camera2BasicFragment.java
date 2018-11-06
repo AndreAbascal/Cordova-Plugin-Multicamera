@@ -582,8 +582,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			@Override
 			public void onClick(View arg0) {
 				// CameraActivity ca = ((CameraActivity) getActivity());
-				ca.sendActivityResult(Activity.RESULT_CANCELED, "[]");
-				activity.finish();
+				activity.sendActivityResult(Activity.RESULT_CANCELED, "[]");
+				// activity.finish();
 			}
 		});
 		Button confirm = activity.findViewById(activity.getResources().getIdentifier("confirm", "id", activity.getPackageName()));
@@ -594,7 +594,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			public void onClick(View arg0) {
 				// CameraActivity ca = ((CameraActivity) getActivity());
 				activity.sendActivityResult(Activity.RESULT_OK, activity.images.toString());
-				activity.finish();
+				// activity.finish();
 			}
 		});
 		Log.d(TAG, "Camera2BasicFragment onViewCreated 3");
