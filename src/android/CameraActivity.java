@@ -97,7 +97,7 @@ public class CameraActivity extends AppCompatActivity {
 						Log.d(TAG, "payment token: user cancelled");
 						String imgString = this.images.toString();
 						JSONObject obj = new JSONObject();
-						obj.add("fotos",this.images.toString());
+						obj.put("fotos",this.images.toString());
 						sendActivityResult(AppCompatActivity.RESULT_OK, obj);
 						break;
 					case AppCompatActivity.RESULT_CANCELED:
