@@ -260,15 +260,15 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			// mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile));
             // mBackgroundHandler.post(new ImageSaver(reader.acquireLatestImage(), mFile));
 			mBackgroundHandler.post(new Runnable() {
-				private final Image rImage;
+				private final Image rImage = reader.acquireLatestImage();
 				/**
 				* The file we save the image into.
 				*/
-				private final File rFile;
+				private final File rFile = mFile;
 				@Override
 				public void run () {
-					rImage = reader.acquireLatestImage();
-					rFile = mFile;
+					// rImage = reader.acquireLatestImage();
+					// rFile = mFile;
 					ByteBuffer buffer = rImage.getPlanes()[0].getBuffer();
 					byte[] bytes = new byte[buffer.remaining()];
 					buffer.get(bytes);
