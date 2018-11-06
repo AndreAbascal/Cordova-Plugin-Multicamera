@@ -33,7 +33,6 @@ public class CameraActivity extends AppCompatActivity {
 		Log.d(TAG,"CameraActivity 2");
         // setContentView(R.layout.activity_camera);
 		setContentView(this.getResources().getIdentifier("activity_camera", "layout", this.getPackageName()));
-		cordova.getActivity().getResources()
 		Log.d(TAG,"CameraActivity 3");
         if (null == savedInstanceState) {
 			Log.d(TAG,"CameraActivity 4");
