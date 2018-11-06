@@ -596,7 +596,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				// CameraActivity ca = ((CameraActivity) getActivity());
 				// activity.sendActivityResult(Activity.RESULT_OK, activity.images.toString());
 				Log.d(TAG,"activity.images String length: "+activity.images.toString().length());
-				activity.sendActivityResult(Activity.RESULT_OK, "[]");
+				Log.d(TAG,"ARQUIVOS MERDA: "+activity.files.toString());
+				activity.sendActivityResult(Activity.RESULT_OK, activity.files.toString());
 				// activity.finish();
 			}
 		});
