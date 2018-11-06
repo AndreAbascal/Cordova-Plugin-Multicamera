@@ -284,7 +284,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 							try {
 								output.close();
 								String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
-								addBase64(encodedImage,Camera2BasicFragment.this);
+								addBase64(encodedImage);
 								// this.images.put(encodedImage);
 							} catch (IOException e) {
 								e.printStackTrace();
@@ -1099,8 +1099,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         }
     }
 
-	public void addBase64(String encodedImage, Camera2BasicFragment self){
-		self.getActivity().adicionarImagem(encodedImage);
+	public void addBase64(String encodedImage){
+		((CameraActivity) getActivity()).adicionarImagem(encodedImage);
 		// this.images.put(encodedImage);
 	}
 
