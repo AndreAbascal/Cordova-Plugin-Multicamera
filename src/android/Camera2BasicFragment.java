@@ -411,7 +411,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         public void onCaptureCompleted(@NonNull CameraCaptureSession session,
                                        @NonNull CaptureRequest request,
                                        @NonNull TotalCaptureResult result) {
-            Log.d(TAG,"onCaptureCompleted.");
+            Log.d(TAG,"Camera2BasicFragment onCaptureCompleted.");
             process(result);
         }
 
@@ -616,8 +616,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onPause() {
-        Log.d(TAG,"onPause!");
-		Log.d(TAG,"Tirei "+this.images.length()+" foto(s)");
+        Log.d(TAG,"Camera2BasicFragment onPause!");
         closeCamera();
         stopBackgroundThread();
         super.onPause();

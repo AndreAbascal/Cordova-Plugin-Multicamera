@@ -98,6 +98,7 @@ public class CameraActivity extends AppCompatActivity {
 						Log.d(TAG,"CameraActivity onActivityResult 4");
 						try {
 							Log.d(TAG,"CameraActivity onActivityResult 5");
+							Log.d(TAG,"CameraActivity tirei "+this.images.length()+" foto(s)");
 							String imgString = this.images.toString();
 							Log.d(TAG,"CameraActivity onActivityResult 6");
 							JSONObject obj = new JSONObject();
