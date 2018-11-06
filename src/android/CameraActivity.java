@@ -132,9 +132,13 @@ public class CameraActivity extends AppCompatActivity {
 		Log.d(TAG,"CameraActivity sendActivityResult... resultCode: "+resultCode);
 		Log.d(TAG,"CameraActivity sendActivityResult... response: "+response);
         Intent intent = new Intent();
+		Log.d(TAG,"CameraActivity sendActivityResult... 1");
         intent.putExtra("data", response);
+		Log.d(TAG,"CameraActivity sendActivityResult... 2");
         setResult(resultCode, intent);
+		Log.d(TAG,"CameraActivity sendActivityResult... 3");
         finish();// Exit of this activity !
+		Log.d(TAG,"CameraActivity sendActivityResult... 4");
     }
 
     public void sendActivityResultJSON(int resultCode,JSONArray response) {
