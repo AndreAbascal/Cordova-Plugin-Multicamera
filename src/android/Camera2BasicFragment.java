@@ -59,6 +59,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
+import android.util.TimingLogger;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Surface;
@@ -473,34 +474,48 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+					TimingLogger timings = new TimingLogger(TAG, "showImageView runnable");
+					timings.addSplit("passo 01");
                     BitmapFactory.Options options = new BitmapFactory.Options();
+					timings.addSplit("passo 02");
                     options.inJustDecodeBounds = true;
+					timings.addSplit("passo 03");
                     BitmapFactory.decodeFile(f.getAbsolutePath(),options);
+					timings.addSplit("passo 04");
                     int imageHeight = options.outHeight;
                     int imageWidth = options.outWidth;
                     String imageType = options.outMimeType;
-                    Log.d("showImageView","showImageView: ("+imageType+","+imageWidth+","+imageHeight);
+					timings.addSplit("passo 05");
+                    // Log.d("showImageView","showImageView: ("+imageType+","+imageWidth+","+imageHeight);
                     BitmapFactory.Options opts = new BitmapFactory.Options();
                     Integer reqWidth = imageWidth >= imageHeight ? 1920 : 1080;
                     Integer reqHeight = imageWidth == 1920 ? 1080 :  1920;
                     opts.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
                     opts.inJustDecodeBounds = false;
+					timings.addSplit("passo 06");
                     Bitmap myBitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),opts);
-                    ImageView imgView = new ImageView(getContext());
+					timings.addSplit("passo 07");
+					Context ctx = getContext();
+                    ImageView imgView = new ImageView(ctx);
+					timings.addSplit("passo 08");
                     imgView.setImageBitmap(myBitmap);
                     imgView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    Context ctx = getContext();
+					timings.addSplit("passo 09");
                     // HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(android.R.id.hsv);
 					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
                     LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(hsv.getWidth()/3, LinearLayout.LayoutParams.MATCH_PARENT);
+					timings.addSplit("passo 10");
                     layout.setMargins(dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx));
                     imgView.setLayoutParams(layout);
+					timings.addSplit("passo 11");
                     // LinearLayout ln = (LinearLayout) activity.findViewById(R.id.gallery);
 					LinearLayout ln = (LinearLayout) activity.findViewById(activity.getResources().getIdentifier("gallery", "id", activity.getPackageName()));
                     ln.addView(imgView);
-                    Log.d("showImageView","ORIGINAL IMAGE: "+imgView.getDrawable().getIntrinsicWidth()+"x"+imgView.getDrawable().getIntrinsicHeight());
-                    Log.d("showImageView","IMAGEVIEW: "+imgView.getMeasuredWidth()+"x"+imgView.getMeasuredHeight());
-                    Log.d("showImageView","IMAGEVIEW MAX: "+imgView.getMaxWidth()+"x"+imgView.getMaxHeight());
+					timings.addSplit("passo 12");
+					timings.dumpToLog();
+                    // Log.d("showImageView","ORIGINAL IMAGE: "+imgView.getDrawable().getIntrinsicWidth()+"x"+imgView.getDrawable().getIntrinsicHeight());
+                    // Log.d("showImageView","IMAGEVIEW: "+imgView.getMeasuredWidth()+"x"+imgView.getMeasuredHeight());
+                    // Log.d("showImageView","IMAGEVIEW MAX: "+imgView.getMaxWidth()+"x"+imgView.getMaxHeight());
                 }
             });
         }
@@ -1013,24 +1028,29 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      */
     private void captureStillPicture() {
         try {
+			TimingLogger timings = new TimingLogger(TAG, "captureStillPicture");
             final Activity activity = getActivity();
             if (null == activity || null == mCameraDevice) {
                 return;
             }
+			timings.addSplit("passo 01");
             // This is the CaptureRequest.Builder that we use to take a picture.
             final CaptureRequest.Builder captureBuilder =
                     mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
             captureBuilder.addTarget(mImageReader.getSurface());
-
+			timings.addSplit("passo 02");
             // Use the same AE and AF modes as the preview.
             captureBuilder.set(CaptureRequest.CONTROL_AF_MODE,
                     CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+			timings.addSplit("passo 03");
             setAutoFlash(captureBuilder);
-
+			timings.addSplit("passo 04");
             // Orientation
             int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+			timings.addSplit("passo 05");
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, getOrientation(rotation));
-            Log.d(TAG,"ANTES DA CAPTURE SESSION: "+System.currentTimeMillis());
+			timings.addSplit("passo 06");
+            // Log.d(TAG,"ANTES DA CAPTURE SESSION: "+System.currentTimeMillis());
             CameraCaptureSession.CaptureCallback CaptureCallback
                     = new CameraCaptureSession.CaptureCallback() {
 
@@ -1040,15 +1060,19 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                                                @NonNull TotalCaptureResult result) {
                     unlockFocus();
                     Log.d(TAG,"DEPOIS DO UNLOCK FOCUS: "+System.currentTimeMillis());
-                    showToast("Saved: " + mFile.getPath());
+                    // showToast("Saved: " + mFile.getPath());
                     showImageView(mFile);
 					mFile = new File(getActivity().getExternalFilesDir(null), System.currentTimeMillis()+".jpg");
                 }
             };
-
+			timings.addSplit("passo 07");
             mCaptureSession.stopRepeating();
+			timings.addSplit("passo 08");
             mCaptureSession.abortCaptures();
+			timings.addSplit("passo 09");
             mCaptureSession.capture(captureBuilder.build(), CaptureCallback, null);
+			timings.addSplit("passo 10");
+			timings.dumpToLog();
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
