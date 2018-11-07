@@ -108,7 +108,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     /**
      * Tag for the {@link Log}.
      */
-    private static final String TAG = "CordovaPluginMulticamera";
+    private static final String TAG = "PluginMulticamera";
 
     /**
      * Camera state: Showing camera preview.

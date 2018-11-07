@@ -29,7 +29,7 @@ public class CameraActivity extends AppCompatActivity {
 	public JSONArray files = new JSONArray();
 	private static final int ERROR_CODE = 0;
 	private static final int SUCCESS_CODE = 1;
-	public static final String TAG = "CordovaPluginMulticamera";
+	public static final String TAG = "PluginMulticamera";
 	public void adicionarArquivo(String absolutePath){
 		Log.d(TAG,"Novo arquivo: "+absolutePath);
 		this.files.put(absolutePath);

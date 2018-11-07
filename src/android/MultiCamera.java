@@ -34,7 +34,7 @@ import android.util.Log;
 
 public class MultiCamera extends CordovaPlugin {
 
-    public static final String TAG = "CordovaPluginMulticamera";
+    public static final String TAG = "PluginMulticamera";
 
     public static final int open = 1;
 
