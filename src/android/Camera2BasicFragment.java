@@ -1042,6 +1042,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     Log.d(TAG,"DEPOIS DO UNLOCK FOCUS: "+System.currentTimeMillis());
                     showToast("Saved: " + mFile.getPath());
                     showImageView(mFile);
+					mFile = new File(getActivity().getExternalFilesDir(null), System.currentTimeMillis()+".jpg");
                 }
             };
 
