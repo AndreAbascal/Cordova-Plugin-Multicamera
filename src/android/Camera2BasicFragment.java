@@ -415,7 +415,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         public void onCaptureCompleted(@NonNull CameraCaptureSession session,
                                        @NonNull CaptureRequest request,
                                        @NonNull TotalCaptureResult result) {
-            Log.d(TAG,"Camera2BasicFragment onCaptureCompleted.");
             process(result);
         }
 
