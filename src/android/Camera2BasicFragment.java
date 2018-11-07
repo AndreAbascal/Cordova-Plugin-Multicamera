@@ -1170,7 +1170,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	public void addFile(String absolutePath){
 		CameraActivity ca = ((CameraActivity) getActivity());
 		ca.adicionarArquivo(absolutePath);
-		runOnUiThread(new Runnable() {
+		ca.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				// Stuff that updates the UI
