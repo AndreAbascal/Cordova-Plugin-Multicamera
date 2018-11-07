@@ -473,6 +473,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+					Context ctx = getContext();
 					TimingLogger timings = new TimingLogger(TAG, "showImageView runnable");
 					timings.addSplit("passo 01");
                     BitmapFactory.Options options = new BitmapFactory.Options();
@@ -487,14 +488,16 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					timings.addSplit("passo 05");
                     // Log.d("showImageView","showImageView: ("+imageType+","+imageWidth+","+imageHeight);
                     BitmapFactory.Options opts = new BitmapFactory.Options();
-                    Integer reqWidth = imageWidth >= imageHeight ? 1920 : 1080;
-                    Integer reqHeight = imageWidth == 1920 ? 1080 :  1920;
+					int squareDim = dpToPx(48,ctx);
+					Integer reqWidth = new Integer(squareDim);
+					Integer reqHeight = new Integer(squareDim);
+                    // Integer reqWidth = imageWidth >= imageHeight ? 1920 : 1080;
+                    // Integer reqHeight = imageWidth == 1920 ? 1080 :  1920;
                     opts.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
                     opts.inJustDecodeBounds = false;
 					timings.addSplit("passo 06");
                     Bitmap myBitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),opts);
 					timings.addSplit("passo 07");
-					Context ctx = getContext();
                     ImageView imgView = new ImageView(ctx);
 					timings.addSplit("passo 08");
                     imgView.setImageBitmap(myBitmap);
@@ -502,7 +505,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					timings.addSplit("passo 09");
                     // HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(android.R.id.hsv);
 					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
-                    LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(hsv.getWidth()/3, LinearLayout.LayoutParams.MATCH_PARENT);
+                    // LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(hsv.getWidth()/3, LinearLayout.LayoutParams.MATCH_PARENT);
+					LinearLayout LayoutParams layout = new LinearLayout.LayoutParams(squareDim,squareDim);
 					timings.addSplit("passo 10");
                     layout.setMargins(dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx));
                     imgView.setLayoutParams(layout);
