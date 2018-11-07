@@ -348,19 +348,14 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     break;
                 }
                 case STATE_WAITING_LOCK: {
-                    Log.d("CAMERA_LOG","STATE_WAITING_LOCK");
                     Integer afState = result.get(CaptureResult.CONTROL_AF_STATE);
                     if (afState == null) {
-                        Log.d("CAMERA_LOG", "afState nulo");
                         captureStillPicture();
                     }else if(afState == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED
                             || afState == CaptureResult.CONTROL_AF_STATE_PASSIVE_UNFOCUSED){
-                        Log.d("CAMERA_LOG","afState: "+afState);
-                        Log.d("CAMERA_LOG","unlockFocus()");
                         unlockFocus();
                     }else if(afState == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED
                             || afState == CaptureResult.CONTROL_AF_STATE_PASSIVE_FOCUSED){
-                        Log.d("CAMERA_LOG","afState capture: "+afState);
                         Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
                         if (aeState == null ||
                                 aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
@@ -889,20 +884,21 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      */
     private void createCameraPreviewSession() {
         try {
+			TimingLogger timings = new TimingLogger(TAG, "configureTransform");
+			timings.addSplit("passo 01");
             SurfaceTexture texture = mTextureView.getSurfaceTexture();
             assert texture != null;
-
+			timings.addSplit("passo 02");
             // We configure the size of default buffer to be the size of camera preview we want.
             texture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
-
+			timings.addSplit("passo 03");
             // This is the output Surface we need to start preview.
             Surface surface = new Surface(texture);
-
+			timings.addSplit("passo 04");
             // We set up a CaptureRequest.Builder with the output Surface.
-            mPreviewRequestBuilder
-                    = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+            mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mPreviewRequestBuilder.addTarget(surface);
-
+			timings.addSplit("passo 05");
             // Here, we create a CameraCaptureSession for camera preview.
             mCameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()),
                     new CameraCaptureSession.StateCallback() {
@@ -939,6 +935,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                         }
                     }, null
             );
+			timings.dumpToLog();
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -957,13 +954,17 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         if (null == mTextureView || null == mPreviewSize || null == activity) {
             return;
         }
+		TimingLogger timings = new TimingLogger(TAG, "configureTransform");
+		timings.addSplit("passo 01");
         int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-        Log.d("TEXTURE_VIEW","rotation: "+rotation);
+        timings.addSplit("passo 02");
         Matrix matrix = new Matrix();
+		timings.addSplit("passo 03");
         RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
         RectF bufferRect = new RectF(0, 0, mPreviewSize.getHeight(), mPreviewSize.getWidth());
         float centerX = viewRect.centerX();
         float centerY = viewRect.centerY();
+		timings.addSplit("passo 04");
         if (Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation) {
             bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY());
             matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL);
@@ -972,10 +973,14 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     (float) viewWidth / mPreviewSize.getWidth());
             matrix.postScale(scale, scale, centerX, centerY);
             matrix.postRotate(90 * (rotation - 2), centerX, centerY);
+			timings.addSplit("passo 05");
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180, centerX, centerY);
+			timings.addSplit("passo 05");
         }
         mTextureView.setTransform(matrix);
+		timings.addSplit("passo 06");
+		timings.dumpToLog();
     }
 
     /**
@@ -990,14 +995,17 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      */
     private void lockFocus() {
         try {
-            Log.d(TAG,"lockFocus()");
+			TimingLogger timings = new TimingLogger(TAG, "lockFocus");
             // This is how to tell the camera to lock focus.
-            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
-                    CameraMetadata.CONTROL_AF_TRIGGER_START);
+			timings.addSplit("passo 01");
+            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,CameraMetadata.CONTROL_AF_TRIGGER_START);
+			timings.addSplit("passo 02");
             // Tell #mCaptureCallback to wait for the lock.
             mState = STATE_WAITING_LOCK;
-            mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,
-                    mBackgroundHandler);
+			timings.addSplit("passo 03");
+            mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,mBackgroundHandler);
+			timings.addSplit("passo 04");
+			timings.dumpToLog();
         } catch (CameraAccessException e) {
             Log.d(TAG,"ERRO CAMERA lockFocus(): ");
             e.printStackTrace();
