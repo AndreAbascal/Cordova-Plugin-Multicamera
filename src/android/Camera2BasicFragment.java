@@ -506,7 +506,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     // HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(android.R.id.hsv);
 					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
                     // LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(hsv.getWidth()/3, LinearLayout.LayoutParams.MATCH_PARENT);
-					LinearLayout LayoutParams layout = new LinearLayout.LayoutParams(squareDim,squareDim);
+					LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(squareDim,squareDim);
 					timings.addSplit("passo 10");
                     layout.setMargins(dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx));
                     imgView.setLayoutParams(layout);
