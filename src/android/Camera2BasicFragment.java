@@ -489,11 +489,13 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     // Log.d("showImageView","showImageView: ("+imageType+","+imageWidth+","+imageHeight);
                     BitmapFactory.Options opts = new BitmapFactory.Options();
 					int squareDim = dpToPx(48,ctx);
+					Log.d(TAG,"dpToPx(48,ctx): "+squareDim);
 					Integer reqWidth = new Integer(squareDim);
 					Integer reqHeight = new Integer(squareDim);
                     // Integer reqWidth = imageWidth >= imageHeight ? 1920 : 1080;
                     // Integer reqHeight = imageWidth == 1920 ? 1080 :  1920;
                     opts.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+					Log.d(TAG,"opts.inSampleSize: "+opts.inSampleSize);
                     opts.inJustDecodeBounds = false;
 					timings.addSplit("passo 06");
                     Bitmap myBitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),opts);
@@ -782,17 +784,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 // We fit the aspect ratio of TextureView to the size of preview we picked.
                 int correctedHeight = (int) (largest.getWidth()/(maxPreviewWidth/(double)maxPreviewHeight));
                 int orientation = getResources().getConfiguration().orientation;
-                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                /*if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     mTextureView.setAspectRatio(mPreviewSize.getWidth(), mPreviewSize.getHeight());
                     mTextureView.setLayoutParams(new FrameLayout.LayoutParams(largest.getWidth(), correctedHeight));
-                    Log.d("TEXTURE_VIEW","mTextureView landscape: "+mTextureView.getWidth()+"x"+mTextureView.getHeight());
                 } else {
-//                    Log.d("TEXTURE_VIEW","ESSA DEVERIA SER A ALTURA: "+correctedHeight);
-//                    mTextureView.setAspectRatio(correctedHeight, largest.getWidth());
                     mTextureView.setAspectRatio(mPreviewSize.getHeight(), mPreviewSize.getWidth());
-//                    mTextureView.setLayoutParams(new FrameLayout.LayoutParams(correctedHeight, largest.getWidth()));
-                    Log.d("TEXTURE_VIEW","mTextureView portrait: "+mTextureView.getWidth()+"x"+mTextureView.getHeight());
-                }
+                }*/
 
                 // Check if the flash is supported.
                 Boolean available = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
