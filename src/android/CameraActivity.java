@@ -31,6 +31,7 @@ public class CameraActivity extends AppCompatActivity {
 	private static final int SUCCESS_CODE = 1;
 	public static final String TAG = "CordovaPluginMulticamera";
 	public void adicionarArquivo(String absolutePath){
+		Log.d(TAG,"Novo arquivo: "+absolutePath);
 		this.files.put(absolutePath);
 	}
 	public void adicionarImagem(String encodedImage){
