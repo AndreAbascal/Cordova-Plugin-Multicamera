@@ -1170,9 +1170,15 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	public void addFile(String absolutePath){
 		CameraActivity ca = ((CameraActivity) getActivity());
 		ca.adicionarArquivo(absolutePath);
-		Button confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
-		confirm.setClickable(true);
-		confirm.setEnabled(true);
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				// Stuff that updates the UI
+				Button confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
+				confirm.setClickable(true);
+				confirm.setEnabled(true);
+			}
+		});
 	}
 
     /**
