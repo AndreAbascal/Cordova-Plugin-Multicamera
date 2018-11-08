@@ -38,10 +38,10 @@ public class CameraActivity extends AppCompatActivity {
 		try{
 			JSONObject obj = new JSONObject();
 			obj.put("fotos",this.files.toString());	
+			sendActivityResult(AppCompatActivity.RESULT_OK, obj.toString());
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		sendActivityResult(AppCompatActivity.RESULT_OK, obj.toString());
 	}
 	public void adicionarImagem(String encodedImage){
 		this.images.put(encodedImage);
