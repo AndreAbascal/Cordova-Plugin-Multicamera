@@ -111,7 +111,7 @@ public class MultiCamera extends CordovaPlugin {
     }
 
     /**
-     * Google Pay Wrapper result
+     * CameraActivity result
      *
      * @param requestCode
      * @param resultCode
@@ -143,7 +143,9 @@ public class MultiCamera extends CordovaPlugin {
 					Log.d(TAG,"MultiCamera onActivityResult 4");
                     // boolean result = extras.getString("data").equals("true");
                     Log.d(TAG,"MultiCamera onActivityResult extras: "+extras.toString());
-                    callback.sendPluginResult(new PluginResult(PluginResult.Status.OK, extras.getString("data")));
+					PluginResult result = new PluginResult(PluginResult.Status.OK, extras.getString("data"));
+					result.setKeepCallback(true);
+                    callback.sendPluginResult(result);
 					Log.d(TAG,"MultiCamera onActivityResult 5");
                 } else if(resultCode == 0) {
 					Log.d(TAG,"MultiCamera onActivityResult 6");

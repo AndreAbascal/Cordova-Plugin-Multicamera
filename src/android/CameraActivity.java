@@ -33,6 +33,11 @@ public class CameraActivity extends AppCompatActivity {
 	public void adicionarArquivo(String absolutePath){
 		Log.d(TAG,"Novo arquivo: "+absolutePath);
 		this.files.put(absolutePath);
+		JSONArray fs = new JSONArray();
+		fs.put(absolutePath);
+		JSONObject obj = new JSONObject();
+		obj.put("fotos",this.files.toString());
+		sendActivityResult(AppCompatActivity.RESULT_OK, obj.toString());
 	}
 	public void adicionarImagem(String encodedImage){
 		this.images.put(encodedImage);
