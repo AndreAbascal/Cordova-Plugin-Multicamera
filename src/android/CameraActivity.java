@@ -35,8 +35,12 @@ public class CameraActivity extends AppCompatActivity {
 		this.files.put(absolutePath);
 		JSONArray fs = new JSONArray();
 		fs.put(absolutePath);
-		JSONObject obj = new JSONObject();
-		obj.put("fotos",this.files.toString());
+		try{
+			JSONObject obj = new JSONObject();
+			obj.put("fotos",this.files.toString());	
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
 		sendActivityResult(AppCompatActivity.RESULT_OK, obj.toString());
 	}
 	public void adicionarImagem(String encodedImage){
