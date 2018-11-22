@@ -717,7 +717,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         Activity activity = getActivity();
         CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
         try {
-			Log.d(TAG,"setUpCameraOutputs("+width","+height+")");
+			Log.d(TAG,"setUpCameraOutputs("+width+","+height+")");
             for (String cameraId : manager.getCameraIdList()) {
 				Log.d(TAG,"cameraId: "+cameraId);
 				CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
