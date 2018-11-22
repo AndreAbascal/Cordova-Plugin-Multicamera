@@ -257,7 +257,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      */
     private final ImageReader.OnImageAvailableListener mOnImageAvailableListener
             = new ImageReader.OnImageAvailableListener() {
-		final Activity activity = getActivity();
+		// final Activity activity = getActivity();
         @Override
         public void onImageAvailable(ImageReader reader) {
 			// mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile));
@@ -288,7 +288,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 								output.close();
 								String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
 								addFile(rFile.getAbsolutePath());
-								showImageView(bytes,activity);
+								showImageView(bytes,Camera2BasicFragment.this);
 								// showImageView(rImage);
 								// Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 				// mImageView.setImageBitmap(bitmap);
