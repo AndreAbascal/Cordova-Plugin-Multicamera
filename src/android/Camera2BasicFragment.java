@@ -717,29 +717,45 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         Activity activity = getActivity();
         CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
         try {
+			Log.d(TAG,"setUpCameraOutputs("+width","+height+")");
             for (String cameraId : manager.getCameraIdList()) {
-                CameraCharacteristics characteristics
-                        = manager.getCameraCharacteristics(cameraId);
-
+				Log.d(TAG,"cameraId: "+cameraId);
+				CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
+				Log.d(TAG,"setUpCameraOutputs 1");
                 // We don't use a front facing camera in this sample.
                 Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
                 if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
                     continue;
-                }
-
+				}
+				Log.d(TAG,"setUpCameraOutputs 2");
                 StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
                 if (map == null) {
                     continue;
-                }
-
+				}
+				Log.d(TAG,"setUpCameraOutputs 3");
 				// For still image captures, we use the largest available size.
-				List sizeList = Arrays.asList(map.getOutputSizes(ImageFormat.JPEG));
+				/*List sizeList = Arrays.asList(map.getOutputSizes(ImageFormat.JPEG));
 				for(int i=0;i<sizeList.size();i++){
 					Size size = sizeList.get(i);
 					Log.d(TAG,"sizeList["+i+"]: "+size.getWidth()+"x"+size.getHeight());
+				}*/
+				Point displaySize = new Point();
+				activity.getWindowManager().getDefaultDisplay().getSize(displaySize);
+				Log.d(TAG,"setUpCameraOutputs 4");
+				int maxPreviewWidth = displaySize.x;
+                int maxPreviewHeight = displaySize.y;
+				Size[] sizeArray = map.getOutputSizes(ImageFormat.JPEG);
+				Log.d(TAG,"setUpCameraOutputs 5");
+				for (Size size : sizeArray){
+					Log.d(TAG,"sizeArray["+i+"]: "+size.getWidth()+"x"+size.getHeight());
 				}
-				Size largest = Collections.max(sizeList,new CompareSizesByArea());
+				Log.d(TAG,"setUpCameraOutputs 6");
+				Size largest = Collections.max(Arrays.asList(sizeArray),new CompareSizesByArea());
+				Size optimal  = chooseOptimalSize(sizeArray,width,height,maxPreviewWidth,maxPreviewHeight,new Size(MAX_PREVIEW_WIDTH,MAX_PREVIEW_HEIGHT));
+				Size optimal2  = chooseOptimalSize(sizeArray,width,height,maxPreviewWidth,maxPreviewHeight,largest);
 				Log.d(TAG,"largest: "+largest.getWidth()+"x"+largest.getHeight());
+				Log.d(TAG,"optimal: "+optimal.getWidth()+"x"+optimal.getHeight());
+				Log.d(TAG,"optimal2: "+optimal2.getWidth()+"x"+optimal2.getHeight());
                 mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(),ImageFormat.JPEG, 2);
                 mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
 
@@ -766,12 +782,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                         Log.e(TAG, "Display rotation is invalid: " + displayRotation);
                 }
 
-                Point displaySize = new Point();
-                activity.getWindowManager().getDefaultDisplay().getSize(displaySize);
                 int rotatedPreviewWidth = width;
                 int rotatedPreviewHeight = height;
-                int maxPreviewWidth = displaySize.x;
-                int maxPreviewHeight = displaySize.y;
 
                 if (swappedDimensions) {
                     rotatedPreviewWidth = height;
@@ -917,7 +929,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			timings.addSplit("passo 04");
             // We set up a CaptureRequest.Builder with the output Surface.
             mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-			mPreviewRequestBuilder.set(CaptureRequest.JPEG_THUMBNAIL_QUALITY, (byte) 70);
+			mPreviewRequestBuilder.set(CaptureRequest.JPEG_QUALITY, (byte) 70);
             mPreviewRequestBuilder.addTarget(surface);
 			timings.addSplit("passo 05");
             // Here, we create a CameraCaptureSession for camera preview.
