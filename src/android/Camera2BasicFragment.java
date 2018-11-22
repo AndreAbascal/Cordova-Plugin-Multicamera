@@ -108,7 +108,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     /**
      * Tag for the {@link Log}.
      */
-    private static final String TAG = "PluginMulticamera";
+	private static final String TAG = "PluginMulticamera";
+
+	/**
+     * Maximum number of images for the ImageReader.
+     */
+	private static final int MAX_CAPTURE_IMAGES = 12;
 
     /**
      * Camera state: Showing camera preview.
@@ -273,6 +278,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					// rImage = reader.acquireLatestImage();
 					// rFile = mFile;
 					ByteBuffer buffer = rImage.getPlanes()[0].getBuffer();
+					rImage.close();
 					byte[] bytes = new byte[buffer.remaining()];
 					buffer.get(bytes);
 					FileOutputStream output = null;
@@ -282,7 +288,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					} catch (IOException e) {
 						e.printStackTrace();
 					} finally {
-						rImage.close();
+						// rImage.close();
 						if (null != output) {
 							try {
 								output.close();
@@ -765,7 +771,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				Log.d(TAG,"optimal: "+optimal.getWidth()+"x"+optimal.getHeight());
 				Log.d(TAG,"optimal2: "+optimal2.getWidth()+"x"+optimal2.getHeight());
 				Log.d(TAG,"optimal3: "+optimal3.getWidth()+"x"+optimal3.getHeight());
-                mImageReader = ImageReader.newInstance(optimal.getWidth(), optimal.getHeight(),ImageFormat.JPEG, 2);
+                mImageReader = ImageReader.newInstance(optimal.getWidth(), optimal.getHeight(),ImageFormat.JPEG, MAX_CAPTURE_IMAGES);
                 mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
 
                 // Find out if we need to swap dimension to get the preview size relative to sensor
