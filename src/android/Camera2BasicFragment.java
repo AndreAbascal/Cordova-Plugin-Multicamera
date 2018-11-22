@@ -473,10 +473,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				public void run(){
 					Log.d(TAG,"CHEGOU AQUI BUCETA!");
 					Context ctx = getContext();
-					BitmapFactory.Options opts = new BitmapFactory.Options();
+					BitmapFactory.Options options = new BitmapFactory.Options();
+					options.inJustDecodeBounds = true;
 					int squareDim = dpToPx(48,ctx);
 					Integer reqWidth = new Integer(squareDim);
 					Integer reqHeight = new Integer(squareDim);
+					BitmapFactory.Options opts = new BitmapFactory.Options();
 					opts.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 					opts.inJustDecodeBounds = false;
 					Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length,opts);
