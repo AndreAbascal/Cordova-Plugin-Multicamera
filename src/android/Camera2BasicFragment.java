@@ -288,6 +288,9 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 								output.close();
 								String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
 								addFile(rFile.getAbsolutePath());
+								showImageView(rImage);
+								// Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                				// mImageView.setImageBitmap(bitmap);
 								// addBase64(encodedImage);
 								// this.images.put(encodedImage);
 							} catch (IOException e) {
@@ -462,12 +465,31 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         return Math.round((float) dp * density);
     }
 
-    private void showImageView(final File f){
+    private void showImageView(final byte[] b/*final File f*/){
         final Activity activity = getActivity();
         if(activity != null){
             activity.runOnUiThread(new Runnable() {
                 @Override
-                public void run() {
+				public void run(){
+					Log.d(TAG,"CHEGOU AQUI BUCETA!");
+					Context ctx = getContext();
+					BitmapFactory.Options opts = new BitmapFactory.Options();
+					int squareDim = dpToPx(48,ctx);
+					Integer reqWidth = new Integer(squareDim);
+					Integer reqHeight = new Integer(squareDim);
+					opts.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+					opts.inJustDecodeBounds = false;
+					Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length,opts);
+					ImageView imgView = new ImageView(ctx);
+					imgView.setImageBitmap(bitmap);
+                    imgView.setScaleType(ImageView.ScaleType.FIT_XY);
+					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewByd(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
+					LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(squareDim,squareDim);
+					imgView.setLayoutParams(layout);
+					LinearLayout ln = (LinearLayout) activity.findViewById(activity.getResources().getIdentifier("gallery", "id", activity.getPackageName()));
+                    ln.addView(imgView);
+				}
+                /*public void run() {
 					Context ctx = getContext();
 					TimingLogger timings = new TimingLogger(TAG, "showImageView runnable");
 					timings.addSplit("passo 01");
@@ -481,7 +503,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     int imageWidth = options.outWidth;
                     String imageType = options.outMimeType;
 					timings.addSplit("passo 05");
-                    // Log.d("showImageView","showImageView: ("+imageType+","+imageWidth+","+imageHeight);
                     BitmapFactory.Options opts = new BitmapFactory.Options();
 					int squareDim = dpToPx(48,ctx);
 					Log.d(TAG,"dpToPx(48,ctx): "+squareDim);
@@ -489,8 +510,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					Integer reqHeight = new Integer(squareDim);
 					Log.d(TAG,"reqWidth: "+reqWidth);
 					Log.d(TAG,"reqHeight: "+reqHeight);
-                    // Integer reqWidth = imageWidth >= imageHeight ? 1920 : 1080;
-                    // Integer reqHeight = imageWidth == 1920 ? 1080 :  1920;
                     opts.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 					Log.d(TAG,"opts.inSampleSize: "+opts.inSampleSize);
                     opts.inJustDecodeBounds = false;
@@ -502,23 +521,17 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     imgView.setImageBitmap(myBitmap);
                     imgView.setScaleType(ImageView.ScaleType.FIT_XY);
 					timings.addSplit("passo 09");
-                    // HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(android.R.id.hsv);
-					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
-                    // LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(hsv.getWidth()/3, LinearLayout.LayoutParams.MATCH_PARENT);
+					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewByd(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
 					LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(squareDim,squareDim);
 					timings.addSplit("passo 10");
                     layout.setMargins(dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx));
                     imgView.setLayoutParams(layout);
 					timings.addSplit("passo 11");
-                    // LinearLayout ln = (LinearLayout) activity.findViewById(R.id.gallery);
 					LinearLayout ln = (LinearLayout) activity.findViewById(activity.getResources().getIdentifier("gallery", "id", activity.getPackageName()));
                     ln.addView(imgView);
 					timings.addSplit("passo 12");
 					timings.dumpToLog();
-                    // Log.d("showImageView","ORIGINAL IMAGE: "+imgView.getDrawable().getIntrinsicWidth()+"x"+imgView.getDrawable().getIntrinsicHeight());
-                    // Log.d("showImageView","IMAGEVIEW: "+imgView.getMeasuredWidth()+"x"+imgView.getMeasuredHeight());
-                    // Log.d("showImageView","IMAGEVIEW MAX: "+imgView.getMaxWidth()+"x"+imgView.getMaxHeight());
-                }
+                }*/
             });
         }
     }
@@ -1078,7 +1091,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     unlockFocus();
                     Log.d(TAG,"DEPOIS DO UNLOCK FOCUS: "+System.currentTimeMillis());
                     // showToast(mFile.getPath());
-                    showImageView(mFile);
+                    // showImageView(mFile);
+					// showImageView(rImage);
 					mFile = new File(getActivity().getExternalFilesDir(null), System.currentTimeMillis()+".jpg");
                 }
             };
@@ -1174,6 +1188,17 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		Button confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
 		confirm.setClickable(true);
 		confirm.setEnabled(true);
+	}
+
+	public static Bitmap getThumbnail(ContentResolver cr, String path) throws Exception {
+		Cursor ca = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.MediaColumns._ID }, MediaStore.MediaColumns.DATA + "=?", new String[] {path}, null);
+		if (ca != null && ca.moveToFirst()) {
+			int id = ca.getInt(ca.getColumnIndex(MediaStore.MediaColumns._ID));
+			ca.close();
+			return MediaStore.Images.Thumbnails.getThumbnail(cr, id, MediaStore.Images.Thumbnails.MICRO_KIND, null );
+		}
+		ca.close();
+		return null;
 	}
 
 	public void addFile(String absolutePath){
