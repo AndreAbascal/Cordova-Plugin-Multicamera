@@ -288,7 +288,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 								output.close();
 								String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
 								addFile(rFile.getAbsolutePath());
-								showImageView(bytes,this);
 								// showImageView(rImage);
 								// Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 				// mImageView.setImageBitmap(bitmap);
@@ -466,12 +465,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         return Math.round((float) dp * density);
     }
 
-    private void showImageView(final byte[] b, Activity activity/*final File f*/){
-        // final Activity activity = getActivity();
+    private void showImageView(final File f){
+        final Activity activity = getActivity();
         if(activity != null){
             activity.runOnUiThread(new Runnable() {
                 @Override
-				public void run(){
+				/*public void run(){
 					Log.d(TAG,"CHEGOU AQUI BUCETA!");
 					Context ctx = getContext();
 					BitmapFactory.Options options = new BitmapFactory.Options();
@@ -491,8 +490,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					imgView.setLayoutParams(layout);
 					LinearLayout ln = (LinearLayout) activity.findViewById(activity.getResources().getIdentifier("gallery", "id", activity.getPackageName()));
                     ln.addView(imgView);
-				}
-                /*public void run() {
+				}*/
+                public void run() {
 					Context ctx = getContext();
 					TimingLogger timings = new TimingLogger(TAG, "showImageView runnable");
 					timings.addSplit("passo 01");
@@ -534,7 +533,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     ln.addView(imgView);
 					timings.addSplit("passo 12");
 					timings.dumpToLog();
-                }*/
+                }
             });
         }
     }
@@ -1093,9 +1092,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                                                @NonNull TotalCaptureResult result) {
                     unlockFocus();
                     Log.d(TAG,"DEPOIS DO UNLOCK FOCUS: "+System.currentTimeMillis());
-                    // showToast(mFile.getPath());
-                    // showImageView(mFile);
-					// showImageView(rImage);
+                    showImageView(mFile);
 					mFile = new File(getActivity().getExternalFilesDir(null), System.currentTimeMillis()+".jpg");
                 }
             };
