@@ -719,9 +719,13 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 }
 
                 // For still image captures, we use the largest available size.
-                Size largest = Collections.max(
-                        Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)),
-                        new CompareSizesByArea());
+				Size[] sizeList = Arrays.asList(map.getOutputSizes(ImageFormat.JPEG));
+				for (int i = 0; i < sizeList.size(); i++) {
+					Size size = sizeList.get(i);
+					Log.d(TAG,"sizeList["+i+"]: "+size.getWidth()+"x"+size.getHeight());
+				}
+                Size largest = Collections.max(sizeList,new CompareSizesByArea());
+				
                 mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(),
                         ImageFormat.JPEG, /*maxImages*/2);
                 mImageReader.setOnImageAvailableListener(
