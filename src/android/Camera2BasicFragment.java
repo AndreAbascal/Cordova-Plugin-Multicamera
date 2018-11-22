@@ -765,7 +765,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				Log.d(TAG,"optimal: "+optimal.getWidth()+"x"+optimal.getHeight());
 				Log.d(TAG,"optimal2: "+optimal2.getWidth()+"x"+optimal2.getHeight());
 				Log.d(TAG,"optimal3: "+optimal3.getWidth()+"x"+optimal3.getHeight());
-                mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(),ImageFormat.JPEG, 2);
+                mImageReader = ImageReader.newInstance(optimal.getWidth(), optimal.getHeight(),ImageFormat.JPEG, 2);
                 mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
 
                 // Find out if we need to swap dimension to get the preview size relative to sensor
