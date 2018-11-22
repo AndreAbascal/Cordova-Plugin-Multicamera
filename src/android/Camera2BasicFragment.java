@@ -747,7 +747,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				Size[] sizeArray = map.getOutputSizes(ImageFormat.JPEG);
 				Log.d(TAG,"setUpCameraOutputs 5");
 				for (Size size : sizeArray){
-					Log.d(TAG,"sizeArray["+i+"]: "+size.getWidth()+"x"+size.getHeight());
+					Log.d(TAG,"size: "+size.getWidth()+"x"+size.getHeight());
 				}
 				Log.d(TAG,"setUpCameraOutputs 6");
 				Size largest = Collections.max(Arrays.asList(sizeArray),new CompareSizesByArea());
