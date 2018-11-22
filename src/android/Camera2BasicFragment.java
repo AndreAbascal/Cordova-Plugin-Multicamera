@@ -778,6 +778,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),
                         rotatedPreviewWidth, rotatedPreviewHeight, maxPreviewWidth,
                         maxPreviewHeight, largest);
+				Log.d(TAG,"setUpCameraOutputs... mPreviewSize: "+mPreviewSize.getWidth()+"x"+mPreviewSize.getHeight());
                 // We fit the aspect ratio of TextureView to the size of preview we picked.
                 int correctedHeight = (int) (largest.getWidth()/(maxPreviewWidth/(double)maxPreviewHeight));
                 int orientation = getResources().getConfiguration().orientation;
@@ -893,6 +894,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			timings.addSplit("passo 02");
             // We configure the size of default buffer to be the size of camera preview we want.
             texture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
+			Log.d(TAG,"createCameraPreviewSession... mPreviewSize: "+mPreviewSize.getWidth()+"x"+mPreviewSize.getHeight());
 			timings.addSplit("passo 03");
             // This is the output Surface we need to start preview.
             Surface surface = new Surface(texture);
