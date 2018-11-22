@@ -751,11 +751,20 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				}
 				Log.d(TAG,"setUpCameraOutputs 6");
 				Size largest = Collections.max(Arrays.asList(sizeArray),new CompareSizesByArea());
-				Size optimal  = chooseOptimalSize(sizeArray,width,height,maxPreviewWidth,maxPreviewHeight,new Size(MAX_PREVIEW_WIDTH,MAX_PREVIEW_HEIGHT));
+				Size FULL_HD = new Size(MAX_PREVIEW_WIDTH,MAX_PREVIEW_HEIGHT);
+				Log.d(TAG,"optimal params... ");
+				Log.d(TAG,"width: "+width);
+				Log.d(TAG,"height: "+height);
+				Log.d(TAG,"maxPreviewWidth: "+MAX_PREVIEW_WIDTH);
+				Log.d(TAG,"maxPreviewHeight: "+MAX_PREVIEW_HEIGHT);
+				Log.d(TAG,"aspectRatio: "+FULL_HD.getWidth()+"x"+FULL_HD.getHeight());
+				Size optimal  = chooseOptimalSize(sizeArray,width,height,MAX_PREVIEW_WIDTH,MAX_PREVIEW_HEIGHT,FULL_HD);
+				Size optimal3  = chooseOptimalSize(sizeArray,width,height,maxPreviewWidth,maxPreviewHeight,FULL_HD);
 				Size optimal2  = chooseOptimalSize(sizeArray,width,height,maxPreviewWidth,maxPreviewHeight,largest);
 				Log.d(TAG,"largest: "+largest.getWidth()+"x"+largest.getHeight());
 				Log.d(TAG,"optimal: "+optimal.getWidth()+"x"+optimal.getHeight());
 				Log.d(TAG,"optimal2: "+optimal2.getWidth()+"x"+optimal2.getHeight());
+				Log.d(TAG,"optimal3: "+optimal3.getWidth()+"x"+optimal3.getHeight());
                 mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(),ImageFormat.JPEG, 2);
                 mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
 
