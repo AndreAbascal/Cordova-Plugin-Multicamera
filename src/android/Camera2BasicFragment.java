@@ -257,12 +257,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      */
     private final ImageReader.OnImageAvailableListener mOnImageAvailableListener
             = new ImageReader.OnImageAvailableListener() {
-
+		final Activity activity = getActivity();
         @Override
         public void onImageAvailable(ImageReader reader) {
 			// mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile));
 			// mBackgroundHandler.post(new ImageSaver(reader.acquireLatestImage(), mFile));
-			final Activity activity = getActivity();
 			mBackgroundHandler.post(new Runnable() {
 				private final Image rImage = reader.acquireLatestImage();
 				/**
