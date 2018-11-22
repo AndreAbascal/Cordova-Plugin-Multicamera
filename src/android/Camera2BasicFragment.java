@@ -487,6 +487,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					Log.d(TAG,"dpToPx(48,ctx): "+squareDim);
 					Integer reqWidth = new Integer(squareDim);
 					Integer reqHeight = new Integer(squareDim);
+					Log.d(TAG,"reqWidth: "+reqWidth);
+					Log.d(TAG,"reqHeight: "+reqHeight);
                     // Integer reqWidth = imageWidth >= imageHeight ? 1920 : 1080;
                     // Integer reqHeight = imageWidth == 1920 ? 1080 :  1920;
                     opts.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
@@ -561,10 +563,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         // Pick the smallest of those big enough. If there is no one big enough, pick the
         // largest of those not big enough.
         if (bigEnough.size() > 0) {
-            Log.d("TEXTURE_VIEW","Retornou aqui");
+            Log.d("TEXTURE_VIEW","Retornou aqui: "+Collections.min(bigEnough, new CompareSizesByArea()));
             return Collections.min(bigEnough, new CompareSizesByArea());
         } else if (notBigEnough.size() > 0) {
-            Log.d("TEXTURE_VIEW","Retornou embaixo");
+            Log.d("TEXTURE_VIEW","Retornou embaixo"+Collections.max(notBigEnough, new CompareSizesByArea());
             return Collections.max(notBigEnough, new CompareSizesByArea());
         } else {
             Log.e(TAG, "Couldn't find any suitable preview size");
