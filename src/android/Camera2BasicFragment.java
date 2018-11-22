@@ -581,7 +581,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             Log.d("TEXTURE_VIEW","Retornou aqui: "+Collections.min(bigEnough, new CompareSizesByArea()));
             return Collections.min(bigEnough, new CompareSizesByArea());
         } else if (notBigEnough.size() > 0) {
-            Log.d("TEXTURE_VIEW","Retornou embaixo"+Collections.max(notBigEnough, new CompareSizesByArea()));
+            Log.d("TEXTURE_VIEW","Retornou embaixo: "+Collections.max(notBigEnough, new CompareSizesByArea()));
             return Collections.max(notBigEnough, new CompareSizesByArea());
         } else {
             Log.e(TAG, "Couldn't find any suitable preview size");
@@ -825,8 +825,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 return;
             }
         } catch (CameraAccessException e) {
+			Log.d(TAG,"Deu merda aqui!")
             e.printStackTrace();
         } catch (NullPointerException e) {
+			Log.d(TAG,"Ou deu merda aqui!")
             // Currently an NPE is thrown when the Camera2API is used but not supported on the
             // device this code runs.
             // ErrorDialog.newInstance(getString(R.string.camera_error)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
