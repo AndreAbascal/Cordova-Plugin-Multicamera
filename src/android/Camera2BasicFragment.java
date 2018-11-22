@@ -288,7 +288,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 								output.close();
 								String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
 								addFile(rFile.getAbsolutePath());
-								showImageView(rImage);
+								showImageView(bytes);
+								// showImageView(rImage);
 								// Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 				// mImageView.setImageBitmap(bitmap);
 								// addBase64(encodedImage);
@@ -481,7 +482,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					BitmapFactory.Options opts = new BitmapFactory.Options();
 					opts.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 					opts.inJustDecodeBounds = false;
-					Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length,opts);
+					Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length,opts);
 					ImageView imgView = new ImageView(ctx);
 					imgView.setImageBitmap(bitmap);
                     imgView.setScaleType(ImageView.ScaleType.FIT_XY);
