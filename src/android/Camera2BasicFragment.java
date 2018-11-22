@@ -566,7 +566,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             Log.d("TEXTURE_VIEW","Retornou aqui: "+Collections.min(bigEnough, new CompareSizesByArea()));
             return Collections.min(bigEnough, new CompareSizesByArea());
         } else if (notBigEnough.size() > 0) {
-            Log.d("TEXTURE_VIEW","Retornou embaixo"+Collections.max(notBigEnough, new CompareSizesByArea());
+            Log.d("TEXTURE_VIEW","Retornou embaixo"+Collections.max(notBigEnough, new CompareSizesByArea()));
             return Collections.max(notBigEnough, new CompareSizesByArea());
         } else {
             Log.e(TAG, "Couldn't find any suitable preview size");
