@@ -825,10 +825,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 return;
             }
         } catch (CameraAccessException e) {
-			Log.d(TAG,"Deu merda aqui!")
+			Log.d(TAG,"Deu merda aqui!");
             e.printStackTrace();
         } catch (NullPointerException e) {
-			Log.d(TAG,"Ou deu merda aqui!")
+			Log.d(TAG,"Ou deu merda aqui!");
             // Currently an NPE is thrown when the Camera2API is used but not supported on the
             // device this code runs.
             // ErrorDialog.newInstance(getString(R.string.camera_error)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
