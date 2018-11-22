@@ -1190,7 +1190,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		confirm.setEnabled(true);
 	}
 
-	public static Bitmap getThumbnail(ContentResolver cr, String path) throws Exception {
+	/*public static Bitmap getThumbnail(ContentResolver cr, String path) throws Exception {
 		Cursor ca = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.MediaColumns._ID }, MediaStore.MediaColumns.DATA + "=?", new String[] {path}, null);
 		if (ca != null && ca.moveToFirst()) {
 			int id = ca.getInt(ca.getColumnIndex(MediaStore.MediaColumns._ID));
@@ -1199,7 +1199,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		}
 		ca.close();
 		return null;
-	}
+	}*/
 
 	public void addFile(String absolutePath){
 		CameraActivity ca = ((CameraActivity) getActivity());
