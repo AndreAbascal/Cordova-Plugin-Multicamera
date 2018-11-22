@@ -905,6 +905,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			timings.addSplit("passo 04");
             // We set up a CaptureRequest.Builder with the output Surface.
             mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+			mPreviewRequestBuilder.set(CaptureRequest.JPEG_THUMBNAIL_QUALITY, (byte) 70);
             mPreviewRequestBuilder.addTarget(surface);
 			timings.addSplit("passo 05");
             // Here, we create a CameraCaptureSession for camera preview.
