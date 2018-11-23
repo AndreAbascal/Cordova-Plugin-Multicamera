@@ -617,8 +617,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		Log.d(TAG, "Camera2BasicFragment onViewCreated 2");
         // mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
 		mTextureView = (AutoFitTextureView) view.findViewById(activity.getResources().getIdentifier("texture", "id", activity.getPackageName()));
-		// Button back = activity.findViewById(activity.getResources().getIdentifier("back", "id", activity.getPackageName()));
-		ImageButton back = activity.findViewById(activity.getResources().getIdentifier("back", "id", activity.getPackageName()));
+		Button back = activity.findViewById(activity.getResources().getIdentifier("back", "id", activity.getPackageName()));
+		// ImageButton back = activity.findViewById(activity.getResources().getIdentifier("back", "id", activity.getPackageName()));
 		back.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
