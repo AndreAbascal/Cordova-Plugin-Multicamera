@@ -280,7 +280,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					ByteBuffer buffer = rImage.getPlanes()[0].getBuffer();
 					byte[] bytes = new byte[buffer.remaining()];
 					buffer.get(bytes);
-					rImage.close();
+					// rImage.close();
 					FileOutputStream output = null;
 					try {
 						output = new FileOutputStream(rFile);
@@ -288,7 +288,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					} catch (IOException e) {
 						e.printStackTrace();
 					} finally {
-						// rImage.close();
+						rImage.close();
 						if (null != output) {
 							try {
 								output.close();
