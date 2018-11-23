@@ -64,6 +64,7 @@
 		<source-file src="src/android/res/layout/fragment_camera2_basic.xml" target-dir="res/layout" />
 		<source-file src="src/android/res/drawable/baseline_arrow_back_24.xml" target-dir="res/drawable" />
 		<source-file src="src/android/res/drawable/baseline_done_24.xml" target-dir="res/drawable" />
+		<source-file src="src/android/res/drawable/holo_blue_ripple.xml" target-dir="res/drawable" />
 		<source-file src="src/android/res/drawable-xxxhdpi/lens.png" target-dir="res/drawable-xxxhdpi" />
 		<source-file src="src/android/res/drawable-xxhdpi/lens.png" target-dir="res/drawable-xxhdpi" />
 		<source-file src="src/android/res/drawable-xhdpi/lens.png" target-dir="res/drawable-xhdpi" />

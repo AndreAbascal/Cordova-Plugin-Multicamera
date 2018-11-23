@@ -42,8 +42,15 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentEnd="true"/>-->
+		<!-- android:background="?attr/selectableItemBackgroundBorderless" -->
 		<ImageButton
-			android:background="?attr/selectableItemBackgroundBorderless"
+			android:background="@drawable/holo_blue_ripple"
+			android:layout_alignParentEnd="true"
+			android:layout_width="32dp"
+			android:layout_height="32dp"
+			android:src="@drawable/baseline_done_24"/>
+		<ImageButton
+			android:background="@drawable/holo_blue_ripple"
 			android:id="@+id/confirm"
 			android:layout_alignParentEnd="true"
 			android:layout_width="24dp"
