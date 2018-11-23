@@ -70,6 +70,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -625,7 +626,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				// activity.finish();
 			}
 		});
-		Button confirm = activity.findViewById(activity.getResources().getIdentifier("confirm", "id", activity.getPackageName()));
+		// Button confirm = activity.findViewById(activity.getResources().getIdentifier("confirm", "id", activity.getPackageName()));
+		ImageButton confirm = activity.findViewById(activity.getResources().getIdentifier("confirm", "id", activity.getPackageName()));
 		confirm.setClickable(false);
 		confirm.setEnabled(false);
 		confirm.setOnClickListener(new OnClickListener(){
@@ -1211,7 +1213,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	public void addBase64(String encodedImage){
 		CameraActivity ca = ((CameraActivity) getActivity());
 		ca.adicionarImagem(encodedImage);
-		Button confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
+		// Button confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
+		ImageButton confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
 		confirm.setClickable(true);
 		confirm.setEnabled(true);
 	}
@@ -1234,7 +1237,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			@Override
 			public void run() {
 				// Stuff that updates the UI
-				Button confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
+				// Button confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
+				ImageButton confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
 				confirm.setClickable(true);
 				confirm.setEnabled(true);
 			}
