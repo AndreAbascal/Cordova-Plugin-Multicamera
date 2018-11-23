@@ -31,11 +31,12 @@
         android:padding="16dp">
 
         <Button
-            android:background="@drawable/baseline_arrow_back_24"
+			android:background="@drawable/ripple"
 			android:id="@+id/back"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+			android:src="@drawable/baseline_arrow_back_24"/>
         <!--<Button
             android:background="@drawable/baseline_done_24"
 			android:id="@+id/confirm"
@@ -44,13 +45,13 @@
             android:layout_alignParentEnd="true"/>-->
 		<!-- android:background="?attr/selectableItemBackgroundBorderless" -->
 		<ImageButton
-			android:background="@drawable/holo_blue_ripple"
+			android:background="@drawable/ripple"
 			android:layout_alignParentEnd="true"
 			android:layout_width="32dp"
 			android:layout_height="32dp"
 			android:src="@drawable/baseline_done_24"/>
 		<ImageButton
-			android:background="@drawable/holo_blue_ripple"
+			android:background="@drawable/ripple"
 			android:id="@+id/confirm"
 			android:layout_alignParentEnd="true"
 			android:layout_width="24dp"
