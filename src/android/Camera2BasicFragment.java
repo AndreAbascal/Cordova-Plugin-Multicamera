@@ -1083,7 +1083,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 			String message = "Rotation: "+rotation+"\njpegOrientation: "+jpegOrientation+"\ndisplayRotation: "+displayRotation+"\nmSensorOrientation: "+mSensorOrientation;
 			InfoDialog.newInstance(message).show(getChildFragmentManager(), FRAGMENT_DIALOG);
-            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation);
+            // captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation);
             // Log.d(TAG,"ANTES DA CAPTURE SESSION: "+System.currentTimeMillis());
             CameraCaptureSession.CaptureCallback CaptureCallback
                     = new CameraCaptureSession.CaptureCallback() {
