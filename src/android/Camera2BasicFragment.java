@@ -1075,7 +1075,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             // Orientation
 			int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 			Log.d("ORIENTATION","captureStillPicture rotation: "+rotation);
-			int jpegOrientation = getOrientation(rotation);
+			// int jpegOrientation = getOrientation(rotation);
+			int jpegOrientation = 0;
 			Log.d("ORIENTATION","captureStillPicture jpegOrientation: "+jpegOrientation);
 			int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 			String message = "Rotation: "+rotation+"\njpegOrientation: "+jpegOrientation+"\ndisplayRotation: "+displayRotation+"\nmSensorOrientation: "+mSensorOrientation;
