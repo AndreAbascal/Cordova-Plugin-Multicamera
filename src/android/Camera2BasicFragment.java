@@ -812,12 +812,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 int correctedHeight = (int) (largest.getWidth()/(maxPreviewWidth/(double)maxPreviewHeight));
 				int orientation = getResources().getConfiguration().orientation;
 				Log.d(TAG,"ORIENTATION BUCETA... getResources().getConfiguration().orientation: "+orientation);
-                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                /*if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     mTextureView.setAspectRatio(mPreviewSize.getWidth(), mPreviewSize.getHeight());
                     mTextureView.setLayoutParams(new FrameLayout.LayoutParams(largest.getWidth(), correctedHeight));
                 } else {
                     mTextureView.setAspectRatio(mPreviewSize.getHeight(), mPreviewSize.getWidth());
-                }
+                }*/
 
                 // Check if the flash is supported.
                 Boolean available = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
