@@ -41,6 +41,7 @@ public class CameraActivity extends AppCompatActivity {
 	}
 	@Override
 	public void onConfigurationChanged(Configuration newConfig){
+		Log.d(TAG,"CameraActivity onConfigurationChanged");
 		super.onConfigurationChanged(newConfig);
 	}
 	@Override
