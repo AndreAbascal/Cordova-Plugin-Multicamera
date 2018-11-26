@@ -38,6 +38,11 @@ public class CameraActivity extends AppCompatActivity {
 		this.images.put(encodedImage);
 	}
 	@Override
+	public void onConfigurationChanged(Configuration newConfig){
+		super.onConfigurationChanged(newConfig);
+		InfoDialog.newInstance("CameraActivity onConfigurationChanged... newConfig.orientation: "+newConfig.orientation).show(getChildFragmentManager(), FRAGMENT_DIALOG);
+	}
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG,"CameraActivity onCreate");
         super.onCreate(savedInstanceState);
@@ -155,6 +160,35 @@ public class CameraActivity extends AppCompatActivity {
 		Log.d(TAG,"CameraActivity sendActivityResultJSON 3");
         finish();// Exit of this activity !
 		Log.d(TAG,"CameraActivity sendActivityResultJSON 4");
+	}
+	
+	public static class InfoDialog extends DialogFragment {
+
+        private static final String ARG_MESSAGE = "message";
+
+        public static InfoDialog newInstance(String message) {
+            InfoDialog dialog = new InfoDialog();
+            Bundle args = new Bundle();
+            args.putString(ARG_MESSAGE, message);
+            dialog.setArguments(args);
+            return dialog;
+        }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+			final Activity activity = getActivity();
+			AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+			dialog.setMessage(getArguments().getString(ARG_MESSAGE));
+			dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialogInterface, int i) {
+					dismiss();
+				}
+			});
+			return dialog.create();
+        }
+
     }
 
 }
