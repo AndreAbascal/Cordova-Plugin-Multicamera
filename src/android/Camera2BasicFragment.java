@@ -1014,7 +1014,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180, centerX, centerY);
 		}
-		Log.d("MATRIX","configureTransform Matrix: "+matrix.toString());
         mTextureView.setTransform(matrix);
     }
 
