@@ -730,12 +730,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				Log.d(TAG,"maxPreviewHeight: "+MAX_PREVIEW_HEIGHT);
 				Log.d(TAG,"aspectRatio: "+FULL_HD.getWidth()+"x"+FULL_HD.getHeight());
 				Size optimal  = chooseOptimalSize(sizeArray,width,height,MAX_PREVIEW_WIDTH,MAX_PREVIEW_HEIGHT,FULL_HD);
-				Size optimal3  = chooseOptimalSize(sizeArray,width,height,maxPreviewWidth,maxPreviewHeight,FULL_HD);
-				Size optimal2  = chooseOptimalSize(sizeArray,width,height,maxPreviewWidth,maxPreviewHeight,largest);
 				Log.d(TAG,"largest: "+largest.getWidth()+"x"+largest.getHeight());
 				Log.d(TAG,"optimal: "+optimal.getWidth()+"x"+optimal.getHeight());
-				Log.d(TAG,"optimal2: "+optimal2.getWidth()+"x"+optimal2.getHeight());
-				Log.d(TAG,"optimal3: "+optimal3.getWidth()+"x"+optimal3.getHeight());
                 mImageReader = ImageReader.newInstance(optimal.getWidth(), optimal.getHeight(),ImageFormat.JPEG, MAX_CAPTURE_IMAGES);
                 mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
 
@@ -1049,6 +1045,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			Log.d("ORIENTATION","captureStillPicture rotation: "+rotation);
 			int jpegOrientation = getOrientation(rotation);
 			Log.d("ORIENTATION","captureStillPicture jpegOrientation: "+jpegOrientation);
+			ErrorDialog.newInstance("Rotation: "+rotation+"\njpegOrientation: "+jpegOrientation).show(getChildFragmentManager(), FRAGMENT_DIALOG);
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation);
             // Log.d(TAG,"ANTES DA CAPTURE SESSION: "+System.currentTimeMillis());
             CameraCaptureSession.CaptureCallback CaptureCallback
