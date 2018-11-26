@@ -49,7 +49,11 @@ public class CameraActivity extends AppCompatActivity {
 		Log.d(TAG,"CameraActivity onCreate");
         super.onCreate(savedInstanceState);
 		Log.d(TAG,"CameraActivity 2");
-        // setContentView(R.layout.activity_camera);
+		// setContentView(R.layout.activity_camera);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+							  WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+		}
 		setContentView(this.getResources().getIdentifier("activity_camera", "layout", this.getPackageName()));
 		Log.d(TAG,"CameraActivity 3");
         if (null == savedInstanceState) {
