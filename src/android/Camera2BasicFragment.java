@@ -1045,7 +1045,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			Log.d("ORIENTATION","captureStillPicture rotation: "+rotation);
 			int jpegOrientation = getOrientation(rotation);
 			Log.d("ORIENTATION","captureStillPicture jpegOrientation: "+jpegOrientation);
-			ErrorDialog.newInstance("Rotation: "+rotation+"\njpegOrientation: "+jpegOrientation).show(getChildFragmentManager(), FRAGMENT_DIALOG);
+			InfoDialog.newInstance("Rotation: "+rotation+"\njpegOrientation: "+jpegOrientation).show(getChildFragmentManager(), FRAGMENT_DIALOG);
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation);
             // Log.d(TAG,"ANTES DA CAPTURE SESSION: "+System.currentTimeMillis());
             CameraCaptureSession.CaptureCallback CaptureCallback
@@ -1234,6 +1234,35 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             // We cast here to ensure the multiplications won't overflow
             return Long.signum((long) lhs.getWidth() * lhs.getHeight() -
                     (long) rhs.getWidth() * rhs.getHeight());
+        }
+
+	}
+	
+	public static class InfoDialog extends DialogFragment {
+
+        private static final String ARG_MESSAGE = "message";
+
+        public static InfoDialog newInstance(String message) {
+            InfoDialog dialog = new InfoDialog();
+            Bundle args = new Bundle();
+            args.putString(ARG_MESSAGE, message);
+            dialog.setArguments(args);
+            return dialog;
+        }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+			final Activity activity = getActivity();
+			AlertDialog.Builder dialog = AlertDialog.Builder(getActivity());
+			dialog.setMessage(getArguments().getString(ARG_MESSAGE));
+			dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialogInterface, int i) {
+					dismiss();
+				}
+			});
+			return dialog.create();
         }
 
     }
