@@ -27,7 +27,9 @@ import android.view.TextureView;
 public class AutoFitTextureView extends TextureView {
 
     private int mRatioWidth = 0;
-    private int mRatioHeight = 0;
+	private int mRatioHeight = 0;
+	
+	private static final String TAG = "AutoFitTextureView";
 
     public AutoFitTextureView(Context context) {
         this(context, null);
@@ -54,7 +56,8 @@ public class AutoFitTextureView extends TextureView {
             throw new IllegalArgumentException("Size cannot be negative.");
         }
         mRatioWidth = width;
-        mRatioHeight = height;
+		mRatioHeight = height;
+		Log.d(TAG,"setAspectRatio: "+mRatioWidth+"x"+mRatioHeight);
         requestLayout();
     }
 

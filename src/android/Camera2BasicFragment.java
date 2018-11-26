@@ -758,13 +758,13 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 boolean swappedDimensions = false;
                 switch (displayRotation) {
                     case Surface.ROTATION_0: //0
-                    case Surface.ROTATION_180: //3
+                    case Surface.ROTATION_180: //2
                         if (mSensorOrientation == 90 || mSensorOrientation == 270) {
                             swappedDimensions = true;
                         }
                         break;
                     case Surface.ROTATION_90: //1
-                    case Surface.ROTATION_270: //2
+                    case Surface.ROTATION_270: //3
                         if (mSensorOrientation == 0 || mSensorOrientation == 180) {
                             swappedDimensions = true;
                         }
@@ -804,13 +804,14 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				Log.d(TAG,"setUpCameraOutputs... mPreviewSize: "+mPreviewSize.getWidth()+"x"+mPreviewSize.getHeight());
                 // We fit the aspect ratio of TextureView to the size of preview we picked.
                 int correctedHeight = (int) (largest.getWidth()/(maxPreviewWidth/(double)maxPreviewHeight));
-                int orientation = getResources().getConfiguration().orientation;
-                /*if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+				int orientation = getResources().getConfiguration().orientation;
+				Log.d(TAG,"ORIENTATION BUCETA... getResources().getConfiguration().orientation: "+orientation);
+                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     mTextureView.setAspectRatio(mPreviewSize.getWidth(), mPreviewSize.getHeight());
                     mTextureView.setLayoutParams(new FrameLayout.LayoutParams(largest.getWidth(), correctedHeight));
                 } else {
                     mTextureView.setAspectRatio(mPreviewSize.getHeight(), mPreviewSize.getWidth());
-                }*/
+                }
 
                 // Check if the flash is supported.
                 Boolean available = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
