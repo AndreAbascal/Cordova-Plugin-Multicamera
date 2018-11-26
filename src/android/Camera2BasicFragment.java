@@ -1254,7 +1254,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final Activity activity = getActivity();
-			AlertDialog.Builder dialog = AlertDialog.Builder(getActivity());
+			AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 			dialog.setMessage(getArguments().getString(ARG_MESSAGE));
 			dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				@Override
