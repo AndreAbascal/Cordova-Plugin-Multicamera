@@ -16,13 +16,18 @@
 
 package cordova.plugin.multicamera;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.content.Intent;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 public class CameraActivity extends AppCompatActivity {
 	public JSONArray images = new JSONArray();
@@ -177,8 +182,8 @@ public class CameraActivity extends AppCompatActivity {
         @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-			final Activity activity = getActivity();
-			AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+			final Activity activity = CameraActivity.this;
+			AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
 			dialog.setMessage(getArguments().getString(ARG_MESSAGE));
 			dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				@Override
