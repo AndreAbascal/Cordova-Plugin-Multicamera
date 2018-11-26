@@ -513,7 +513,13 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	public void onConfigurationChanged(Configuration newConfig){
 		super.onConfigurationChanged(newConfig);
 		String message = "newConfig.orientation: "+newConfig.orientation;
-		InfoDialog.newInstance(message).show(getChildFragmentManager(), FRAGMENT_DIALOG);
+		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+			Log.v("TAG","Landscape!!!");
+		 }
+		 else { 
+			Log.v("TAG","Portrait!!!");
+		}
+		// InfoDialog.newInstance(message).show(getChildFragmentManager(), FRAGMENT_DIALOG);
 		/*
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
