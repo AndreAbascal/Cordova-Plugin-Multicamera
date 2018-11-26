@@ -507,7 +507,19 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 }
             });
         }
-    }
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig){
+		super.onConfigurationChanged(newConfig);
+		/*
+		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+		}else{
+
+		}
+		*/
+	}
 
     /**
      * Given {@code choices} of {@code Size}s supported by a camera, choose the smallest one that
@@ -734,7 +746,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				Log.d(TAG,"optimal: "+optimal.getWidth()+"x"+optimal.getHeight());
                 mImageReader = ImageReader.newInstance(optimal.getWidth(), optimal.getHeight(),ImageFormat.JPEG, MAX_CAPTURE_IMAGES);
                 mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
-
                 // Find out if we need to swap dimension to get the preview size relative to sensor
                 // coordinate.
 				int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
@@ -1067,7 +1078,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			int jpegOrientation = getOrientation(rotation);
 			Log.d("ORIENTATION","captureStillPicture jpegOrientation: "+jpegOrientation);
 			int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-			String message = "Rotation: "+rotation+"\njpegOrientation: "+jpegOrientation+"\ndisplayRotation: "+displayRotation;
+			String message = "Rotation: "+rotation+"\njpegOrientation: "+jpegOrientation+"\ndisplayRotation: "+displayRotation+"\nmSensorOrientation: "+mSensorOrientation;
 			InfoDialog.newInstance(message).show(getChildFragmentManager(), FRAGMENT_DIALOG);
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation);
             // Log.d(TAG,"ANTES DA CAPTURE SESSION: "+System.currentTimeMillis());
