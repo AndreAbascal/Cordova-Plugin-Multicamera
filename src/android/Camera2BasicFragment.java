@@ -476,41 +476,14 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         if(activity != null){
             activity.runOnUiThread(new Runnable() {
                 @Override
-				/*public void run(){
-					Log.d(TAG,"CHEGOU AQUI BUCETA!");
-					Context ctx = getContext();
-					BitmapFactory.Options options = new BitmapFactory.Options();
-					options.inJustDecodeBounds = true;
-					int squareDim = dpToPx(48,ctx);
-					Integer reqWidth = new Integer(squareDim);
-					Integer reqHeight = new Integer(squareDim);
-					BitmapFactory.Options opts = new BitmapFactory.Options();
-					opts.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-					opts.inJustDecodeBounds = false;
-					Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length,opts);
-					ImageView imgView = new ImageView(ctx);
-					imgView.setImageBitmap(bitmap);
-                    imgView.setScaleType(ImageView.ScaleType.FIT_XY);
-					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewByd(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
-					LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(squareDim,squareDim);
-					imgView.setLayoutParams(layout);
-					LinearLayout ln = (LinearLayout) activity.findViewById(activity.getResources().getIdentifier("gallery", "id", activity.getPackageName()));
-                    ln.addView(imgView);
-				}*/
                 public void run() {
 					Context ctx = getContext();
-					TimingLogger timings = new TimingLogger(TAG, "showImageView runnable");
-					timings.addSplit("passo 01");
                     BitmapFactory.Options options = new BitmapFactory.Options();
-					timings.addSplit("passo 02");
                     options.inJustDecodeBounds = true;
-					timings.addSplit("passo 03");
                     BitmapFactory.decodeFile(f.getAbsolutePath(),options);
-					timings.addSplit("passo 04");
                     int imageHeight = options.outHeight;
                     int imageWidth = options.outWidth;
                     String imageType = options.outMimeType;
-					timings.addSplit("passo 05");
                     BitmapFactory.Options opts = new BitmapFactory.Options();
 					int squareDim = dpToPx(48,ctx);
 					Log.d(TAG,"dpToPx(48,ctx): "+squareDim);
@@ -521,24 +494,16 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     opts.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 					Log.d(TAG,"opts.inSampleSize: "+opts.inSampleSize);
                     opts.inJustDecodeBounds = false;
-					timings.addSplit("passo 06");
                     Bitmap myBitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),opts);
-					timings.addSplit("passo 07");
                     ImageView imgView = new ImageView(ctx);
-					timings.addSplit("passo 08");
                     imgView.setImageBitmap(myBitmap);
                     imgView.setScaleType(ImageView.ScaleType.FIT_XY);
-					timings.addSplit("passo 09");
 					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
 					LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(squareDim,squareDim);
-					timings.addSplit("passo 10");
                     layout.setMargins(dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx));
                     imgView.setLayoutParams(layout);
-					timings.addSplit("passo 11");
 					LinearLayout ln = (LinearLayout) activity.findViewById(activity.getResources().getIdentifier("gallery", "id", activity.getPackageName()));
                     ln.addView(imgView);
-					timings.addSplit("passo 12");
-					timings.dumpToLog();
                 }
             });
         }
@@ -776,19 +741,21 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
                 // Find out if we need to swap dimension to get the preview size relative to sensor
                 // coordinate.
-                int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+				int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+				Log.d("ORIENTATION","displayRotation: "+displayRotation);
                 //noinspection ConstantConditions
-                mSensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+				mSensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+				Log.d("ORIENTATION","mSensorOrientation: "+mSensorOrientation);
                 boolean swappedDimensions = false;
                 switch (displayRotation) {
-                    case Surface.ROTATION_0:
-                    case Surface.ROTATION_180:
+                    case Surface.ROTATION_0: //0
+                    case Surface.ROTATION_180: //3
                         if (mSensorOrientation == 90 || mSensorOrientation == 270) {
                             swappedDimensions = true;
                         }
                         break;
-                    case Surface.ROTATION_90:
-                    case Surface.ROTATION_270:
+                    case Surface.ROTATION_90: //1
+                    case Surface.ROTATION_270: //2
                         if (mSensorOrientation == 0 || mSensorOrientation == 180) {
                             swappedDimensions = true;
                         }
@@ -804,7 +771,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     rotatedPreviewWidth = height;
                     rotatedPreviewHeight = width;
                     maxPreviewWidth = displaySize.y;
-                    maxPreviewHeight = displaySize.x;
+					maxPreviewHeight = displaySize.x;
+					Log.d("ORIENTATION", "rotatedPreviewWidth: "+rotatedPreviewWidth);
+					Log.d("ORIENTATION", "rotatedPreviewHeight: "+rotatedPreviewHeight);
+					Log.d("ORIENTATION", "maxPreviewWidth: "+maxPreviewWidth);
+					Log.d("ORIENTATION", "maxPreviewHeight: "+maxPreviewHeight);
                 }
 
                 if (maxPreviewWidth > MAX_PREVIEW_WIDTH) {
@@ -932,23 +903,16 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      */
     private void createCameraPreviewSession() {
         try {
-			TimingLogger timings = new TimingLogger(TAG, "configureTransform");
-			timings.addSplit("passo 01");
             SurfaceTexture texture = mTextureView.getSurfaceTexture();
             assert texture != null;
-			timings.addSplit("passo 02");
             // We configure the size of default buffer to be the size of camera preview we want.
             texture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
-			Log.d(TAG,"createCameraPreviewSession... mPreviewSize: "+mPreviewSize.getWidth()+"x"+mPreviewSize.getHeight());
-			timings.addSplit("passo 03");
             // This is the output Surface we need to start preview.
             Surface surface = new Surface(texture);
-			timings.addSplit("passo 04");
             // We set up a CaptureRequest.Builder with the output Surface.
             mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
 			mPreviewRequestBuilder.set(CaptureRequest.JPEG_QUALITY, (byte) 70);
             mPreviewRequestBuilder.addTarget(surface);
-			timings.addSplit("passo 05");
             // Here, we create a CameraCaptureSession for camera preview.
             mCameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()),
                     new CameraCaptureSession.StateCallback() {
@@ -985,7 +949,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                         }
                     }, null
             );
-			timings.dumpToLog();
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -1004,17 +967,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         if (null == mTextureView || null == mPreviewSize || null == activity) {
             return;
         }
-		TimingLogger timings = new TimingLogger(TAG, "configureTransform");
-		timings.addSplit("passo 01");
         int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-        timings.addSplit("passo 02");
         Matrix matrix = new Matrix();
-		timings.addSplit("passo 03");
         RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
         RectF bufferRect = new RectF(0, 0, mPreviewSize.getHeight(), mPreviewSize.getWidth());
         float centerX = viewRect.centerX();
         float centerY = viewRect.centerY();
-		timings.addSplit("passo 04");
         if (Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation) {
             bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY());
             matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL);
@@ -1023,14 +981,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     (float) viewWidth / mPreviewSize.getWidth());
             matrix.postScale(scale, scale, centerX, centerY);
             matrix.postRotate(90 * (rotation - 2), centerX, centerY);
-			timings.addSplit("passo 05");
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180, centerX, centerY);
-			timings.addSplit("passo 05");
         }
         mTextureView.setTransform(matrix);
-		timings.addSplit("passo 06");
-		timings.dumpToLog();
     }
 
     /**
@@ -1045,19 +999,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      */
     private void lockFocus() {
         try {
-			TimingLogger timings = new TimingLogger(TAG, "lockFocus");
             // This is how to tell the camera to lock focus.
-			timings.addSplit("passo 01");
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,CameraMetadata.CONTROL_AF_TRIGGER_START);
-			timings.addSplit("passo 02");
             // Tell #mCaptureCallback to wait for the lock.
             mState = STATE_WAITING_LOCK;
-			timings.addSplit("passo 03");
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,mBackgroundHandler);
-			timings.addSplit("passo 04");
-			timings.dumpToLog();
         } catch (CameraAccessException e) {
-            Log.d(TAG,"ERRO CAMERA lockFocus(): ");
             e.printStackTrace();
         }
     }
@@ -1086,28 +1033,23 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      */
     private void captureStillPicture() {
         try {
-			TimingLogger timings = new TimingLogger(TAG, "captureStillPicture");
             final Activity activity = getActivity();
             if (null == activity || null == mCameraDevice) {
                 return;
             }
-			timings.addSplit("passo 01");
             // This is the CaptureRequest.Builder that we use to take a picture.
             final CaptureRequest.Builder captureBuilder =
                     mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
             captureBuilder.addTarget(mImageReader.getSurface());
-			timings.addSplit("passo 02");
             // Use the same AE and AF modes as the preview.
-            captureBuilder.set(CaptureRequest.CONTROL_AF_MODE,
-                    CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-			timings.addSplit("passo 03");
+            captureBuilder.set(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
             setAutoFlash(captureBuilder);
-			timings.addSplit("passo 04");
             // Orientation
-            int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-			timings.addSplit("passo 05");
-            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, getOrientation(rotation));
-			timings.addSplit("passo 06");
+			int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+			Log.d("ORIENTATION","captureStillPicture rotation: "+rotation);
+			int jpegOrientation = getOrientation(rotation);
+			Log.d("ORIENTATION","captureStillPicture jpegOrientation: "+jpegOrientation);
+            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation);
             // Log.d(TAG,"ANTES DA CAPTURE SESSION: "+System.currentTimeMillis());
             CameraCaptureSession.CaptureCallback CaptureCallback
                     = new CameraCaptureSession.CaptureCallback() {
@@ -1122,14 +1064,9 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					mFile = new File(getActivity().getExternalFilesDir(null), System.currentTimeMillis()+".jpg");
                 }
             };
-			timings.addSplit("passo 07");
             mCaptureSession.stopRepeating();
-			timings.addSplit("passo 08");
             mCaptureSession.abortCaptures();
-			timings.addSplit("passo 09");
             mCaptureSession.capture(captureBuilder.build(), CaptureCallback, null);
-			timings.addSplit("passo 10");
-			timings.dumpToLog();
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
