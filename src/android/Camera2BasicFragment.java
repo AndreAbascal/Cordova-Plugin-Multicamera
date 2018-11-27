@@ -642,7 +642,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			@Override
 			public void onOrientationChanged(int angle) {
 				Log.d("ORIENTATIONCHANGED","angle: "+angle);
-				if(angle > 0){
+				if(angle >= 0){
 					TextView text1 = (TextView) activity.findViewById(activity.getResources().getIdentifier("text1", "id", activity.getPackageName()));
 					text1.setText("Angle: "+angle+"\u00B0");
 				}
