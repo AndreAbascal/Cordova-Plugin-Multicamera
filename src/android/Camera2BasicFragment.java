@@ -638,7 +638,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			}
 		});
 		Log.d(TAG, "Camera2BasicFragment onViewCreated 3");
-		orientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_UI) {
+		orientationEventListener = new OrientationEventListener(activity, SensorManager.SENSOR_DELAY_UI) {
 			@Override
 			public void onOrientationChanged(int angle) {
 				Log.d("ORIENTATIONCHANGED","angle: "+angle);
