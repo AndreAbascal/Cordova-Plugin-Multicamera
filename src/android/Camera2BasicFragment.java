@@ -263,7 +263,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 break;
         }
 		for (int i = 0; i < childCount; i++) {
-			ImageView imgView = hsv.getChildAt(i);
+			View imgView = hsv.getChildAt(i);
 			imgView.setRotation(rotation);
 		}
     }
