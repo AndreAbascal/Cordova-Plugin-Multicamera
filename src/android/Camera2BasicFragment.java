@@ -244,6 +244,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	};
 	
 	private void updateImageRotation(int degree) {
+		Log.d("SENSOR","updateImageRotation: "+degree);
 		final Activity activity = getActivity();
 		HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
 		final int childCount = hsv.getChildCount();
