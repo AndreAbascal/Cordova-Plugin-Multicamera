@@ -207,10 +207,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 }
                 orientation = value;
                 Log.d("orientation", "portrait ");
-            }
-
-
-            if (event.values[1] < 0 && event.values[0] == 0) {
+            }else if (event.values[1] < 0 && event.values[0] == 0) {
                 value = Surface.ROTATION_180;//portrait reverse
                 if (orientation != value) {
                     updateImageRotation(value);
@@ -218,9 +215,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 }
                 orientation = value;
                 Log.d("orientation", "portrait reverse");
-            }
-
-            if (event.values[0] > 0 && event.values[1] == 0) {
+            }else if(event.values[0] > 0 && event.values[1] == 0) {
                 value = Surface.ROTATION_90;//portrait reverse
                 if (orientation != value) {
                     updateImageRotation(value);
@@ -228,9 +223,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 }
                 orientation = value;
                 Log.d("orientation", "landscape");
-            }
-
-            if (event.values[0] < 0 && event.values[1] == 0) {
+            }else if (event.values[0] < 0 && event.values[1] == 0) {
                 value = Surface.ROTATION_270;//portrait reverse
                 if (orientation != value) {
                     updateImageRotation(value);
@@ -248,7 +241,32 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
         }
-    };
+	};
+	
+	private void updateImageRotation(int degree) {
+		final Activity activity = getActivity();
+		HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
+		final int childCount = hsv.getChildCount();
+		int rotation = 0;
+		switch (degree) {
+            case Surface.ROTATION_0:
+                rotation = 0;
+                break;
+            case Surface.ROTATION_90:
+                rotation = 90;
+                break;
+            case Surface.ROTATION_180:
+                rotation = 180;
+                break;
+            case Surface.ROTATION_270:
+				rotation = 270;
+                break;
+        }
+		for (int i = 0; i < childCount; i++) {
+			ImageView imgView = hsv.getChildAt(i);
+			imgView.setRotation(rotation);
+		}
+    }
 
     /**
      * ID of the current {@link CameraDevice}.
