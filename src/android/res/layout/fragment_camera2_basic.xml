@@ -41,7 +41,7 @@
 			android:id="@+id/text1"
 			android:text="@string/angle"
 			android:textStyle="bold"
-			android:textColor="#ff00ff"
+			android:textColor="#ffffff"
 			android:textIsSelectable="false"/>
 
         <Button
