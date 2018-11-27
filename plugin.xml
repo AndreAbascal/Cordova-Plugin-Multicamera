@@ -39,8 +39,7 @@
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
 			<activity android:name="cordova.plugin.multicamera.CameraActivity"
 				android:label="CameraActivity"
-				android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-				android:screenOrientation="fullSensor">
+				android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 				<intent-filter>
         			<category android:name="android.intent.category.DEFAULT"/>
     			</intent-filter>
