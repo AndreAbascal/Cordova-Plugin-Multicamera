@@ -576,7 +576,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "Camera2BasicFragment onCreate()");
-		setRetainInstance(true);
 	}
 
     @Override
@@ -625,7 +624,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 		Log.d(TAG, "Camera2BasicFragment onActivityCreated");
-        super.onActivityCreated(savedInstanceState);
+		super.onActivityCreated(savedInstanceState);
+		setRetainInstance(true);
 		Log.d(TAG, "Camera2BasicFragment onActivityCreated 2");
         mFile = new File(getActivity().getExternalFilesDir(null), System.currentTimeMillis()+".jpg");
 		Log.d(TAG, "Camera2BasicFragment onActivityCreated 3");
