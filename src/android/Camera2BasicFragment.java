@@ -807,13 +807,15 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 // We fit the aspect ratio of TextureView to the size of preview we picked.
                 int correctedHeight = (int) (largest.getWidth()/(maxPreviewWidth/(double)maxPreviewHeight));
 				int orientation = getResources().getConfiguration().orientation;
-				Log.d(TAG,"ORIENTATION BUCETA... getResources().getConfiguration().orientation: "+orientation);
-                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+				Log.d(TAG,"setUpCameraOutputs orientation... getResources().getConfiguration().orientation: "+orientation);
+				/*
+				if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     mTextureView.setAspectRatio(mPreviewSize.getWidth(), mPreviewSize.getHeight());
                     //mTextureView.setLayoutParams(new FrameLayout.LayoutParams(largest.getWidth(), correctedHeight));
                 } else {
                     mTextureView.setAspectRatio(mPreviewSize.getHeight(), mPreviewSize.getWidth());
-                }
+				}
+				*/
 
                 // Check if the flash is supported.
                 Boolean available = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
