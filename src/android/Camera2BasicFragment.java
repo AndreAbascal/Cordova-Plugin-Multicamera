@@ -1080,6 +1080,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             setAutoFlash(captureBuilder);
             // Orientation
 			int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+			Log.d("ORIENTATION","getResources().getConfiguration().orientation: "+getResources().getConfiguration().orientation);
 			Log.d("ORIENTATION","captureStillPicture rotation: "+rotation);
 			int jpegOrientation = getOrientation(rotation);
 			Log.d("ORIENTATION","captureStillPicture jpegOrientation: "+jpegOrientation);
