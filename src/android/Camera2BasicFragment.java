@@ -512,21 +512,9 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	@Override
 	public void onConfigurationChanged(Configuration newConfig){
 		super.onConfigurationChanged(newConfig);
-		String message = "newConfig.orientation: "+newConfig.orientation;
-		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-			Log.v("TAG","Landscape!!!");
-		 }
-		 else { 
-			Log.v("TAG","Portrait!!!");
-		}
-		// InfoDialog.newInstance(message).show(getChildFragmentManager(), FRAGMENT_DIALOG);
-		/*
-		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-
-		}else{
-
-		}
-		*/
+		Log.d(TAG,"Camera2BasicFragment onConfigurationChanged... orientation: "+newConfig.orientation);
+		String message = "Camera2BasicFragment newConfig.orientation: "+newConfig.orientation;
+		InfoDialog.newInstance(message).show(getChildFragmentManager(), FRAGMENT_DIALOG);
 	}
 
     /**
@@ -582,7 +570,14 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
     public static Camera2BasicFragment newInstance() {
         return new Camera2BasicFragment();
-    }
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		Log.d(TAG, "Camera2BasicFragment onCreate()");
+		setRetainInstance(true);
+	}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {

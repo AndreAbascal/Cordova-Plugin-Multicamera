@@ -40,7 +40,7 @@
 			<activity android:name="cordova.plugin.multicamera.CameraActivity"
 				android:label="CameraActivity"
 				android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-				android:screenOrientation="fullSensor">
+				android:screenOrientation="fullSensor"><!-- android:configChanges="orientation|screenSize" -->
 				<intent-filter>
         			<category android:name="android.intent.category.DEFAULT"/>
     			</intent-filter>
