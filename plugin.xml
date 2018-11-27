@@ -41,7 +41,7 @@
 			<activity android:name="cordova.plugin.multicamera.CameraActivity"
 				android:label="CameraActivity"
 				android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-				android:orientation="landscape">
+				android:screenOrientation="landscape">
 				<intent-filter>
         			<category android:name="android.intent.category.DEFAULT"/>
     			</intent-filter>
