@@ -43,10 +43,6 @@ import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.media.Image;
 import android.media.ImageReader;
 import android.os.AsyncTask;
@@ -182,92 +178,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         }
 
 	};
-
-	private SensorManager mSensorManager;
-    private Sensor mOrientation;
-
-    float value_0 = -10000;
-    float value_1 = -10000;
-	
-	private SensorEventListener mOrientationSensorListener = new SensorEventListener() {
-        int orientation = -1;
-
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            int value ;
-            if(value_0 == event.values[0] && value_1==event.values[1]){
-                return;
-            }
-//            Log.d("values:", "values:" + event.values[0]+", "+event.values[1]);
-            if (event.values[1] > 0 && event.values[0] == 0) {
-                value = Surface.ROTATION_0;//portrait
-                if (orientation != value) {
-                    updateImageRotation(value);
-                    Log.d("orientation", "portrait  + update");
-                }
-                orientation = value;
-                Log.d("orientation", "portrait ");
-            }else if (event.values[1] < 0 && event.values[0] == 0) {
-                value = Surface.ROTATION_180;//portrait reverse
-                if (orientation != value) {
-                    updateImageRotation(value);
-                    Log.d("orientation", "portrait reverse + update");
-                }
-                orientation = value;
-                Log.d("orientation", "portrait reverse");
-            }else if(event.values[0] > 0 && event.values[1] == 0) {
-                value = Surface.ROTATION_90;//portrait reverse
-                if (orientation != value) {
-                    updateImageRotation(value);
-                    Log.d("orientation", "landscape  + update");
-                }
-                orientation = value;
-                Log.d("orientation", "landscape");
-            }else if (event.values[0] < 0 && event.values[1] == 0) {
-                value = Surface.ROTATION_270;//portrait reverse
-                if (orientation != value) {
-                    updateImageRotation(value);
-                    Log.d("orientation", "landscape  + update");
-                }
-                orientation = value;
-                Log.d("orientation", "landscape reverse");
-            }
-
-            value_0=event.values[0];
-            value_1=event.values[1];
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-        }
-	};
-	
-	private void updateImageRotation(int degree) {
-		Log.d("SENSOR","updateImageRotation: "+degree);
-		final Activity activity = getActivity();
-		HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
-		final int childCount = hsv.getChildCount();
-		int rotation = 0;
-		switch (degree) {
-            case Surface.ROTATION_0:
-                rotation = 0;
-                break;
-            case Surface.ROTATION_90:
-                rotation = 90;
-                break;
-            case Surface.ROTATION_180:
-                rotation = 180;
-                break;
-            case Surface.ROTATION_270:
-				rotation = 270;
-                break;
-        }
-		for (int i = 0; i < childCount; i++) {
-			View imgView = hsv.getChildAt(i);
-			imgView.setRotation(rotation);
-		}
-    }
 
     /**
      * ID of the current {@link CameraDevice}.
@@ -434,6 +344,19 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      * Orientation of the camera sensor
      */
     private int mSensorOrientation;
+
+
+	/**
+	 * Orientation event listener
+	 */
+
+	private OrientationEventListener orientationEventListener;
+
+	/**
+	 *  Holds current orientation value
+	*/
+
+	private int currentOrientation;
 
     /**
      * A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
@@ -712,6 +635,25 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			}
 		});
 		Log.d(TAG, "Camera2BasicFragment onViewCreated 3");
+		orientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_UI) {
+			@Override
+			public void onOrientationChanged(int angle) {
+				Log.d("ORIENTATIONCHANGED","angle: "+angle);
+				if(angle > 0){
+					TextView text1 = (TextView) activity.findViewById(activity.getResources().getIdentifier("text1", "id", activity.getPackageName()));
+					text1.setText("Angle: "+angle+"\u00B0");
+				}
+				/*if(angle > 260 && angle < 280) {
+					currentOrientation
+					// button.setRotation(90);
+				} else if(angle > 80 && angle < 100) {
+					// button.setRotation(270);
+				} else if(angle > 350 || angle < 10){
+					// button.setRotation(0);
+				}*/
+			}
+		};
+		orientationEventListener.enable();
     }
 
     @Override
@@ -732,11 +674,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     @Override
     public void onResume() {
 		super.onResume();
-		if (mOrientation != null) {
-            mSensorManager.registerListener(mOrientationSensorListener, mOrientation,
-                    SensorManager.SENSOR_DELAY_GAME);
-        }
-        startBackgroundThread();
+		startBackgroundThread();
+		if(orientationEventListener != null){
+			orientationEventListener.enable();
+		}
 
         // When the screen is turned off and turned back on, the SurfaceTexture is already
         // available, and "onSurfaceTextureAvailable" will not be called. In that case, we can open
@@ -760,11 +701,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     public void onPause() {
         Log.d(TAG,"Camera2BasicFragment onPause!");
         closeCamera();
-        stopBackgroundThread();
+		stopBackgroundThread();
+		if(orientationEventListener != null){
+			orientationEventListener.disable();
+		}
 		super.onPause();
-		if (mOrientation != null) {
-            mSensorManager.unregisterListener(mOrientationSensorListener);
-        }
     }
 
     private void requestCameraPermission() {
