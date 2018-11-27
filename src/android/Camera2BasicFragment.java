@@ -43,6 +43,10 @@ import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.Image;
 import android.media.ImageReader;
 import android.os.AsyncTask;
@@ -153,6 +157,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     /**
      * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
      * {@link TextureView}.
+	 * 
      */
     private final TextureView.SurfaceTextureListener mSurfaceTextureListener
             = new TextureView.SurfaceTextureListener() {
@@ -176,6 +181,73 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         public void onSurfaceTextureUpdated(SurfaceTexture texture) {
         }
 
+	};
+
+	private SensorManager mSensorManager;
+    private Sensor mOrientation;
+
+    float value_0 = -10000;
+    float value_1 = -10000;
+	
+	private SensorEventListener mOrientationSensorListener = new SensorEventListener() {
+        int orientation = -1;
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            int value ;
+            if(value_0 == event.values[0] && value_1==event.values[1]){
+                return;
+            }
+//            Log.d("values:", "values:" + event.values[0]+", "+event.values[1]);
+            if (event.values[1] > 0 && event.values[0] == 0) {
+                value = Surface.ROTATION_0;//portrait
+                if (orientation != value) {
+                    updateImageRotation(value);
+                    Log.d("orientation", "portrait  + update");
+                }
+                orientation = value;
+                Log.d("orientation", "portrait ");
+            }
+
+
+            if (event.values[1] < 0 && event.values[0] == 0) {
+                value = Surface.ROTATION_180;//portrait reverse
+                if (orientation != value) {
+                    updateImageRotation(value);
+                    Log.d("orientation", "portrait reverse + update");
+                }
+                orientation = value;
+                Log.d("orientation", "portrait reverse");
+            }
+
+            if (event.values[0] > 0 && event.values[1] == 0) {
+                value = Surface.ROTATION_90;//portrait reverse
+                if (orientation != value) {
+                    updateImageRotation(value);
+                    Log.d("orientation", "landscape  + update");
+                }
+                orientation = value;
+                Log.d("orientation", "landscape");
+            }
+
+            if (event.values[0] < 0 && event.values[1] == 0) {
+                value = Surface.ROTATION_270;//portrait reverse
+                if (orientation != value) {
+                    updateImageRotation(value);
+                    Log.d("orientation", "landscape  + update");
+                }
+                orientation = value;
+                Log.d("orientation", "landscape reverse");
+            }
+
+            value_0=event.values[0];
+            value_1=event.values[1];
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
     };
 
     /**
@@ -640,7 +712,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onResume() {
-        super.onResume();
+		super.onResume();
+		if (mOrientation != null) {
+            mSensorManager.registerListener(mOrientationSensorListener, mOrientation,
+                    SensorManager.SENSOR_DELAY_GAME);
+        }
         startBackgroundThread();
 
         // When the screen is turned off and turned back on, the SurfaceTexture is already
@@ -666,7 +742,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         Log.d(TAG,"Camera2BasicFragment onPause!");
         closeCamera();
         stopBackgroundThread();
-        super.onPause();
+		super.onPause();
+		if (mOrientation != null) {
+            mSensorManager.unregisterListener(mOrientationSensorListener);
+        }
     }
 
     private void requestCameraPermission() {

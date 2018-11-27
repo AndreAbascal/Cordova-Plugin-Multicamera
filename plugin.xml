@@ -29,6 +29,7 @@
 			<!-- <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" /> -->
             <uses-feature android:name="android.hardware.camera2.full" android:required="false"/>
             <uses-feature android:name="android.hardware.camera2.autofocus" android:required="false"/>
+			<uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true"/>
         </config-file>
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="MultiCamera">
@@ -40,7 +41,7 @@
 			<activity android:name="cordova.plugin.multicamera.CameraActivity"
 				android:label="CameraActivity"
 				android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-				android:configChanges="orientation|screenSize|keyboardHidden">
+				android:orientation="landscape">
 				<intent-filter>
         			<category android:name="android.intent.category.DEFAULT"/>
     			</intent-filter>
