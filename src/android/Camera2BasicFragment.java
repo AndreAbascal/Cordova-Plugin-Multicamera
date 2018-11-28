@@ -75,6 +75,7 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -543,7 +544,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     ImageView imgView = new ImageView(ctx);
                     imgView.setImageBitmap(myBitmap);
                     imgView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-					ScrollView hsv = (ScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
+					// ScrollView hsv = (ScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
 					LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(squareDim,squareDim);
                     layout.setMargins(dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx));
                     imgView.setLayoutParams(layout);
