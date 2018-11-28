@@ -723,12 +723,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onPause() {
-        Log.d(TAG,"Camera2BasicFragment onPause!");
-        closeCamera();
-		stopBackgroundThread();
+		Log.d(TAG,"Camera2BasicFragment onPause!");
 		if(orientationEventListener != null){
 			orientationEventListener.disable();
 		}
+        closeCamera();
+		stopBackgroundThread();
 		super.onPause();
     }
 
@@ -914,24 +914,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		}
         setUpCameraOutputs(width, height);
 		configureTransform(width, height);
-		mBackgroundHandler.post(new Runnable() {
-			@Override
-			public void run() {
-				Activity activity = getActivity();
-				CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
-				try {
-					if (!mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
-						throw new RuntimeException("Time out waiting to lock camera opening.");
-					}
-					manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
-				} catch (CameraAccessException e) {
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
-				}
-			}
-		});
-		/*
         Activity activity = getActivity();
         CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
         try {
@@ -944,7 +926,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         } catch (InterruptedException e) {
             throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
 		}
-		*/
     }
 
     /**
