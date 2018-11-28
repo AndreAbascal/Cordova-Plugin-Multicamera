@@ -543,7 +543,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     ImageView imgView = new ImageView(ctx);
                     imgView.setImageBitmap(myBitmap);
                     imgView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-					HorizontalScrollView hsv = (HorizontalScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
+					// ScrollView hsv = (ScrollView) activity.findViewById(activity.getResources().getIdentifier("hsv", "id", activity.getPackageName()));
 					LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(squareDim,squareDim);
                     layout.setMargins(dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx),dpToPx(16,ctx));
                     imgView.setLayoutParams(layout);
