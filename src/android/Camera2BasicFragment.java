@@ -553,14 +553,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             });
         }
 	}
-	
-	@Override
-	public void onConfigurationChanged(Configuration newConfig){
-		super.onConfigurationChanged(newConfig);
-		Log.d(TAG,"Camera2BasicFragment onConfigurationChanged... orientation: "+newConfig.orientation);
-		String message = "Camera2BasicFragment newConfig.orientation: "+newConfig.orientation;
-		InfoDialog.newInstance(message).show(getChildFragmentManager(), FRAGMENT_DIALOG);
-	}
 
     /**
      * Given {@code choices} of {@code Size}s supported by a camera, choose the smallest one that
@@ -669,22 +661,22 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		orientationEventListener = new OrientationEventListener(activity, SensorManager.SENSOR_DELAY_UI) {
 			@Override
 			public void onOrientationChanged(int angle) {
-				currentOrientation = angle;
-				TextView text1 = (TextView) activity.findViewById(activity.getResources().getIdentifier("text1", "id", activity.getPackageName()));
+				// currentOrientation = angle;
+				// TextView text1 = (TextView) activity.findViewById(activity.getResources().getIdentifier("text1", "id", activity.getPackageName()));
 				Log.d("ORIENTATIONCHANGED","angle: "+angle);
 				if(angle >= 315 || angle <= 44){
 					// currentRotation = 270;
 					currentRotation = 90;
-					text1.setText("Angle: "+angle+"\u00B0 (Retrato)");
+					// text1.setText("Angle: "+angle+"\u00B0 (Retrato)");
 				}else if(angle >= 45 && angle <= 134){
 					currentRotation = 180;
-					text1.setText("Angle: "+angle+"\u00B0 (Paisagem INVERSO)");
+					// text1.setText("Angle: "+angle+"\u00B0 (Paisagem INVERSO)");
 				}else if(angle >= 135 && angle <= 224){
 					currentRotation = -90;
-					text1.setText("Angle: "+angle+"\u00B0 (Retrato INVERSO)");
+					// text1.setText("Angle: "+angle+"\u00B0 (Retrato INVERSO)");
 				}else if(angle >= 225 && angle <= 314){
 					currentRotation = 0;
-					text1.setText("Angle: "+angle+"\u00B0 (Paisagem)");
+					// text1.setText("Angle: "+angle+"\u00B0 (Paisagem)");
 				}
 			}
 		};
@@ -1155,13 +1147,13 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             setAutoFlash(captureBuilder);
             // Orientation
 			int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-			Log.d("ORIENTATION","getResources().getConfiguration().orientation: "+getResources().getConfiguration().orientation);
-			Log.d("ORIENTATION","captureStillPicture rotation: "+rotation);
+			// Log.d("ORIENTATION","getResources().getConfiguration().orientation: "+getResources().getConfiguration().orientation);
+			// Log.d("ORIENTATION","captureStillPicture rotation: "+rotation);
 			int jpegOrientation = getOrientation(rotation);
 			Log.d("ORIENTATION","captureStillPicture jpegOrientation: "+jpegOrientation);
-			int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-			String message = "Rotation: "+rotation+"\njpegOrientation: "+jpegOrientation+"\ndisplayRotation: "+displayRotation+"\nmSensorOrientation: "+mSensorOrientation;
-			InfoDialog.newInstance(message).show(getChildFragmentManager(), FRAGMENT_DIALOG);
+			// int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+			// String message = "Rotation: "+rotation+"\njpegOrientation: "+jpegOrientation+"\ndisplayRotation: "+displayRotation+"\nmSensorOrientation: "+mSensorOrientation;
+			// InfoDialog.newInstance(message).show(getChildFragmentManager(), FRAGMENT_DIALOG);
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation);
             // Log.d(TAG,"ANTES DA CAPTURE SESSION: "+System.currentTimeMillis());
             CameraCaptureSession.CaptureCallback CaptureCallback

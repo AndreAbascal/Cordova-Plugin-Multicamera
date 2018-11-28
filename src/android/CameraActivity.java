@@ -42,12 +42,6 @@ public class CameraActivity extends AppCompatActivity {
 		this.images.put(encodedImage);
 	}
 	@Override
-	public void onConfigurationChanged(Configuration newConfig){
-		Log.d(TAG,"CameraActivity onConfigurationChanged");
-		Log.d(TAG,"amerCaActivity onConfigurationChanged orientation: "+newConfig.orientation);
-		super.onConfigurationChanged(newConfig);
-	}
-	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG,"CameraActivity onCreate");
         super.onCreate(savedInstanceState);

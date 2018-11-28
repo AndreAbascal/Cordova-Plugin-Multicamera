@@ -39,14 +39,14 @@
 				android:id="@+id/back"
 				android:layout_width="24dp"
 				android:layout_height="24dp"/>
-			<TextView
+			<!-- <TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/text1"
 				android:text="@string/angle"
 				android:textStyle="bold"
 				android:textColor="#ffffff"
-				android:textIsSelectable="false"/>
+				android:textIsSelectable="false"/> -->
 		</RelativeLayout>
 
         <Button
