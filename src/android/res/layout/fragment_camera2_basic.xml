@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/lens"/>
         </LinearLayout>
-        <HorizontalScrollView
+        <ScrollView
             android:id="@+id/hsv"
             android:layout_width="96dp"
             android:layout_height="match_parent">
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
             </LinearLayout>
-        </HorizontalScrollView>
+        </ScrollView>
 
         <!--<LinearLayout-->
             <!--android:id="@+id/control"-->
