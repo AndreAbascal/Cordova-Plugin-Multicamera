@@ -356,11 +356,20 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	private OrientationEventListener orientationEventListener;
 
 	/**
+	 *  Holds current bitmap rotate angle
+	*/
+
+	private int currentRotation;
+
+	/**
 	 *  Holds current orientation value
 	*/
 
 	private int currentOrientation;
-
+	/**
+	 * Holds device default orientation
+	*/
+	private int defaultOrientation;
     /**
      * A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
      */
@@ -456,7 +465,21 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 }
             });
         }
-    }
+	}
+	
+	public int getDeviceDefaultOrientation() {
+		WindowManager windowManager =  (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+		Configuration config = getResources().getConfiguration();
+		int rotation = windowManager.getDefaultDisplay().getRotation();
+		if ( ((rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) &&
+				config.orientation == Configuration.ORIENTATION_LANDSCAPE)
+			|| ((rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) &&    
+				config.orientation == Configuration.ORIENTATION_PORTRAIT)) {
+		  return Configuration.ORIENTATION_LANDSCAPE;
+		} else { 
+		  return Configuration.ORIENTATION_PORTRAIT;
+		}
+	}
 
     public static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -488,7 +511,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         return Math.round((float) dp * density);
     }
 
-    private void showImageView(final File f){
+    private void showImageView(final File f, int bitmapRotation){
         final Activity activity = getActivity();
         if(activity != null){
             activity.runOnUiThread(new Runnable() {
@@ -510,8 +533,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					Log.d(TAG,"reqHeight: "+reqHeight);
                     opts.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 					Log.d(TAG,"opts.inSampleSize: "+opts.inSampleSize);
-                    opts.inJustDecodeBounds = false;
-                    Bitmap myBitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),opts);
+					opts.inJustDecodeBounds = false;
+					Matrix matrix = new Matrix();
+					matrix.postRotate(bitmapRotation);
+					Bitmap myBitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),opts);
+					myBitmap = Bitmap.createBitmap(myBitmap,0,0,myBitmap.getWidth(),myBitmap.getHeight(),matrix,true);
                     ImageView imgView = new ImageView(ctx);
                     imgView.setImageBitmap(myBitmap);
                     imgView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -641,20 +667,26 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		orientationEventListener = new OrientationEventListener(activity, SensorManager.SENSOR_DELAY_UI) {
 			@Override
 			public void onOrientationChanged(int angle) {
+				currentOrientation = angle;
 				TextView text1 = (TextView) activity.findViewById(activity.getResources().getIdentifier("text1", "id", activity.getPackageName()));
 				Log.d("ORIENTATIONCHANGED","angle: "+angle);
 				if(angle >= 315 || angle <= 44){
+					currentRotation = 270;
 					text1.setText("Angle: "+angle+"\u00B0 (Retrato)");
 				}else if(angle >= 45 && angle <= 134){
+					currentRotation = 180;
 					text1.setText("Angle: "+angle+"\u00B0 (Paisagem INVERSO)");
 				}else if(angle >= 135 && angle <= 224){
+					currentRotation = 90;
 					text1.setText("Angle: "+angle+"\u00B0 (Retrato INVERSO)");
 				}else if(angle >= 225 && angle <= 314){
+					currentRotation = 0;
 					text1.setText("Angle: "+angle+"\u00B0 (Paisagem)");
 				}
 			}
 		};
 		orientationEventListener.enable();
+		this.defaultOrientation = this.getDeviceDefaultOrientation();
     }
 
     @Override
@@ -1136,9 +1168,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session,
                                                @NonNull CaptureRequest request,
                                                @NonNull TotalCaptureResult result) {
+					int bitmapRotation = currentRotation;
                     unlockFocus();
                     Log.d(TAG,"DEPOIS DO UNLOCK FOCUS: "+System.currentTimeMillis());
-                    showImageView(mFile);
+                    showImageView(mFile,angle);
 					mFile = new File(getActivity().getExternalFilesDir(null), System.currentTimeMillis()+".jpg");
                 }
             };
