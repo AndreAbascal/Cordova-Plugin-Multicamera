@@ -6,9 +6,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ff1669f-47de-4bdf-92e8-974e183aa936" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/android/res/layout/fragment_camera2_basic.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/android/res/layout/fragment_camera2_basic.xml" afterDir="false" />
-    </list>
+    <list default="true" id="3ff1669f-47de-4bdf-92e8-974e183aa936" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,15 +16,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Camera2BasicFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/android/Camera2BasicFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8636">
-              <caret line="600" column="24" selection-start-line="600" selection-start-column="24" selection-end-line="600" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MultiCamera.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/android/MultiCamera.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -92,8 +81,8 @@
       <file leaf-file-name="fragment_camera2_basic.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/android/res/layout/fragment_camera2_basic.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="62" column="9" selection-start-line="62" selection-start-column="9" selection-end-line="62" selection-end-column="9" />
+            <state relative-caret-position="153">
+              <caret line="9" column="68" lean-forward="true" selection-start-line="9" selection-start-column="68" selection-end-line="9" selection-end-column="68" />
             </state>
           </provider>
         </entry>
@@ -125,6 +114,7 @@
       <list>
         <option value="$PROJECT_DIR$/src/android/res/layout/activity_camera.xml" />
         <option value="$PROJECT_DIR$/src/android/res/layout/fragment_camera2_basic.xml" />
+        <option value="$PROJECT_DIR$/src/android/res/layout/teste.xml" />
       </list>
     </option>
   </component>
@@ -453,8 +443,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/android/Camera2BasicFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8636">
-          <caret line="600" column="24" selection-start-line="600" selection-start-column="24" selection-end-line="600" selection-end-column="24" />
+        <state relative-caret-position="8976">
+          <caret line="601" column="24" selection-start-line="601" selection-start-column="24" selection-end-line="601" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -504,10 +494,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/android/res/layout/teste.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/android/res/layout/fragment_camera2_basic.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="62" column="9" selection-start-line="62" selection-start-column="9" selection-end-line="62" selection-end-column="9" />
+        <state relative-caret-position="153">
+          <caret line="9" column="68" lean-forward="true" selection-start-line="9" selection-start-column="68" selection-end-line="9" selection-end-column="68" />
         </state>
       </provider>
     </entry>
