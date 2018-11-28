@@ -673,13 +673,14 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				TextView text1 = (TextView) activity.findViewById(activity.getResources().getIdentifier("text1", "id", activity.getPackageName()));
 				Log.d("ORIENTATIONCHANGED","angle: "+angle);
 				if(angle >= 315 || angle <= 44){
-					currentRotation = 270;
+					// currentRotation = 270;
+					currentRotation = 90;
 					text1.setText("Angle: "+angle+"\u00B0 (Retrato)");
 				}else if(angle >= 45 && angle <= 134){
 					currentRotation = 180;
 					text1.setText("Angle: "+angle+"\u00B0 (Paisagem INVERSO)");
 				}else if(angle >= 135 && angle <= 224){
-					currentRotation = 90;
+					currentRotation = -90;
 					text1.setText("Angle: "+angle+"\u00B0 (Retrato INVERSO)");
 				}else if(angle >= 225 && angle <= 314){
 					currentRotation = 0;
