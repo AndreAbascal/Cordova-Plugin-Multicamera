@@ -671,7 +671,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				}else if(angle >= 45 && angle <= 134){
 					currentRotation = 180;
 				}else if(angle >= 135 && angle <= 224){
-					currentRotation = -90;
+					currentRotation = 270;
 				}else if(angle >= 225 && angle <= 314){
 					currentRotation = 0;
 				}
