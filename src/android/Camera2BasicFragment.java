@@ -469,7 +469,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	}
 	
 	public int getDeviceDefaultOrientation() {
-		WindowManager windowManager =  (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+		Activity activity = getActivity();
+		WindowManager windowManager =  (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
 		Configuration config = getResources().getConfiguration();
 		int rotation = windowManager.getDefaultDisplay().getRotation();
 		if ( ((rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) &&
@@ -1172,7 +1173,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					int bitmapRotation = currentRotation;
                     unlockFocus();
                     Log.d(TAG,"DEPOIS DO UNLOCK FOCUS: "+System.currentTimeMillis());
-                    showImageView(mFile,angle);
+                    showImageView(mFile,bitmapRotation);
 					mFile = new File(getActivity().getExternalFilesDir(null), System.currentTimeMillis()+".jpg");
                 }
             };
