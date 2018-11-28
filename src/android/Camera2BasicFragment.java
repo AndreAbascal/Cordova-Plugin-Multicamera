@@ -661,10 +661,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		orientationEventListener = new OrientationEventListener(activity, SensorManager.SENSOR_DELAY_NORMAL) {
 			@Override
 			public void onOrientationChanged(int angle) {
-				currentRotation = angle;
+				// currentRotation = angle;
 				// currentOrientation = angle;
 				// TextView text1 = (TextView) activity.findViewById(activity.getResources().getIdentifier("text1", "id", activity.getPackageName()));
-				/*Log.d("ORIENTATIONCHANGED","angle: "+angle);
+				// Log.d("ORIENTATIONCHANGED","angle: "+angle);
 				if(angle >= 315 || angle <= 44){
 					currentRotation = 90;
 				}else if(angle >= 45 && angle <= 134){
@@ -673,7 +673,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 					currentRotation = -90;
 				}else if(angle >= 225 && angle <= 314){
 					currentRotation = 0;
-				}*/
+				}
 			}
 		};
 		orientationEventListener.enable();
@@ -1149,9 +1149,9 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			int jpegOrientation = getOrientation(currentRotation);
 			Log.d("ORIENTATION","captureStillPicture jpegOrientation: "+jpegOrientation);
 			// int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-			// String message = "Rotation: "+rotation+"\njpegOrientation: "+jpegOrientation+"\ndisplayRotation: "+displayRotation+"\nmSensorOrientation: "+mSensorOrientation;
-			// InfoDialog.newInstance(message).show(getChildFragmentManager(), FRAGMENT_DIALOG);
-            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation);
+			String message = "\njpegOrientation: "+jpegOrientation;
+			InfoDialog.newInstance(message).show(getChildFragmentManager(), FRAGMENT_DIALOG);
+            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, currentRotation);
             // Log.d(TAG,"ANTES DA CAPTURE SESSION: "+System.currentTimeMillis());
             CameraCaptureSession.CaptureCallback CaptureCallback
                     = new CameraCaptureSession.CaptureCallback() {
