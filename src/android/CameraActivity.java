@@ -151,6 +151,7 @@ public class CameraActivity extends AppCompatActivity {
 		Log.d(TAG,"CameraActivity sendActivityResult... 2");
         setResult(resultCode, intent);
 		Log.d(TAG,"CameraActivity sendActivityResult... 3");
+		getSupportFragmentManager().beginTransaction().remove(this.getResources().getIdentifier("container", "id", this.getPackageName()), Camera2BasicFragment.newInstance()).commit();
         finish();// Exit of this activity !
 		Log.d(TAG,"CameraActivity sendActivityResult... 4");
     }
@@ -164,6 +165,7 @@ public class CameraActivity extends AppCompatActivity {
 		Log.d(TAG,"CameraActivity sendActivityResultJSON 2");
         setResult(resultCode, intent);
 		Log.d(TAG,"CameraActivity sendActivityResultJSON 3");
+		getSupportFragmentManager().beginTransaction().remove(this.getResources().getIdentifier("container", "id", this.getPackageName()), Camera2BasicFragment.newInstance()).commit();
         finish();// Exit of this activity !
 		Log.d(TAG,"CameraActivity sendActivityResultJSON 4");
 	}
