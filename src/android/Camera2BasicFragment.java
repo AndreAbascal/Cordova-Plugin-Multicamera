@@ -709,20 +709,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         // a camera and start preview from here (otherwise, we wait until the surface is ready in
         // the SurfaceTextureListener).
         if (mTextureView.isAvailable()) {
-            Log.d("TEXTURE_VIEW","mTextureView (WxH): "+mTextureView.getWidth()+"x"+mTextureView.getHeight());
-            Display display = getActivity().getWindowManager().getDefaultDisplay();
-            Point size = new Point();
-            display.getSize(size);
-            int width = size.x;
-            int height = size.y;
-            Log.d("TEXTURE_VIEW", "Display: "+width+"x"+height);
             openCamera(mTextureView.getWidth(), mTextureView.getHeight());
         } else {
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
         }
 	}
 	
-	@Override
     protected void onStop() {
         super.onStop();
         closeCamera();
