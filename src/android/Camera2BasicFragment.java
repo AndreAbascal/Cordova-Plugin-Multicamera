@@ -207,7 +207,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     /**
      * The {@link android.util.Size} of camera preview.
      */
-    private Size mPreviewSize;
+	private Size mPreviewSize;
+	
+	/**
+     * The {@link android.util.Size} of camera preview.
+     */
+    private int countFotos = 0;
 
     /**
      * {@link CameraDevice.StateCallback} is called when {@link CameraDevice} changes its state.
@@ -520,6 +525,9 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+					this.countFotos++;
+					TextView text1 = (TextView) activity.findViewById(activity.getResources().getIdentifier("text1", "id", activity.getPackageName()));
+					text1.setText(this.countFotos == 1 ? "1 foto" : this.countFotos+" fotos");
 					Context ctx = getContext();
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = true;
