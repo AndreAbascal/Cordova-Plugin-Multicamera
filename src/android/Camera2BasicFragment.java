@@ -714,12 +714,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
         }
 	}
-	
-    protected void onStop() {
-        super.onStop();
-        closeCamera();
-        stopBackgroundThread();
-    }
 
     @Override
     public void onPause() {
