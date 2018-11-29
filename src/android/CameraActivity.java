@@ -142,6 +142,14 @@ public class CameraActivity extends AppCompatActivity {
 		}
 	}
 
+	public void removeAllFragments(){
+		for (Fragment fragment:getSupportFragmentManager().getFragments()) {
+			if(fragment != null){
+				getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+			}
+		}
+	}
+
 	public void sendActivityResult(int resultCode, String response) {
 		Log.d(TAG,"CameraActivity sendActivityResult... resultCode: "+resultCode);
 		Log.d(TAG,"CameraActivity sendActivityResult... response: "+response);
@@ -151,7 +159,7 @@ public class CameraActivity extends AppCompatActivity {
 		Log.d(TAG,"CameraActivity sendActivityResult... 2");
         setResult(resultCode, intent);
 		Log.d(TAG,"CameraActivity sendActivityResult... 3");
-		getSupportFragmentManager().beginTransaction().remove(this.getResources().getIdentifier("container", "id", this.getPackageName()), Camera2BasicFragment.newInstance()).commit();
+		removeAllFragments();
         finish();// Exit of this activity !
 		Log.d(TAG,"CameraActivity sendActivityResult... 4");
     }
@@ -165,7 +173,7 @@ public class CameraActivity extends AppCompatActivity {
 		Log.d(TAG,"CameraActivity sendActivityResultJSON 2");
         setResult(resultCode, intent);
 		Log.d(TAG,"CameraActivity sendActivityResultJSON 3");
-		getSupportFragmentManager().beginTransaction().remove(this.getResources().getIdentifier("container", "id", this.getPackageName()), Camera2BasicFragment.newInstance()).commit();
+		removeAllFragments();
         finish();// Exit of this activity !
 		Log.d(TAG,"CameraActivity sendActivityResultJSON 4");
 	}
