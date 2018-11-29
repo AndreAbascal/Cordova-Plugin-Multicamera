@@ -525,9 +525,9 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-					this.countFotos++;
+					Camera2BasicFragment.this.countFotos++;
 					TextView text1 = (TextView) activity.findViewById(activity.getResources().getIdentifier("text1", "id", activity.getPackageName()));
-					text1.setText(this.countFotos == 1 ? "1 foto" : this.countFotos+" fotos");
+					text1.setText(Camera2BasicFragment.this.countFotos == 1 ? "1 foto" : Camera2BasicFragment.this.countFotos+" fotos");
 					Context ctx = getContext();
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = true;
