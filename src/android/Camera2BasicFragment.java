@@ -550,7 +550,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     imgView.setLayoutParams(layout);
 					LinearLayout ln = (LinearLayout) activity.findViewById(activity.getResources().getIdentifier("gallery", "id", activity.getPackageName()));
 					ln.addView(imgView,0);
-					// myBitmap.recycle();
+					myBitmap.recycle();
                 }
             });
         }
