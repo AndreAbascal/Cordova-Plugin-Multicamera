@@ -649,6 +649,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			public void onClick(View arg0) {
 				// CameraActivity ca = ((CameraActivity) getActivity());
 				activity.sendActivityResult(Activity.RESULT_CANCELED, "[]");
+				closeCamera();
 				// activity.finish();
 			}
 		});
@@ -663,6 +664,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				Log.d(TAG,"activity.images String length: "+activity.images.toString().length());
 				Log.d(TAG,"ARQUIVOS MERDA: "+activity.files.toString());
 				activity.sendActivityResult(Activity.RESULT_OK, activity.files.toString());
+				closeCamera();
 				// activity.finish();
 			}
 		});
