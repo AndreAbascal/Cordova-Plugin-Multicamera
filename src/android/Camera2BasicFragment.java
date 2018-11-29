@@ -989,7 +989,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             // This is the output Surface we need to start preview.
             Surface surface = new Surface(texture);
             // We set up a CaptureRequest.Builder with the output Surface.
-            mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+			// mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+			mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
 			mPreviewRequestBuilder.set(CaptureRequest.JPEG_QUALITY, (byte) 70);
             mPreviewRequestBuilder.addTarget(surface);
             // Here, we create a CameraCaptureSession for camera preview.
