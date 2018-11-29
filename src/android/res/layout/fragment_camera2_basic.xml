@@ -34,7 +34,7 @@
 			android:orientation="vertical"
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent">
-			<RelativeLayout
+			<LinearLayout
 				android:orientation="horizontal"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
@@ -47,8 +47,9 @@
 					<TextView
 						android:id="@+id/text1"
 						android:layout_height="wrap_content"
-						android:layout_width="wrap_content"/>
-			</RelativeLayout>
+						android:layout_width="wrap_content"
+						android:textColor="#FFFFFF"/>
+			</LinearLayout>
 			<Button
 				android:background="@drawable/baseline_arrow_back_24"
 				android:id="@+id/back"
