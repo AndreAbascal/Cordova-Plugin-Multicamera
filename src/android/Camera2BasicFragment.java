@@ -219,8 +219,16 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      */
     private final CameraDevice.StateCallback mStateCallback = new CameraDevice.StateCallback() {
 
+		@Override
+		public void onClosed(@NonNull CameraDevice cameraDevice) {
+			Log.d(TAG,"CameraDevice.StateCallback... onClosed");
+			mCameraOpenCloseLock.release();
+			mCameraDevice = null;
+		}
+
         @Override
         public void onOpened(@NonNull CameraDevice cameraDevice) {
+			Log.d(TAG,"CameraDevice.StateCallback... onOpened");
             // This method is called when the camera is opened.  We start camera preview here.
             mCameraOpenCloseLock.release();
             mCameraDevice = cameraDevice;
@@ -229,6 +237,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
         @Override
         public void onDisconnected(@NonNull CameraDevice cameraDevice) {
+			Log.d(TAG,"CameraDevice.StateCallback... onDisconnected");
             mCameraOpenCloseLock.release();
             cameraDevice.close();
             mCameraDevice = null;
@@ -236,6 +245,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
         @Override
         public void onError(@NonNull CameraDevice cameraDevice, int error) {
+			Log.d(TAG,"CameraDevice.StateCallback... onError: "+error);
             mCameraOpenCloseLock.release();
             cameraDevice.close();
             mCameraDevice = null;
