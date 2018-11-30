@@ -149,9 +149,17 @@ public class MultiCamera extends CordovaPlugin {
 					Log.d(TAG,"MultiCamera onActivityResult 6");
                     // callback.sendPluginResult(new PluginResult(PluginResult.Status.OK, null));
 					callback.sendPluginResult(new PluginResult(PluginResult.Status.NO_RESULT,""));
-					sendError(extras.getString("data"));
+					String error = "Erro desconhecido";
+					if(!extras.getString("data").equals(null)){
+						error = extras.getString("data");
+					}
+					sendError(error);
 				}else{
 					Log.d(TAG,"MultiCamera onActivityResult 7");
+					String error = "Erro desconhecido";
+					if(!extras.getString("data").equals(null)){
+						error = extras.getString("data");
+					}
 					sendError(extras.getString("data"));
 				}
 
