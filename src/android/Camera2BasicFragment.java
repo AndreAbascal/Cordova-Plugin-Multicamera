@@ -230,7 +230,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         public void onOpened(@NonNull CameraDevice cameraDevice) {
 			Log.d(TAG,"CameraDevice.StateCallback... onOpened");
             // This method is called when the camera is opened.  We start camera preview here.
-            mCameraOpenCloseLock.release();
+            // mCameraOpenCloseLock.release();
             mCameraDevice = cameraDevice;
             createCameraPreviewSession();
         }
@@ -1008,39 +1008,34 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             mPreviewRequestBuilder.addTarget(surface);
             // Here, we create a CameraCaptureSession for camera preview.
             mCameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()),
-                    new CameraCaptureSession.StateCallback() {
-
-                        @Override
-                        public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
-                            // The camera is already closed
-                            if (null == mCameraDevice) {
-                                return;
-                            }
-
-                            // When the session is ready, we start displaying the preview.
-                            mCaptureSession = cameraCaptureSession;
-                            try {
-                                // Auto focus should be continuous for camera preview.
-                                mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
-                                        CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-                                // Flash is automatically enabled when necessary.
-                                setAutoFlash(mPreviewRequestBuilder);
-
-                                // Finally, we start displaying the camera preview.
-                                mPreviewRequest = mPreviewRequestBuilder.build();
-                                mCaptureSession.setRepeatingRequest(mPreviewRequest,
-                                        mCaptureCallback, mBackgroundHandler);
-                            } catch (CameraAccessException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onConfigureFailed(
-                                @NonNull CameraCaptureSession cameraCaptureSession) {
-                            showToast("Failed");
-                        }
-                    }, null
+				new CameraCaptureSession.StateCallback() {
+					@Override
+					public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
+						// The camera is already closed
+						if (null == mCameraDevice) {
+							return;
+						}
+						// When the session is ready, we start displaying the preview.
+						mCaptureSession = cameraCaptureSession;
+						try {
+							// Auto focus should be continuous for camera preview.
+							mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+							// Flash is automatically enabled when necessary.
+							setAutoFlash(mPreviewRequestBuilder);
+							// Finally, we start displaying the camera preview.
+							mPreviewRequest = mPreviewRequestBuilder.build();
+							mCaptureSession.setRepeatingRequest(mPreviewRequest,mCaptureCallback,mBackgroundHandler);
+							mCameraOpenCloseLock.release();										
+						} catch (CameraAccessException e) {
+							e.printStackTrace();
+						}
+					}
+					@Override
+					public void onConfigureFailed(
+							@NonNull CameraCaptureSession cameraCaptureSession) {
+						showToast("Failed");
+					}
+				}, null
             );
         } catch (CameraAccessException e) {
             e.printStackTrace();

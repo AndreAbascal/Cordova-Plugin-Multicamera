@@ -168,7 +168,13 @@ public class MultiCamera extends CordovaPlugin {
                 // Handle other results if exists.
                 super.onActivityResult(requestCode, resultCode, data);
         }
-    }
+	}
+	
+	@Override
+	public void onDestroy(){
+		LOG.d(TAG, "CordovaActivity.onDestroy()");
+		super.onDestroy();
+	}
 
     //--------------------------------------------------------------------------
     // LOCAL METHODS
