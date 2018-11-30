@@ -172,7 +172,7 @@ public class MultiCamera extends CordovaPlugin {
 	
 	@Override
 	public void onDestroy(){
-		LOG.d(TAG, "CordovaActivity.onDestroy()");
+		Log.d(TAG, "CordovaActivity.onDestroy()");
 		super.onDestroy();
 	}
 
