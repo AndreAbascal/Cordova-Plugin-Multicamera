@@ -57,7 +57,7 @@ public class AutoFitTextureView extends TextureView {
         }
         mRatioWidth = width;
 		mRatioHeight = height;
-		Log.d(TAG,"setAspectRatio: "+mRatioWidth+"x"+mRatioHeight);
+		// Log.d(TAG,"setAspectRatio: "+mRatioWidth+"x"+mRatioHeight);
         requestLayout();
     }
 

@@ -46,7 +46,7 @@ public class MultiCamera extends CordovaPlugin {
      * Constructor.
      */
     public MultiCamera() {
-		Log.d(TAG,"MultiCamera constructor!");
+		// Log.d(TAG,"MultiCamera constructor!");
     }
 
     /**
@@ -58,10 +58,10 @@ public class MultiCamera extends CordovaPlugin {
      */
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-		Log.d(TAG,"MultiCamera initialize!");
+		// Log.d(TAG,"MultiCamera initialize!");
         super.initialize(cordova, webView);
 
-        Log.d(TAG, "Initializing MultiCamera");
+        // Log.d(TAG, "Initializing MultiCamera");
     }
 
     /**
@@ -74,33 +74,33 @@ public class MultiCamera extends CordovaPlugin {
      */
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		Log.d(TAG,"MultiCamera exec!");
-		Log.d(TAG,"action: "+action);
+		// Log.d(TAG,"MultiCamera exec!");
+		// Log.d(TAG,"action: "+action);
         callback = callbackContext;
         if(action.equals("open")) {
-			Log.d(TAG,"Sim, action = "+action);
+			// Log.d(TAG,"Sim, action = "+action);
             try {
-				Log.d(TAG,"Antes de criar o Intent.");
-				Log.d(TAG,"Atividade: "+ActivityName);
+				// Log.d(TAG,"Antes de criar o Intent.");
+				// Log.d(TAG,"Atividade: "+ActivityName);
 				Context context = cordova.getActivity().getApplicationContext();
                 // Intent intent = new Intent(ActivityName);
 				Intent intent = new Intent(context, CameraActivity.class);
-				Log.d(TAG,"Antes de criar o Intent");
+				// Log.d(TAG,"Antes de criar o Intent");
                 // Send some info to the activity to retrieve it later
-				Log.d(TAG,"intent.putExtra('action'): "+MultiCamera.open);
+				// Log.d(TAG,"intent.putExtra('action'): "+MultiCamera.open);
                 intent.putExtra("action", MultiCamera.open);
-				Log.d(TAG,"Antes do cordova.startActivityForResult.");
+				// Log.d(TAG,"Antes do cordova.startActivityForResult.");
                 cordova.startActivityForResult((CordovaPlugin) this, intent, MultiCamera.open);
-				Log.d(TAG,"Antes do result.");
+				// Log.d(TAG,"Antes do result.");
                 PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
-				Log.d(TAG,"Depois do result.");
+				// Log.d(TAG,"Depois do result.");
                 result.setKeepCallback(true);
-				Log.d(TAG,"Depois do result.setKeepCallback.");
+				// Log.d(TAG,"Depois do result.setKeepCallback.");
                 callback.sendPluginResult(result);
-				Log.d(TAG,"Depois do callback.sendPluginResult.");
-                Log.d(TAG, "Open started");
+				// Log.d(TAG,"Depois do callback.sendPluginResult.");
+                // Log.d(TAG, "Open started");
             } catch(Exception ex) {
-				Log.d(TAG, "execute Exception");
+				// Log.d(TAG, "execute Exception");
 				ex.printStackTrace();
 			}
         } else {
@@ -119,34 +119,34 @@ public class MultiCamera extends CordovaPlugin {
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d(TAG,"MultiCamera onActivityResult... requestCode: "+requestCode+" | resultCode: "+resultCode);
+		// Log.d(TAG,"MultiCamera onActivityResult... requestCode: "+requestCode+" | resultCode: "+resultCode);
 		if(data != null){
-			Log.d(TAG,"MultiCamera onActivityResult... 1");
+			// Log.d(TAG,"MultiCamera onActivityResult... 1");
 			Bundle extras = data.getExtras();
-			Log.d(TAG,"MultiCamera onActivityResult... 2");
+			// Log.d(TAG,"MultiCamera onActivityResult... 2");
 			for (String key : extras.keySet()) {
-				Log.d(TAG,"MultiCamera onActivityResult... xyz");
+				// Log.d(TAG,"MultiCamera onActivityResult... xyz");
 				Object value = extras.get(key);
-				Log.d(TAG, "MultiCamera onActivityResult Bundle extras -> "+String.format("%s %s (%s)", key,value.toString(), value.getClass().getName()));
+				// Log.d(TAG, "MultiCamera onActivityResult Bundle extras -> "+String.format("%s %s (%s)", key,value.toString(), value.getClass().getName()));
 			}
-			Log.d(TAG,"MultiCamera onActivityResult 3");
+			// Log.d(TAG,"MultiCamera onActivityResult 3");
 		}
-		Log.d(TAG,"MultiCamera onActivityResult... 4");
+		// Log.d(TAG,"MultiCamera onActivityResult... 4");
         switch(requestCode) {
             case MultiCamera.open:
 				Bundle extras = new Bundle();
 				if(data != null){
 					extras = data.getExtras();
 				}
-				Log.d(TAG,"MultiCamera onActivityResult 3");
+				// Log.d(TAG,"MultiCamera onActivityResult 3");
                 if(resultCode == cordova.getActivity().RESULT_OK) {
-					Log.d(TAG,"MultiCamera onActivityResult 4");
+					// Log.d(TAG,"MultiCamera onActivityResult 4");
                     // boolean result = extras.getString("data").equals("true");
-                    Log.d(TAG,"MultiCamera onActivityResult extras: "+extras.toString());
+                    // Log.d(TAG,"MultiCamera onActivityResult extras: "+extras.toString());
                     callback.sendPluginResult(new PluginResult(PluginResult.Status.OK, extras.getString("data")));
-					Log.d(TAG,"MultiCamera onActivityResult 5");
+					// Log.d(TAG,"MultiCamera onActivityResult 5");
                 } else if(resultCode == 0) {
-					Log.d(TAG,"MultiCamera onActivityResult 6");
+					// Log.d(TAG,"MultiCamera onActivityResult 6");
                     // callback.sendPluginResult(new PluginResult(PluginResult.Status.OK, null));
 					callback.sendPluginResult(new PluginResult(PluginResult.Status.NO_RESULT,""));
 					String error = "Erro desconhecido";
@@ -155,7 +155,7 @@ public class MultiCamera extends CordovaPlugin {
 					}
 					sendError(error);
 				}else{
-					Log.d(TAG,"MultiCamera onActivityResult 7");
+					// Log.d(TAG,"MultiCamera onActivityResult 7");
 					String error = "Erro desconhecido";
 					if(extras.containsKey("data") && !extras.getString("data").equals(null)){
 						error = extras.getString("data");
@@ -172,7 +172,7 @@ public class MultiCamera extends CordovaPlugin {
 	
 	@Override
 	public void onDestroy(){
-		Log.d(TAG, "CordovaActivity.onDestroy()");
+		// Log.d(TAG, "CordovaActivity.onDestroy()");
 		super.onDestroy();
 	}
 
@@ -181,7 +181,7 @@ public class MultiCamera extends CordovaPlugin {
     //--------------------------------------------------------------------------
 
     private void sendError(String error) {
-		Log.d(TAG,"MultiCamera sendError: "+error);
+		// Log.d(TAG,"MultiCamera sendError: "+error);
         callback.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, error));
     }
 }

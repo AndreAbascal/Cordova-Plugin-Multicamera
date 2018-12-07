@@ -221,14 +221,14 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
 		@Override
 		public void onClosed(@NonNull CameraDevice cameraDevice) {
-			Log.d(TAG,"CameraDevice.StateCallback... onClosed");
+			// Log.d(TAG,"CameraDevice.StateCallback... onClosed");
 			mCameraOpenCloseLock.release();
 			mCameraDevice = null;
 		}
 
         @Override
         public void onOpened(@NonNull CameraDevice cameraDevice) {
-			Log.d(TAG,"CameraDevice.StateCallback... onOpened");
+			// Log.d(TAG,"CameraDevice.StateCallback... onOpened");
             // This method is called when the camera is opened.  We start camera preview here.
             // mCameraOpenCloseLock.release();
             mCameraDevice = cameraDevice;
@@ -237,7 +237,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
         @Override
         public void onDisconnected(@NonNull CameraDevice cameraDevice) {
-			Log.d(TAG,"CameraDevice.StateCallback... onDisconnected");
+			// Log.d(TAG,"CameraDevice.StateCallback... onDisconnected");
             mCameraOpenCloseLock.release();
             cameraDevice.close();
             mCameraDevice = null;
@@ -245,7 +245,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
         @Override
         public void onError(@NonNull CameraDevice cameraDevice, int error) {
-			Log.d(TAG,"CameraDevice.StateCallback... onError: "+error);
+			// Log.d(TAG,"CameraDevice.StateCallback... onError: "+error);
             mCameraOpenCloseLock.release();
             cameraDevice.close();
             mCameraDevice = null;
@@ -418,12 +418,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                         }
                     }else{
                         //0,1,2 nao da pau
-                        Log.d("CAMERA_LOG","afState desconhecido (deu pau): "+afState);
+                        // Log.d("CAMERA_LOG","afState desconhecido (deu pau): "+afState);
                     }
                     break;
                 }
                 case STATE_WAITING_PRECAPTURE: {
-                    Log.d("CAMERA_LOG","STATE_WAITING_PRECAPTURE");
+                    // Log.d("CAMERA_LOG","STATE_WAITING_PRECAPTURE");
                     // CONTROL_AE_STATE can be null on some devices
                     Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
                     if (aeState == null ||
@@ -434,7 +434,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     break;
                 }
                 case STATE_WAITING_NON_PRECAPTURE: {
-                    Log.d("CAMERA_LOG","STATE_WAITING_NON_PRECAPTURE");
+                    // Log.d("CAMERA_LOG","STATE_WAITING_NON_PRECAPTURE");
                     // CONTROL_AE_STATE can be null on some devices
                     Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
                     if (aeState == null || aeState != CaptureResult.CONTROL_AE_STATE_PRECAPTURE) {
@@ -448,7 +448,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
         @Override
         public void onCaptureFailed(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull CaptureFailure failure) {
-            Log.d(TAG,"onCaptureFailed: "+failure.getReason());
+            // Log.d(TAG,"onCaptureFailed: "+failure.getReason());
         }
 
         @Override
@@ -547,13 +547,13 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     String imageType = options.outMimeType;
                     BitmapFactory.Options opts = new BitmapFactory.Options();
 					int squareDim = dpToPx(48,ctx);
-					Log.d(TAG,"dpToPx(48,ctx): "+squareDim);
+					// Log.d(TAG,"dpToPx(48,ctx): "+squareDim);
 					Integer reqWidth = new Integer(squareDim);
 					Integer reqHeight = new Integer(squareDim);
-					Log.d(TAG,"reqWidth: "+reqWidth);
-					Log.d(TAG,"reqHeight: "+reqHeight);
+					// Log.d(TAG,"reqWidth: "+reqWidth);
+					// Log.d(TAG,"reqHeight: "+reqHeight);
                     opts.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-					Log.d(TAG,"opts.inSampleSize: "+opts.inSampleSize);
+					// Log.d(TAG,"opts.inSampleSize: "+opts.inSampleSize);
 					opts.inJustDecodeBounds = false;
 					/*Matrix matrix = new Matrix();
 					matrix.postRotate(bitmapRotation);*/
@@ -613,10 +613,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         // Pick the smallest of those big enough. If there is no one big enough, pick the
         // largest of those not big enough.
         if (bigEnough.size() > 0) {
-            Log.d("TEXTURE_VIEW","Retornou aqui: "+Collections.min(bigEnough, new CompareSizesByArea()));
+            // Log.d("TEXTURE_VIEW","Retornou aqui: "+Collections.min(bigEnough, new CompareSizesByArea()));
             return Collections.min(bigEnough, new CompareSizesByArea());
         } else if (notBigEnough.size() > 0) {
-            Log.d("TEXTURE_VIEW","Retornou embaixo: "+Collections.max(notBigEnough, new CompareSizesByArea()));
+            // Log.d("TEXTURE_VIEW","Retornou embaixo: "+Collections.max(notBigEnough, new CompareSizesByArea()));
             return Collections.max(notBigEnough, new CompareSizesByArea());
         } else {
             Log.e(TAG, "Couldn't find any suitable preview size");
@@ -633,13 +633,13 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		Log.d(TAG, "Camera2BasicFragment onCreate()");
+		// Log.d(TAG, "Camera2BasicFragment onCreate()");
 	}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // return inflater.inflate(R.layout.fragment_camera2_basic, container, false);
-		Log.d(TAG, "Camera2BasicFragment onCreateView");
+		// Log.d(TAG, "Camera2BasicFragment onCreateView");
 		return inflater.inflate(getActivity().getResources().getIdentifier("fragment_camera2_basic", "layout", getActivity().getPackageName()),container,false);
     }
 
@@ -647,10 +647,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     public void onViewCreated(final View view, Bundle savedInstanceState) {
 		// final Activity activity = getActivity();
 		final CameraActivity activity = ((CameraActivity) getActivity());
-		Log.d(TAG, "Camera2BasicFragment onViewCreated");
+		// Log.d(TAG, "Camera2BasicFragment onViewCreated");
         // view.findViewById(R.id.picture).setOnClickListener(this);
 		view.findViewById(activity.getResources().getIdentifier("picture", "id", activity.getPackageName())).setOnClickListener(this);
-		Log.d(TAG, "Camera2BasicFragment onViewCreated 2");
+		// Log.d(TAG, "Camera2BasicFragment onViewCreated 2");
         // mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
 		mTextureView = (AutoFitTextureView) view.findViewById(activity.getResources().getIdentifier("texture", "id", activity.getPackageName()));
 		Button back = activity.findViewById(activity.getResources().getIdentifier("back", "id", activity.getPackageName()));
@@ -671,14 +671,14 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			public void onClick(View arg0) {
 				// CameraActivity ca = ((CameraActivity) getActivity());
 				// activity.sendActivityResult(Activity.RESULT_OK, activity.images.toString());
-				Log.d(TAG,"activity.images String length: "+activity.images.toString().length());
-				Log.d(TAG,"ARQUIVOS MERDA: "+activity.files.toString());
+				// Log.d(TAG,"activity.images String length: "+activity.images.toString().length());
+				// Log.d(TAG,"ARQUIVOS MERDA: "+activity.files.toString());
 				activity.sendActivityResult(Activity.RESULT_OK, activity.files.toString());
 				closeCamera();
 				// activity.finish();
 			}
 		});
-		Log.d(TAG, "Camera2BasicFragment onViewCreated 3");
+		// Log.d(TAG, "Camera2BasicFragment onViewCreated 3");
 		orientationEventListener = new OrientationEventListener(activity, SensorManager.SENSOR_DELAY_NORMAL) {
 			@Override
 			public void onOrientationChanged(int angle) {
@@ -703,12 +703,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-		Log.d(TAG, "Camera2BasicFragment onActivityCreated");
+		// Log.d(TAG, "Camera2BasicFragment onActivityCreated");
 		super.onActivityCreated(savedInstanceState);
-		Log.d(TAG, "Camera2BasicFragment onActivityCreated 2");
+		// Log.d(TAG, "Camera2BasicFragment onActivityCreated 2");
         mFile = new File(getActivity().getExternalFilesDir(null), System.currentTimeMillis()+".jpg");
-		Log.d(TAG, "Camera2BasicFragment onActivityCreated 3");
-        Log.d(TAG,"ANDRE - mFile: "+mFile.toString());
+		// Log.d(TAG, "Camera2BasicFragment onActivityCreated 3");
+        // Log.d(TAG,"ANDRE - mFile: "+mFile.toString());
     }
 
 	@Override
@@ -737,7 +737,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onPause() {
-		Log.d(TAG,"Camera2BasicFragment onPause!");
+		// Log.d(TAG,"Camera2BasicFragment onPause!");
 		if(orientationEventListener != null){
 			orientationEventListener.disable();
 		}
@@ -781,59 +781,59 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         Activity activity = getActivity();
         CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
         try {
-			Log.d(TAG,"setUpCameraOutputs("+width+","+height+")");
+			// Log.d(TAG,"setUpCameraOutputs("+width+","+height+")");
             for (String cameraId : manager.getCameraIdList()) {
-				Log.d(TAG,"cameraId: "+cameraId);
+				// Log.d(TAG,"cameraId: "+cameraId);
 				CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
-				Log.d(TAG,"setUpCameraOutputs 1");
+				// Log.d(TAG,"setUpCameraOutputs 1");
                 // We don't use a front facing camera in this sample.
                 Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
                 if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
                     continue;
 				}
-				Log.d(TAG,"setUpCameraOutputs 2");
+				// Log.d(TAG,"setUpCameraOutputs 2");
                 StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
                 if (map == null) {
                     continue;
 				}
-				Log.d(TAG,"setUpCameraOutputs 3");
+				// Log.d(TAG,"setUpCameraOutputs 3");
 				// For still image captures, we use the largest available size.
 				/*List sizeList = Arrays.asList(map.getOutputSizes(ImageFormat.JPEG));
 				for(int i=0;i<sizeList.size();i++){
 					Size size = sizeList.get(i);
-					Log.d(TAG,"sizeList["+i+"]: "+size.getWidth()+"x"+size.getHeight());
+					// Log.d(TAG,"sizeList["+i+"]: "+size.getWidth()+"x"+size.getHeight());
 				}*/
 				Point displaySize = new Point();
 				activity.getWindowManager().getDefaultDisplay().getSize(displaySize);
-				Log.d(TAG,"setUpCameraOutputs 4");
+				// Log.d(TAG,"setUpCameraOutputs 4");
 				int maxPreviewWidth = displaySize.x;
                 int maxPreviewHeight = displaySize.y;
 				Size[] sizeArray = map.getOutputSizes(ImageFormat.JPEG);
-				Log.d(TAG,"setUpCameraOutputs 5");
+				// Log.d(TAG,"setUpCameraOutputs 5");
 				for (Size size : sizeArray){
-					Log.d(TAG,"size: "+size.getWidth()+"x"+size.getHeight());
+					// Log.d(TAG,"size: "+size.getWidth()+"x"+size.getHeight());
 				}
-				Log.d(TAG,"setUpCameraOutputs 6");
+				// Log.d(TAG,"setUpCameraOutputs 6");
 				Size largest = Collections.max(Arrays.asList(sizeArray),new CompareSizesByArea());
 				Size FULL_HD = new Size(MAX_PREVIEW_WIDTH,MAX_PREVIEW_HEIGHT);
-				Log.d(TAG,"optimal params... ");
-				Log.d(TAG,"width: "+width);
-				Log.d(TAG,"height: "+height);
-				Log.d(TAG,"maxPreviewWidth: "+MAX_PREVIEW_WIDTH);
-				Log.d(TAG,"maxPreviewHeight: "+MAX_PREVIEW_HEIGHT);
-				Log.d(TAG,"aspectRatio: "+FULL_HD.getWidth()+"x"+FULL_HD.getHeight());
+				// Log.d(TAG,"optimal params... ");
+				// Log.d(TAG,"width: "+width);
+				// Log.d(TAG,"height: "+height);
+				// Log.d(TAG,"maxPreviewWidth: "+MAX_PREVIEW_WIDTH);
+				// Log.d(TAG,"maxPreviewHeight: "+MAX_PREVIEW_HEIGHT);
+				// Log.d(TAG,"aspectRatio: "+FULL_HD.getWidth()+"x"+FULL_HD.getHeight());
 				Size optimal  = chooseOptimalSize(sizeArray,width,height,MAX_PREVIEW_WIDTH,MAX_PREVIEW_HEIGHT,FULL_HD);
-				Log.d(TAG,"largest: "+largest.getWidth()+"x"+largest.getHeight());
-				Log.d(TAG,"optimal: "+optimal.getWidth()+"x"+optimal.getHeight());
+				// Log.d(TAG,"largest: "+largest.getWidth()+"x"+largest.getHeight());
+				// Log.d(TAG,"optimal: "+optimal.getWidth()+"x"+optimal.getHeight());
                 mImageReader = ImageReader.newInstance(optimal.getWidth(), optimal.getHeight(),ImageFormat.JPEG, MAX_CAPTURE_IMAGES);
                 mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
                 // Find out if we need to swap dimension to get the preview size relative to sensor
                 // coordinate.
 				int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-				Log.d("ORIENTATION","displayRotation: "+displayRotation);
+				// Log.d("ORIENTATION","displayRotation: "+displayRotation);
                 //noinspection ConstantConditions
 				mSensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
-				Log.d("ORIENTATION","mSensorOrientation: "+mSensorOrientation);
+				// Log.d("ORIENTATION","mSensorOrientation: "+mSensorOrientation);
                 boolean swappedDimensions = false;
                 switch (displayRotation) {
                     case Surface.ROTATION_0: //0
@@ -860,10 +860,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     rotatedPreviewHeight = width;
                     maxPreviewWidth = displaySize.y;
 					maxPreviewHeight = displaySize.x;
-					Log.d("ORIENTATION", "rotatedPreviewWidth: "+rotatedPreviewWidth);
-					Log.d("ORIENTATION", "rotatedPreviewHeight: "+rotatedPreviewHeight);
-					Log.d("ORIENTATION", "maxPreviewWidth: "+maxPreviewWidth);
-					Log.d("ORIENTATION", "maxPreviewHeight: "+maxPreviewHeight);
+					// Log.d("ORIENTATION", "rotatedPreviewWidth: "+rotatedPreviewWidth);
+					// Log.d("ORIENTATION", "rotatedPreviewHeight: "+rotatedPreviewHeight);
+					// Log.d("ORIENTATION", "maxPreviewWidth: "+maxPreviewWidth);
+					// Log.d("ORIENTATION", "maxPreviewHeight: "+maxPreviewHeight);
                 }
 
                 if (maxPreviewWidth > MAX_PREVIEW_WIDTH) {
@@ -880,11 +880,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),
                         rotatedPreviewWidth, rotatedPreviewHeight, maxPreviewWidth,
                         maxPreviewHeight, largest);
-				Log.d(TAG,"setUpCameraOutputs... mPreviewSize: "+mPreviewSize.getWidth()+"x"+mPreviewSize.getHeight());
+				// Log.d(TAG,"setUpCameraOutputs... mPreviewSize: "+mPreviewSize.getWidth()+"x"+mPreviewSize.getHeight());
                 // We fit the aspect ratio of TextureView to the size of preview we picked.
                 int correctedHeight = (int) (largest.getWidth()/(maxPreviewWidth/(double)maxPreviewHeight));
 				int orientation = getResources().getConfiguration().orientation;
-				Log.d(TAG,"setUpCameraOutputs orientation... getResources().getConfiguration().orientation: "+orientation);
+				// Log.d(TAG,"setUpCameraOutputs orientation... getResources().getConfiguration().orientation: "+orientation);
 				/*
 				if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     mTextureView.setAspectRatio(mPreviewSize.getWidth(), mPreviewSize.getHeight());
@@ -902,10 +902,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 return;
             }
         } catch (CameraAccessException e) {
-			Log.d(TAG,"Deu merda aqui!");
+			// Log.d(TAG,"Deu merda aqui!");
             e.printStackTrace();
         } catch (NullPointerException e) {
-			Log.d(TAG,"Ou deu merda aqui!");
+			// Log.d(TAG,"Ou deu merda aqui!");
             // Currently an NPE is thrown when the Camera2API is used but not supported on the
             // device this code runs.
             // ErrorDialog.newInstance(getString(R.string.camera_error)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
@@ -920,7 +920,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      * Opens the camera specified by {@link Camera2BasicFragment#mCameraId}.
      */
     private void openCamera(int width, int height) {
-		Log.d("OPENCAMERA","openCamera("+width+","+height+")");
+		// Log.d("OPENCAMERA","openCamera("+width+","+height+")");
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCameraPermission();
@@ -1138,7 +1138,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			// Log.d("ORIENTATION","captureStillPicture rotation: "+rotation);
 			// int jpegOrientation = getOrientation(rotation);
 			int jpegOrientation = getOrientation(currentRotation);
-			Log.d("ORIENTATION","captureStillPicture jpegOrientation: "+jpegOrientation);
+			// Log.d("ORIENTATION","captureStillPicture jpegOrientation: "+jpegOrientation);
 			// int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 			// String message = "\njpegOrientation: "+jpegOrientation;
 			// InfoDialog.newInstance(message).show(getChildFragmentManager(), FRAGMENT_DIALOG);
@@ -1152,8 +1152,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                                                @NonNull CaptureRequest request,
                                                @NonNull TotalCaptureResult result) {
 					int bitmapRotation = currentRotation;
-                    unlockFocus();
-                    Log.d(TAG,"DEPOIS DO UNLOCK FOCUS: "+System.currentTimeMillis());
+					unlockFocus();
+					// Log.d(TAG,"DEPOIS DO UNLOCK FOCUS: "+System.currentTimeMillis());
                     showImageView(mFile,bitmapRotation);
 					mFile = new File(getActivity().getExternalFilesDir(null), System.currentTimeMillis()+".jpg");
                 }

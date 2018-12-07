@@ -36,7 +36,7 @@ public class CameraActivity extends AppCompatActivity {
 	private static final int SUCCESS_CODE = 1;
 	public static final String TAG = "PluginMulticamera";
 	public void adicionarArquivo(String absolutePath){
-		Log.d(TAG,"Novo arquivo: "+absolutePath);
+		// Log.d(TAG,"Novo arquivo: "+absolutePath);
 		this.files.put(absolutePath);
 	}
 	public void adicionarImagem(String encodedImage){
@@ -44,9 +44,9 @@ public class CameraActivity extends AppCompatActivity {
 	}
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
-		Log.d(TAG,"CameraActivity onCreate");
+		// Log.d(TAG,"CameraActivity onCreate");
         super.onCreate(savedInstanceState);
-		Log.d(TAG,"CameraActivity 2");
+		// Log.d(TAG,"CameraActivity 2");
 		// setContentView(R.layout.activity_camera);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 			/*
@@ -56,86 +56,85 @@ public class CameraActivity extends AppCompatActivity {
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 		setContentView(this.getResources().getIdentifier("activity_camera", "layout", this.getPackageName()));
-		Log.d(TAG,"CameraActivity 3");
+		// Log.d(TAG,"CameraActivity 3");
         if (null == savedInstanceState) {
-			Log.d(TAG,"CameraActivity 4");
+			// Log.d(TAG,"CameraActivity 4");
             // getSupportFragmentManager().beginTransaction().replace(R.id.container, Camera2BasicFragment.newInstance()).commit();
 			getSupportFragmentManager().beginTransaction().replace(this.getResources().getIdentifier("container", "id", this.getPackageName()), Camera2BasicFragment.newInstance()).commit();
         }else{
-			Log.d(TAG,"CameraActivity 5");
+			// Log.d(TAG,"CameraActivity 5");
 		}
     }
 	@Override
 	public void onStart(){
-		Log.d(TAG,"CameraActivity onStart");
+		// Log.d(TAG,"CameraActivity onStart");
 		super.onStart();
-		Log.d(TAG,"CameraActivity onStart 2");
+		// Log.d(TAG,"CameraActivity onStart 2");
         Bundle extras = getIntent().getExtras();
-		Log.d(TAG,"CameraActivity onStart 3");
+		// Log.d(TAG,"CameraActivity onStart 3");
         if (extras == null) {
-            Log.d(TAG, "onStart without action");
+            // Log.d(TAG, "onStart without action");
             sendActivityResult(9, "called without action");
         } else {
-			Log.d(TAG,"CameraActivity onStart 4");
+			// Log.d(TAG,"CameraActivity onStart 4");
             for (String key : extras.keySet()) {
                 Object value = extras.get(key);
-                Log.d(TAG, " onStartBundle extras -> "+String.format("%s %s (%s)", key,
-                        value.toString(), value.getClass().getName()));
+                // Log.d(TAG, " onStartBundle extras -> "+String.format("%s %s (%s)", key,value.toString(), value.getClass().getName()));
             }
-			Log.d(TAG,"CameraActivity onStart 5");
+			// Log.d(TAG,"CameraActivity onStart 5");
         }
 	}
 	@Override
 	public void onPause(){
-		Log.d(TAG,"CameraActivity onPause!");
+		// Log.d(TAG,"CameraActivity onPause!");
 		super.onPause();
 	}
 	@Override
 	public void onStop(){
-		Log.d(TAG,"CameraActivity onStop!");
+		// Log.d(TAG,"CameraActivity onStop!");
 		super.onStop();
 	}
 	@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d(TAG,"CameraActivity onActivityResult");
-		Log.d(TAG,"CameraActivity requestCode: "+requestCode);
-		Log.d(TAG,"CameraActivity resultCode: "+resultCode);
+		// Log.d(TAG,"CameraActivity onActivityResult");
+		// Log.d(TAG,"CameraActivity requestCode: "+requestCode);
+		// Log.d(TAG,"CameraActivity resultCode: "+resultCode);
 		Bundle extras = data.getExtras();
-		Log.d(TAG,"CameraActivity onActivityResult 2");
+		// Log.d(TAG,"CameraActivity onActivityResult 2");
 		for (String key : extras.keySet()) {
 			Object value = extras.get(key);
-			Log.d(TAG, "onActivityResult Bundle extras -> "+String.format("%s %s (%s)", key,value.toString(), value.getClass().getName()));
+			// Log.d(TAG, "onActivityResult Bundle extras -> "+String.format("%s %s (%s)", key,value.toString(), value.getClass().getName()));
 		}
-		Log.d(TAG,"CameraActivity onActivityResult 3");
+		// Log.d(TAG,"CameraActivity onActivityResult 3");
 		switch(requestCode){
 			case ERROR_CODE:
 			case SUCCESS_CODE:
 				switch(resultCode){
 					case AppCompatActivity.RESULT_OK:
-						Log.d(TAG,"CameraActivity onActivityResult 4");
+						// Log.d(TAG,"CameraActivity onActivityResult 4");
 						try {
-							Log.d(TAG,"CameraActivity onActivityResult 5");
+							// Log.d(TAG,"CameraActivity onActivityResult 5");
 							// Log.d(TAG,"CameraActivity tirei "+this.images.length()+" foto(s)");
-							Log.d(TAG,"CameraActivity tirei "+this.files.length()+" foto(s)");
-							Log.d(TAG,"CameraActivity onActivityResult 6");
+							// Log.d(TAG,"CameraActivity tirei "+this.files.length()+" foto(s)");
+							// Log.d(TAG,"CameraActivity onActivityResult 6");
 							JSONObject obj = new JSONObject();
-							Log.d(TAG,"CameraActivity onActivityResult 7");
+							// Log.d(TAG,"CameraActivity onActivityResult 7");
 							// obj.put("fotos",this.images.toString());
 							obj.put("fotos",this.files.toString());
-							Log.d(TAG,"CameraActivity onActivityResult 8");
+							// Log.d(TAG,"CameraActivity onActivityResult 8");
 							sendActivityResult(AppCompatActivity.RESULT_OK, obj.toString());
 						} catch(Exception ex) {
-							Log.d(TAG,"CameraActivity onActivityResult exception");
+							// Log.d(TAG,"CameraActivity onActivityResult exception");
 							ex.printStackTrace();
 						}
 						break;
 					case AppCompatActivity.RESULT_CANCELED:
-						Log.d(TAG,"CameraActivity onActivityResult 9");
-						Log.d(TAG, "Resultado cancelado!");
+						// Log.d(TAG,"CameraActivity onActivityResult 9");
+						// Log.d(TAG, "Resultado cancelado!");
                         sendActivityResult(AppCompatActivity.RESULT_CANCELED, "user cancelled");
 						break;
 					default:
-						Log.d(TAG,"CameraActivity onActivityResult default");
+						// Log.d(TAG,"CameraActivity onActivityResult default");
                         sendActivityResult(resultCode, "Unknown");
 						break;
 
@@ -152,31 +151,31 @@ public class CameraActivity extends AppCompatActivity {
 	}
 
 	public void sendActivityResult(int resultCode, String response) {
-		Log.d(TAG,"CameraActivity sendActivityResult... resultCode: "+resultCode);
-		Log.d(TAG,"CameraActivity sendActivityResult... response: "+response);
+		// Log.d(TAG,"CameraActivity sendActivityResult... resultCode: "+resultCode);
+		// Log.d(TAG,"CameraActivity sendActivityResult... response: "+response);
         Intent intent = new Intent();
-		Log.d(TAG,"CameraActivity sendActivityResult... 1");
+		// Log.d(TAG,"CameraActivity sendActivityResult... 1");
         intent.putExtra("data", response);
-		Log.d(TAG,"CameraActivity sendActivityResult... 2");
+		// Log.d(TAG,"CameraActivity sendActivityResult... 2");
         setResult(resultCode, intent);
-		Log.d(TAG,"CameraActivity sendActivityResult... 3");
+		// Log.d(TAG,"CameraActivity sendActivityResult... 3");
 		removeAllFragments();
         finish();// Exit of this activity !
-		Log.d(TAG,"CameraActivity sendActivityResult... 4");
+		// Log.d(TAG,"CameraActivity sendActivityResult... 4");
     }
 
     public void sendActivityResultJSON(int resultCode,JSONArray response) {
-		Log.d(TAG,"CameraActivity sendActivityResultJSON... resultCode: "+resultCode);
-		Log.d(TAG,"CameraActivity sendActivityResultJSON... response: "+response.toString());
+		// Log.d(TAG,"CameraActivity sendActivityResultJSON... resultCode: "+resultCode);
+		// Log.d(TAG,"CameraActivity sendActivityResultJSON... response: "+response.toString());
         Intent intent = new Intent();
-		Log.d(TAG,"CameraActivity sendActivityResultJSON 1");
+		// Log.d(TAG,"CameraActivity sendActivityResultJSON 1");
         intent.putExtra("data", response.toString());
-		Log.d(TAG,"CameraActivity sendActivityResultJSON 2");
+		// Log.d(TAG,"CameraActivity sendActivityResultJSON 2");
         setResult(resultCode, intent);
-		Log.d(TAG,"CameraActivity sendActivityResultJSON 3");
+		// Log.d(TAG,"CameraActivity sendActivityResultJSON 3");
 		removeAllFragments();
         finish();// Exit of this activity !
-		Log.d(TAG,"CameraActivity sendActivityResultJSON 4");
+		// Log.d(TAG,"CameraActivity sendActivityResultJSON 4");
 	}
 
 }
