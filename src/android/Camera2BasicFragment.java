@@ -676,7 +676,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		flashButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				switchFlash();
+				setupFlashButton();
 			}
 		});
 		// Log.d(TAG, "Camera2BasicFragment onViewCreated 3");
@@ -898,7 +898,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                 Boolean available = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
 				mFlashSupported = available == null ? false : available;
 				mCameraId = cameraId;
-				setupFlashButton();
                 return;
             }
         } catch (CameraAccessException e) {
@@ -1199,36 +1198,17 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			if (isTorchOn) {
 				int drawableFlashOff = activity.getResources().getIdentifier("ic_flash_off", "drawable", activity.getPackageName());
 				flashButton.setImageResource(drawableFlashOff);
+				isTorchOn = false;
 			} else {
 				int drawableFlashOn = activity.getResources().getIdentifier("ic_flash_on", "drawable", activity.getPackageName());
 				flashButton.setImageResource(drawableFlashOn);
+				isTorchOn = true;
 			}
 		} else {
 			flashButton.setVisibility(View.GONE);
 		}
 	}
 	
-	public void switchFlash(CaptureRequest.Builder requestBuilder) {
-		Activity activity = getActivity();
-		try {
-			Log.d(TAG,"switchFlash()... mCameraId: "+mCameraId);
-			if (mCameraId.equals(CAMERA_BACK)) {
-				if (mFlashSupported) {
-					if (isTorchOn) {
-						int drawableFlashOff = activity.getResources().getIdentifier("ic_flash_off", "drawable", activity.getPackageName());
-						flashButton.setImageResource(drawableFlashOff);
-						isTorchOn = false;
-					} else {
-						int drawableFlashOn = activity.getResources().getIdentifier("ic_flash_on", "drawable", activity.getPackageName());
-						flashButton.setImageResource(drawableFlashOn);
-						isTorchOn = true;
-					}
-				}
-			}
-		} catch (CameraAccessException e) {
-			e.printStackTrace();
-		}
-	}
 
     /**
      * Unlock the focus. This method should be called when still image capture sequence is
