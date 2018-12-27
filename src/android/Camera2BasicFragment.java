@@ -671,14 +671,14 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				closeCamera();
 			}
 		});
-		int idButtonFlash = activity.getResources().getIdentifier("button_flash", "id", activity.getPackageName());
+		/*int idButtonFlash = activity.getResources().getIdentifier("button_flash", "id", activity.getPackageName());
 		flashButton = (ImageButton) view.findViewById(idButtonFlash);
 		flashButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setupFlashButton();
 			}
-		});
+		});*/
 		// Log.d(TAG, "Camera2BasicFragment onViewCreated 3");
 		orientationEventListener = new OrientationEventListener(activity, SensorManager.SENSOR_DELAY_NORMAL) {
 			@Override
@@ -1019,8 +1019,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 							// Auto focus should be continuous for camera preview.
 							mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
 							// Flash is automatically enabled when necessary.
-							setFlash(mPreviewRequestBuilder);
-							// setAutoFlash(mPreviewRequestBuilder);
+							// setFlash(mPreviewRequestBuilder);
+							setAutoFlash(mPreviewRequestBuilder);
 
 							// Finally, we start displaying the camera preview.
 							mPreviewRequest = mPreviewRequestBuilder.build();
@@ -1131,8 +1131,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             captureBuilder.addTarget(mImageReader.getSurface());
             // Use the same AE and AF modes as the preview.
 			captureBuilder.set(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-			setFlash(captureBuilder);
-            // setAutoFlash(captureBuilder);
+			// setFlash(captureBuilder);
+            setAutoFlash(captureBuilder);
             // Orientation
 			int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 			// Log.d("ORIENTATION","getResources().getConfiguration().orientation: "+getResources().getConfiguration().orientation);
@@ -1218,8 +1218,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         try {
             // Reset the auto-focus trigger
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
-			setFlash(mPreviewRequestBuilder);
-            // setAutoFlash(mPreviewRequestBuilder);
+			// setFlash(mPreviewRequestBuilder);
+            setAutoFlash(mPreviewRequestBuilder);
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,
                     mBackgroundHandler);
             // After this, the camera will go back to the normal state of preview.
