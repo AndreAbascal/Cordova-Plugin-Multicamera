@@ -386,7 +386,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	public static final String CAMERA_FRONT = "1";
 	public static final String CAMERA_BACK = "0";
     private boolean isFlashSupported;
-	private boolean isTorchOn;
+	private boolean isTorchOn = true;
 	ImageButton flashButton;
 
 	private int currentOrientation;
@@ -1184,10 +1184,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	public void setFlash(CaptureRequest.Builder requestBuilder){
 		if(isTorchOn){
 			// requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-			requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
+			requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_SINGLE);
 		}else{
 			// requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-			requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_SINGLE);
+			requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
 		}
 	}
 
@@ -1220,8 +1220,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
 			setFlash(mPreviewRequestBuilder);
             // setAutoFlash(mPreviewRequestBuilder);
-            mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,
-                    mBackgroundHandler);
+            mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,mBackgroundHandler);
             // After this, the camera will go back to the normal state of preview.
             mState = STATE_PREVIEW;
             mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback,
