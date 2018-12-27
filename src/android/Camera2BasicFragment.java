@@ -73,6 +73,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -1202,14 +1203,14 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				if (mFlashSupported) {
 					if (isTorchOn) {
 						int drawableFlashOff = activity.getResources().getIdentifier("ic_flash_off", "drawable", activity.getPackageName());
-						mPreviewBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
-						mPreviewSession.setRepeatingRequest(mPreviewBuilder.build(), null, null);
+						mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
+						mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), null, null);
 						flashButton.setImageResource(drawableFlashOff);
 						isTorchOn = false;
 					} else {
 						int drawableFlashOn = activity.getResources().getIdentifier("ic_flash_on", "drawable", activity.getPackageName());
-						mPreviewBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_TORCH);
-						mPreviewSession.setRepeatingRequest(mPreviewBuilder.build(), null, null);
+						mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_TORCH);
+						mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), null, null);
 						flashButton.setImageResource(drawableFlashOn);
 						isTorchOn = true;
 					}
