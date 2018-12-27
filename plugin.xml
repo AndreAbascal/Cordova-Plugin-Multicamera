@@ -71,6 +71,8 @@
 		<source-file src="src/android/res/drawable/baseline_arrow_back_24_pressed.xml" target-dir="res/drawable" />
 		<source-file src="src/android/res/drawable/baseline_arrow_back_24.xml" target-dir="res/drawable" />
 		<source-file src="src/android/res/drawable/baseline_done_24.xml" target-dir="res/drawable" />
+		<source-file src="src/android/res/drawable/ic_flash_off.xml" target-dir="res/drawable" />
+		<source-file src="src/android/res/drawable/ic_flash_on.xml" target-dir="res/drawable" />
 		<source-file src="src/android/res/drawable/ripple.xml" target-dir="res/drawable" />
 		<source-file src="src/android/res/drawable/state_pressed_ripple.xml" target-dir="res/drawable" />
 		<source-file src="src/android/res/drawable-xxxhdpi/lens.png" target-dir="res/drawable-xxxhdpi" />
