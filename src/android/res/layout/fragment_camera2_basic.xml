@@ -77,6 +77,8 @@
                     android:background="@drawable/lens"/>
 			<ImageButton
 				android:id="@+id/button_flash"
+				android:layout_width="24dp"
+                android:layout_height="wrap_content"
 				android:src="@drawable/ic_flash_off"
 				android:layout_alignParentLeft="true"/>
         </LinearLayout>
