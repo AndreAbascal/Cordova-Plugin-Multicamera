@@ -1020,6 +1020,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 							// Auto focus should be continuous for camera preview.
 							mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
 							// Flash is automatically enabled when necessary.
+							setFlash(mPreviewRequestBuilder);
 							// setAutoFlash(mPreviewRequestBuilder);
 
 							// Finally, we start displaying the camera preview.
@@ -1131,7 +1132,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             captureBuilder.addTarget(mImageReader.getSurface());
             // Use the same AE and AF modes as the preview.
 			captureBuilder.set(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-			switchFlash(captureBuilder);
+			setFlash(captureBuilder);
             // setAutoFlash(captureBuilder);
             // Orientation
 			int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
@@ -1181,6 +1182,16 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         return (ORIENTATIONS.get(rotation) + mSensorOrientation + 270) % 360;
 	}
 
+	public void setFlash(CaptureRequest.Builder requestBuilder){
+		if(isTorchOn){
+			// requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+			requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
+		}else{
+			// requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+			requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_SINGLE);
+		}
+	}
+
 	public void setupFlashButton() {
 		Activity activity = getActivity();
 		if (mCameraId.equals(CAMERA_BACK) && mFlashSupported) {
@@ -1205,14 +1216,10 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				if (mFlashSupported) {
 					if (isTorchOn) {
 						int drawableFlashOff = activity.getResources().getIdentifier("ic_flash_off", "drawable", activity.getPackageName());
-						requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
-						mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), null, null);
 						flashButton.setImageResource(drawableFlashOff);
 						isTorchOn = false;
 					} else {
 						int drawableFlashOn = activity.getResources().getIdentifier("ic_flash_on", "drawable", activity.getPackageName());
-						requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_TORCH);
-						mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), null, null);
 						flashButton.setImageResource(drawableFlashOn);
 						isTorchOn = true;
 					}
@@ -1231,7 +1238,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         try {
             // Reset the auto-focus trigger
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
-			switchFlash(mPreviewRequestBuilder);
+			setFlash(mPreviewRequestBuilder);
             // setAutoFlash(mPreviewRequestBuilder);
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,
                     mBackgroundHandler);
