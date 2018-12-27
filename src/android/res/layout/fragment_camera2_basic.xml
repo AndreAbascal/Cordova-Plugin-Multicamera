@@ -75,6 +75,10 @@
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/lens"/>
+			<ImageButton
+				android:id="@+id/button_flash"
+				android:src="@drawable/ic_flash_off"
+				android:layout_alignParentLeft="true"/>
         </LinearLayout>
         <ScrollView
             android:id="@+id/hsv"

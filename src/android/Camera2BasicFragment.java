@@ -382,6 +382,12 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	 *  Holds current orientation value
 	*/
 
+	public static final String CAMERA_FRONT = "1";
+	public static final String CAMERA_BACK = "0";
+    private boolean isFlashSupported;
+	private boolean isTorchOn;
+	ImageButton flashButton;
+
 	private int currentOrientation;
 	/**
 	 * Holds device default orientation
@@ -638,29 +644,20 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        // return inflater.inflate(R.layout.fragment_camera2_basic, container, false);
-		// Log.d(TAG, "Camera2BasicFragment onCreateView");
 		return inflater.inflate(getActivity().getResources().getIdentifier("fragment_camera2_basic", "layout", getActivity().getPackageName()),container,false);
     }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-		// final Activity activity = getActivity();
 		final CameraActivity activity = ((CameraActivity) getActivity());
-		// Log.d(TAG, "Camera2BasicFragment onViewCreated");
-        // view.findViewById(R.id.picture).setOnClickListener(this);
 		view.findViewById(activity.getResources().getIdentifier("picture", "id", activity.getPackageName())).setOnClickListener(this);
-		// Log.d(TAG, "Camera2BasicFragment onViewCreated 2");
-        // mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
 		mTextureView = (AutoFitTextureView) view.findViewById(activity.getResources().getIdentifier("texture", "id", activity.getPackageName()));
 		Button back = activity.findViewById(activity.getResources().getIdentifier("back", "id", activity.getPackageName()));
 		back.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
-				// CameraActivity ca = ((CameraActivity) getActivity());
 				activity.sendActivityResult(Activity.RESULT_CANCELED, "[]");
 				closeCamera();
-				// activity.finish();
 			}
 		});
 		Button confirm = activity.findViewById(activity.getResources().getIdentifier("confirm", "id", activity.getPackageName()));
@@ -669,13 +666,16 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		confirm.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
-				// CameraActivity ca = ((CameraActivity) getActivity());
-				// activity.sendActivityResult(Activity.RESULT_OK, activity.images.toString());
-				// Log.d(TAG,"activity.images String length: "+activity.images.toString().length());
-				// Log.d(TAG,"ARQUIVOS MERDA: "+activity.files.toString());
 				activity.sendActivityResult(Activity.RESULT_OK, activity.files.toString());
 				closeCamera();
-				// activity.finish();
+			}
+		});
+		int idButtonFlash = activity.getResources().getIdentifier("button_flash", "id", activity.getPackageName());
+		flashButton = (ImageButton) view.findViewById(idButtonFlash);
+		flashButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				switchFlash();
 			}
 		});
 		// Log.d(TAG, "Camera2BasicFragment onViewCreated 3");
@@ -762,7 +762,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				Activity activity = getActivity();
 				Resources resources = activity.getResources();
 				int idRequestPermission = resources.getIdentifier("request_permission", "string", activity.getPackageName());
-                // ErrorDialog.newInstance(getString(R.string.request_permission)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
 				ErrorDialog.newInstance(getString(idRequestPermission)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
             }
         } else {
@@ -896,9 +895,9 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
                 // Check if the flash is supported.
                 Boolean available = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
-                mFlashSupported = available == null ? false : available;
-
-                mCameraId = cameraId;
+				mFlashSupported = available == null ? false : available;
+				mCameraId = cameraId;
+				setupFlashButton();
                 return;
             }
         } catch (CameraAccessException e) {
@@ -908,7 +907,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			// Log.d(TAG,"Ou deu merda aqui!");
             // Currently an NPE is thrown when the Camera2API is used but not supported on the
             // device this code runs.
-            // ErrorDialog.newInstance(getString(R.string.camera_error)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
 			Resources resources = activity.getResources();
 			int idCameraerror = resources.getIdentifier("camera_error", "string", activity.getPackageName());
 			ErrorDialog.newInstance(getString(idCameraerror)).show(getChildFragmentManager(), FRAGMENT_DIALOG);
@@ -1178,7 +1176,49 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         // For devices with orientation of 90, we simply return our mapping from ORIENTATIONS.
         // For devices with orientation of 270, we need to rotate the JPEG 180 degrees.
         return (ORIENTATIONS.get(rotation) + mSensorOrientation + 270) % 360;
-    }
+	}
+
+	public void setupFlashButton() {
+		Activity activity = getActivity();
+		if (mCameraId.equals(CAMERA_BACK) && mFlashSupported) {
+			flashButton.setVisibility(View.VISIBLE);
+			if (isTorchOn) {
+				int drawableFlashOff = activity.getResources().getIdentifier("ic_flash_off", "drawable", activity.getPackageName());
+				flashButton.setImageResource(drawableFlashOff);
+			} else {
+				int drawableFlashOn = activity.getResources().getIdentifier("ic_flash_on", "drawable", activity.getPackageName());
+				flashButton.setImageResource(drawableFlashOn);
+			}
+		} else {
+			flashButton.setVisibility(View.GONE);
+		}
+	}
+	
+	public void switchFlash() {
+		Activity activity = getActivity();
+		try {
+			Log.d(TAG,"switchFlash()... mCameraId: "+mCameraId);
+			if (mCameraId.equals(CAMERA_BACK)) {
+				if (mFlashSupported) {
+					if (isTorchOn) {
+						int drawableFlashOff = activity.getResources().getIdentifier("ic_flash_off", "drawable", activity.getPackageName());
+						mPreviewBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
+						mPreviewSession.setRepeatingRequest(mPreviewBuilder.build(), null, null);
+						flashButton.setImageResource(drawableFlashOff);
+						isTorchOn = false;
+					} else {
+						int drawableFlashOn = activity.getResources().getIdentifier("ic_flash_on", "drawable", activity.getPackageName());
+						mPreviewBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_TORCH);
+						mPreviewSession.setRepeatingRequest(mPreviewBuilder.build(), null, null);
+						flashButton.setImageResource(drawableFlashOn);
+						isTorchOn = true;
+					}
+				}
+			}
+		} catch (CameraAccessException e) {
+			e.printStackTrace();
+		}
+	}
 
     /**
      * Unlock the focus. This method should be called when still image capture sequence is
@@ -1214,22 +1254,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				.setPositiveButton(android.R.string.ok, null)
 				.show();
 		}
-        /*switch (view.getId()) {
-            case idPicture: {
-                takePicture();
-                break;
-            }
-            case idInfo: {
-                if (null != activity) {
-                    new AlertDialog.Builder(activity)
-                            // .setMessage(R.string.intro_message)
-							.setMessage(activity.getResources().getIdentifier("intro_message", "string", activity.getPackageName()))
-                            .setPositiveButton(android.R.string.ok, null)
-                            .show();
-                }
-                break;
-            }
-        }*/
     }
 
     private void setAutoFlash(CaptureRequest.Builder requestBuilder) {
@@ -1395,7 +1419,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Fragment parent = getParentFragment();
             return new AlertDialog.Builder(getActivity())
-                    // .setMessage(R.string.request_permission)
 					.setMessage(getActivity().getResources().getIdentifier("request_permission", "string", getActivity().getPackageName()))
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
