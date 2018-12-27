@@ -1020,7 +1020,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 							// Auto focus should be continuous for camera preview.
 							mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
 							// Flash is automatically enabled when necessary.
-							setAutoFlash(mPreviewRequestBuilder);
+							// setAutoFlash(mPreviewRequestBuilder);
+
 							// Finally, we start displaying the camera preview.
 							mPreviewRequest = mPreviewRequestBuilder.build();
 							mCaptureSession.setRepeatingRequest(mPreviewRequest,mCaptureCallback,mBackgroundHandler);
@@ -1129,8 +1130,9 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                     mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
             captureBuilder.addTarget(mImageReader.getSurface());
             // Use the same AE and AF modes as the preview.
-            captureBuilder.set(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-            setAutoFlash(captureBuilder);
+			captureBuilder.set(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+			switchFlash(captureBuilder);
+            // setAutoFlash(captureBuilder);
             // Orientation
 			int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 			// Log.d("ORIENTATION","getResources().getConfiguration().orientation: "+getResources().getConfiguration().orientation);
@@ -1195,7 +1197,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		}
 	}
 	
-	public void switchFlash() {
+	public void switchFlash(CaptureRequest.Builder requestBuilder) {
 		Activity activity = getActivity();
 		try {
 			Log.d(TAG,"switchFlash()... mCameraId: "+mCameraId);
@@ -1203,13 +1205,13 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				if (mFlashSupported) {
 					if (isTorchOn) {
 						int drawableFlashOff = activity.getResources().getIdentifier("ic_flash_off", "drawable", activity.getPackageName());
-						mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
+						requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
 						mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), null, null);
 						flashButton.setImageResource(drawableFlashOff);
 						isTorchOn = false;
 					} else {
 						int drawableFlashOn = activity.getResources().getIdentifier("ic_flash_on", "drawable", activity.getPackageName());
-						mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_TORCH);
+						requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_TORCH);
 						mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), null, null);
 						flashButton.setImageResource(drawableFlashOn);
 						isTorchOn = true;
@@ -1228,9 +1230,9 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
     private void unlockFocus() {
         try {
             // Reset the auto-focus trigger
-            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
-                    CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
-            setAutoFlash(mPreviewRequestBuilder);
+            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
+			switchFlash(mPreviewRequestBuilder);
+            // setAutoFlash(mPreviewRequestBuilder);
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,
                     mBackgroundHandler);
             // After this, the camera will go back to the normal state of preview.
@@ -1259,8 +1261,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
     private void setAutoFlash(CaptureRequest.Builder requestBuilder) {
         if (mFlashSupported) {
-            requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                    CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+            requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
         }
     }
 
