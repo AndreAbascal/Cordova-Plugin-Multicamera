@@ -1192,11 +1192,13 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			flashButton.setVisibility(View.VISIBLE);
 			if (isTorchOn) {
 				int drawableFlashOff = activity.getResources().getIdentifier("ic_flash_off", "drawable", activity.getPackageName());
-				flashButton.setImageResource(drawableFlashOff);
+				// flashButton.setImageResource(drawableFlashOff);
+				flashButton.setBackgroundResource(drawableFlashOff);
 				isTorchOn = false;
 			} else {
 				int drawableFlashOn = activity.getResources().getIdentifier("ic_flash_on", "drawable", activity.getPackageName());
-				flashButton.setImageResource(drawableFlashOn);
+				// flashButton.setImageResource(drawableFlashOn);
+				flashButton.setBackgroundResource(drawableFlashOn);
 				isTorchOn = true;
 			}
 		} else {
