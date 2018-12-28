@@ -388,7 +388,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	public static final String CAMERA_BACK = "0";
     private boolean isFlashSupported;
 	private boolean isTorchOn = true;
-	ImageButton flashButton;
+	Button flashButton;
 
 	private int currentOrientation;
 	/**
@@ -673,7 +673,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			}
 		});
 		int idButtonFlash = activity.getResources().getIdentifier("button_flash", "id", activity.getPackageName());
-		flashButton = (ImageButton) view.findViewById(idButtonFlash);
+		flashButton = (Button) view.findViewById(idButtonFlash);
 		flashButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
