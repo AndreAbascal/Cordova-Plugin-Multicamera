@@ -24,40 +24,67 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
+
+    <!--<FrameLayout-->
+        <!--android:id="@+id/control"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="112dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:background="@color/control_background">-->
+
+        <!--<Button-->
+            <!--android:id="@+id/picture"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:text="@string/picture" />-->
+
+        <!--<ImageButton-->
+            <!--android:id="@+id/info"-->
+            <!--android:contentDescription="@string/description_info"-->
+            <!--style="@android:style/Widget.Material.Light.Button.Borderless"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical|right"-->
+            <!--android:padding="20dp"-->
+            <!--android:src="@drawable/ic_action_info" />-->
+
+    <!--</FrameLayout>-->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:padding="16dp"
-		android:layout_alignParentLeft="true">
+        android:layout_alignParentLeft="true">
         <RelativeLayout
-			android:orientation="vertical"
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent">
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentTop="true">
-				<Button
-					android:background="@drawable/baseline_done_24"
-					android:id="@+id/confirm"
-					android:layout_width="24dp"
-					android:layout_height="24dp"/>
-					<TextView
-						android:id="@+id/text1"
-						android:layout_height="wrap_content"
-						android:layout_width="wrap_content"
-						android:layout_marginLeft="16dp"
-						android:textColor="#FFFFFF"/>
-			</LinearLayout>
-			<Button
-				android:background="@drawable/baseline_arrow_back_24"
-				android:id="@+id/back"
-				android:layout_width="24dp"
-				android:layout_height="24dp"
-				android:layout_alignParentBottom="true"/>
-		</RelativeLayout>
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+                <Button
+                    android:background="@drawable/baseline_done_24"
+                    android:id="@+id/confirm"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+                <TextView
+                    android:id="@+id/text1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+            <Button
+                android:background="@drawable/baseline_arrow_back_24"
+                android:id="@+id/back"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -69,18 +96,33 @@
             android:layout_width="64dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center">
+            android:weightSum="3">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"></LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
                 <Button
                     android:id="@+id/picture"
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/lens"/>
-			<ImageButton
-				android:id="@+id/button_flash"
-				android:layout_width="24dp"
-                android:layout_height="wrap_content"
-				android:src="@drawable/ic_flash_off"
-				android:layout_alignParentLeft="true"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/button_flash"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_flash_on" />
+            </LinearLayout>
         </LinearLayout>
         <ScrollView
             android:id="@+id/hsv"
@@ -93,24 +135,6 @@
                 android:layout_height="match_parent">
             </LinearLayout>
         </ScrollView>
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/control"-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="96dp">-->
-            <!--<HorizontalScrollView-->
-                <!--android:id="@+id/hsv"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="112dp">-->
-                <!--<LinearLayout-->
-                    <!--android:id="@+id/gallery"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent">-->
-                <!--</LinearLayout>-->
-            <!--</HorizontalScrollView>-->
-        <!--</LinearLayout>-->
     </LinearLayout>
 
 </RelativeLayout>

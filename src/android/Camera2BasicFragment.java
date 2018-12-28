@@ -316,6 +316,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 								output.close();
 								String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
 								addFile(rFile.getAbsolutePath());
+								showToast("Foto tirada com sucesso.");
 								// showImageView(rImage);
 								// Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 				// mImageView.setImageBitmap(bitmap);
@@ -1031,9 +1032,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 						}
 					}
 					@Override
-					public void onConfigureFailed(
-							@NonNull CameraCaptureSession cameraCaptureSession) {
-						showToast("Failed");
+					public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
 					}
 				}, null
             );
