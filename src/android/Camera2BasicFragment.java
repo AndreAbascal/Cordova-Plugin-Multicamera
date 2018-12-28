@@ -684,10 +684,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		orientationEventListener = new OrientationEventListener(activity, SensorManager.SENSOR_DELAY_NORMAL) {
 			@Override
 			public void onOrientationChanged(int angle) {
-				// currentRotation = angle;
-				// currentOrientation = angle;
-				// TextView text1 = (TextView) activity.findViewById(activity.getResources().getIdentifier("text1", "id", activity.getPackageName()));
-				// Log.d("ORIENTATIONCHANGED","angle: "+angle);
 				if(angle >= 315 || angle <= 44){
 					currentRotation = 90;
 				}else if(angle >= 45 && angle <= 134){
