@@ -674,6 +674,7 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 		// int idButtonFlash = activity.getResources().getIdentifier("button_flash", "id", activity.getPackageName());
 		// flashButton = (Button) view.findViewById(idButtonFlash);
 		Button flashButton = activity.findViewById(activity.getResources().getIdentifier("button_flash", "id", activity.getPackageName()));
+		flashButton.setRotation(270);
 		flashButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
