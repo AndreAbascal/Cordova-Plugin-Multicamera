@@ -1089,7 +1089,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         try {
             // This is how to tell the camera to lock focus.
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,CameraMetadata.CONTROL_AF_TRIGGER_START);
-            // Tell #mCaptureCallback to wait for the lock.
+			// Tell #mCaptureCallback to wait for the lock.
+			setFlash(mPreviewRequestBuilder);
             mState = STATE_WAITING_LOCK;
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,mBackgroundHandler);
         } catch (CameraAccessException e) {
@@ -1191,8 +1192,6 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON);
 			requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
 		}
-		// TESTE
-		unlockFocus();
 	}
 
 	public void setupFlashButton() {
