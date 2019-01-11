@@ -1191,6 +1191,8 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 			requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON);
 			requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
 		}
+		// TESTE
+		unlockFocus();
 	}
 
 	public void setupFlashButton() {
