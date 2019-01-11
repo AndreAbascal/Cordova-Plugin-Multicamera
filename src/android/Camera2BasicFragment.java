@@ -1421,16 +1421,15 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
                                     REQUEST_CAMERA_PERMISSION);
                         }
                     })
-                    .setNegativeButton(android.R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Activity activity = parent.getActivity();
-                                    if (activity != null) {
-                                        activity.finish();
-                                    }
-                                }
-                            })
+                    .setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Activity activity = parent.getActivity();
+							if (activity != null) {
+								activity.finish();
+							}
+						}
+					})
                     .create();
         }
     }
