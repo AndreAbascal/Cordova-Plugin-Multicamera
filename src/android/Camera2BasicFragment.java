@@ -299,7 +299,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 				public void run () {
 					// rImage = reader.acquireLatestImage();
 					// rFile = mFile;
-					ByteBuffer buffer = rImage.getPlanes()[0].getBuffer();
+					Image.Plane[] planes = rImage.getPlanes();
+					if(planes.length < 1 || planes[0].getBuffer() == null){
+						return;
+					}
+					ByteBuffer buffer = planes[0].getBuffer();
 					byte[] bytes = new byte[buffer.remaining()];
 					buffer.get(bytes);
 					// rImage.close();
@@ -1180,9 +1184,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	public void setFlash(CaptureRequest.Builder requestBuilder){
 		if(isTorchOn){
 			// requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+			requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
 			requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_SINGLE);
 		}else{
 			// requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+			requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON);
 			requestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
 		}
 	}
