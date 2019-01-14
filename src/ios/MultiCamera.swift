@@ -6,6 +6,8 @@
 		);
 		let msg = command.arguments[0] as? String ?? ""
 		if !msg.isEmpty {
+			guard let unwrappedStr = msg else { return }
+			let newStr = String(unwrappedStr.reversed());
 			let toastController: UIAlertController = UIAlertController(title: "",message: msg,preferredStyle: .alert);
 			self.viewController?.present(toastController,animated: true,completion: nil);
 			DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -16,7 +18,7 @@
 			}
 			pluginResult = CDVPluginResult(
 				status: CDVCommandStatus_OK,
-				messageAs: "Tudo certo meu bruxo"
+				messageAs: newStr
 			);
 		}
 		self.commandDelegate!.send(pluginResult,callbackId: command.callbackId);
