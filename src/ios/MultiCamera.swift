@@ -4,10 +4,10 @@
 		var pluginResult = CDVPluginResult(
 			status: CDVCommandStatus_ERROR
 		);
-		let msg = command.arguments[0] as? String ?? ""
+		let msg = command.arguments[0] as? String ?? "";
+		let x = msg!;
+		let reversed = String(x.reversed());
 		if !msg.isEmpty {
-			guard let unwrappedStr = msg else { return }
-			let newStr = String(unwrappedStr.reversed());
 			let toastController: UIAlertController = UIAlertController(title: "",message: msg,preferredStyle: .alert);
 			self.viewController?.present(toastController,animated: true,completion: nil);
 			DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -18,7 +18,7 @@
 			}
 			pluginResult = CDVPluginResult(
 				status: CDVCommandStatus_OK,
-				messageAs: newStr
+				messageAs: reversed
 			);
 		}
 		self.commandDelegate!.send(pluginResult,callbackId: command.callbackId);
