@@ -5,7 +5,7 @@
 			status: CDVCommandStatus_ERROR
 		);
 		let msg = command.arguments[0] as? String ?? ""
-		if !msg.empty {
+		if !msg.isEmpty {
 			let toastController: UIAlertController = UIAlertController(title: "",message: msg,preferredStyle: .alert);
 			self.viewController?.present(toastController,animated: true,completion: nil);
 			DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
