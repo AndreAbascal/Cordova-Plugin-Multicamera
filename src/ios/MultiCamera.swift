@@ -16,7 +16,7 @@
 			}
 			pluginResult = CDVPluginResult(
 				status: CDVCommandStatus_OK,
-				messageAs: msg
+				messageAs: "Tudo certo meu bruxo"
 			);
 		}
 		self.commandDelegate!.send(pluginResult,callbackId: command.callbackId);
