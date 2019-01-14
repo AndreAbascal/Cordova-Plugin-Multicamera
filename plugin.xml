@@ -89,5 +89,13 @@
 			</resources>
 		</config-file> -->
 	</platform>
+	<platform name="ios">
+		<config-file target="config.xml" parent="/*">
+			<feature name="MultiCamera">
+				<param name="ios-package" value="MultiCamera"/>
+			</feature>
+		</config-file>
+		<source-file src="src/ios/MultiCamera.swift"/>
+	</platform>
 
 </plugin>
