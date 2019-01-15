@@ -145,7 +145,6 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
 						print("photoOutput() 2");
 						dismiss(true) {
 							print("photoOutput() 3");
-							buceta();
 							print("photoOutput() 4");
 							finish?(photos);
 						}
@@ -165,7 +164,7 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
 			print("photoOutput() 3");
 			let path = directory+fileName;
 			print("photoOutput() 4");
-			imageData.write(to: URL(fileURLWithPath: path), options: .atomic);
+			try imageData.write(to: URL(fileURLWithPath: path), options: .atomic);
             print("photoOutput() 5");
         }else{
 			print("photoOutput() erro 1");

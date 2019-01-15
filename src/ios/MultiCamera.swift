@@ -5,9 +5,6 @@ protocol ModalHandler {
 }
 
 @objc(MultiCamera) class MultiCamera: CDVPlugin, ModalHandler {
-	func buceta(){
-		print("Bucetao");
-	}
 	@objc(open:)
     func open(_ command: CDVInvokedUrlCommand) {
         let cameraVC = CameraViewController();
