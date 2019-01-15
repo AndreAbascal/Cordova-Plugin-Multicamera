@@ -1,5 +1,6 @@
 import Foundation
 @objc(MultiCamera) class MultiCamera: CDVPlugin {
+	@objc(open:)
     func open(_ command: CDVInvokedUrlCommand) {
         let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "message");
         let cameraVC = CameraViewController();
