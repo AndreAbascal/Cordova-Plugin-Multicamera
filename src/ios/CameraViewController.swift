@@ -143,7 +143,7 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
 					print("photoOutput() 1");
 					if(photos.count == 3){
 						print("photoOutput() 2");
-						dismiss(true) {
+						dismiss(animated: true) {
 							print("photoOutput() 3");
 							print("photoOutput() 4");
 							finish?(photos);
@@ -155,19 +155,6 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
 			}
 		}catch let error {
 			print("error: "+error.localizedDescription);
-		}
-        if let imageData = photo.fileDataRepresentation() {
-			print("photoOutput() 1");
-			let directory = NSTemporaryDirectory();
-			print("photoOutput() 2");
-			let fileName = NSUUID().uuidString;
-			print("photoOutput() 3");
-			let path = directory+fileName;
-			print("photoOutput() 4");
-			try imageData.write(to: URL(fileURLWithPath: path), options: .atomic);
-            print("photoOutput() 5");
-        }else{
-			print("photoOutput() erro 1");
 		}
     }
 
