@@ -10,6 +10,7 @@ class CameraViewController: UIViewController {
     var output = AVCapturePhotoOutput()
     var gravity = CameraVideoGravity.resizeAspect
     var captureVideoQuality = AVCaptureSession.Preset.high
+	var photos = [String]();
     
     override func loadView() {
         self.view = UIView(frame: UIScreen.main.bounds)
@@ -130,6 +131,30 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
     }
 
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+		do {
+			if let imageData = photo.fileDataRepresentation() {
+				if let appDirectory = FileManager.default.urls(for: .applicationDirectory, in: .userDomainMask).last {
+					let fileName = NSUUID().uuidString;
+					let fileURL = appDirectory.appendingPathComponent(fileName);
+					try? imageData.write(to: fileURL, options: .atomic);
+					photos.append(fileURL.absoluteString);
+					print("photoOutput() 1");
+					if(photos.count == 3){
+						print("photoOutput() 2");
+						dismiss(true) {
+							print("photoOutput() 3");
+							buceta();
+							print("photoOutput() 4");
+							modalDismissed?(photos);
+						}
+					}
+				}
+			}else{
+				print("photoOutput() erro 1");
+			}
+		}catch let error {
+			print("error: "+error.localizedDescription);
+		}
         if let imageData = photo.fileDataRepresentation() {
 			print("photoOutput() 1");
 			let directory = NSTemporaryDirectory();
