@@ -11,6 +11,8 @@ class CameraViewController: UIViewController {
     var gravity = CameraVideoGravity.resizeAspect
     var captureVideoQuality = AVCaptureSession.Preset.high
 	var photos = [String]();
+
+	public var finish: (([String]) -> ())?
     
     override func loadView() {
         self.view = UIView(frame: UIScreen.main.bounds)
@@ -145,7 +147,7 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
 							print("photoOutput() 3");
 							buceta();
 							print("photoOutput() 4");
-							modalDismissed?(photos);
+							finish?(photos);
 						}
 					}
 				}
