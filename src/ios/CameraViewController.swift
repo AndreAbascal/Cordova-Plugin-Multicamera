@@ -131,8 +131,18 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
 
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let imageData = photo.fileDataRepresentation() {
-            print(imageData)
-        }
+			print("photoOutput() 1");
+			let directory = NSTemporaryDirectory();
+			print("photoOutput() 2");
+			let fileName = NSUUID().uuidString;
+			print("photoOutput() 3");
+			let path = directory+fileName;
+			print("photoOutput() 4");
+			imageData.write(to: URL(fileURLWithPath: path), options: .atomic);
+            print("photoOutput() 5");
+        }else{
+			print("photoOutput() erro 1");
+		}
     }
 
     func changeEnabledButton() {
