@@ -8,7 +8,7 @@ protocol ModalHandler {
 	@objc(open:)
     func open(_ command: CDVInvokedUrlCommand) {
         let cameraVC = CameraViewController();
-		cameraVC.finish(photos: [String]) { photos in
+		cameraVC.finish = {(photos: [String]) -> () in
 			print("Chegou aqui");
 			print("Recebi "+photos.count+" foto(s).");
 			let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: photos);
