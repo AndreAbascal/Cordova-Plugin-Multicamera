@@ -96,6 +96,9 @@
 			</feature>
 		</config-file>
 		<header-file src="src/ios/MultiCamera-Bridging-Header.h"/>
+		<source-file src="src/ios/CameraButton.swift"/>
+		<source-file src="src/ios/CameraPreview.swift"/>
+		<source-file src="src/ios/CameraViewController.swift"/>
 		<source-file src="src/ios/MultiCamera.swift"/>
 		<dependency id="cordova-plugin-add-swift-support" version="1.7.2"/>
 	</platform>
