@@ -146,7 +146,7 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
 						dismiss(animated: true) {
 							print("photoOutput() 3");
 							print("photoOutput() 4");
-							finish?(photos);
+							self.finish?(self.photos);
 						}
 					}
 				}
