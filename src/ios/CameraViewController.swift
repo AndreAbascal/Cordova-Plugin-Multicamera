@@ -13,6 +13,63 @@ class CameraViewController: UIViewController {
 	var photos = [String]();
 
 	public var finish: (([String]) -> ())?
+
+	func fixOrientationOfImage(image: UIImage) -> UIImage? {
+		if image.imageOrientation == .up {
+			return image
+		}
+
+		// We need to calculate the proper transformation to make the image upright.
+		// We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+		var transform = CGAffineTransform.identity
+
+		switch image.imageOrientation {
+		case .down, .downMirrored:
+			transform = transform.translatedBy(x: image.size.width, y: image.size.height)
+			transform = transform.rotated(by: CGFloat(Double.pi))
+		case .left, .leftMirrored:
+			transform = transform.translatedBy(x: image.size.width, y: 0)
+			transform = transform.rotated(by:  CGFloat(Double.pi / 2))
+		case .right, .rightMirrored:
+			transform = transform.translatedBy(x: 0, y: image.size.height)
+			transform = transform.rotated(by:  -CGFloat(Double.pi / 2))
+		default:
+			break
+		}
+
+		switch image.imageOrientation {
+		case .upMirrored, .downMirrored:
+			transform = transform.translatedBy(x: image.size.width, y: 0)
+			transform = transform.scaledBy(x: -1, y: 1)
+		case .leftMirrored, .rightMirrored:
+			transform = transform.translatedBy(x: image.size.height, y: 0)
+			transform = transform.scaledBy(x: -1, y: 1)
+		default:
+			break
+		}
+
+		// Now we draw the underlying CGImage into a new context, applying the transform
+		// calculated above.
+		guard let context = CGContext(data: nil, width: Int(image.size.width), height: Int(image.size.height), bitsPerComponent: image.cgImage!.bitsPerComponent, bytesPerRow: 0, space: image.cgImage!.colorSpace!, bitmapInfo: image.cgImage!.bitmapInfo.rawValue) else {
+			return nil
+		}
+
+		context.concatenate(transform)
+
+		switch image.imageOrientation {
+		case .left, .leftMirrored, .right, .rightMirrored:
+			context.draw(image.cgImage!, in: CGRect(x: 0, y: 0, width: image.size.height, height: image.size.width))
+		default:
+			context.draw(image.cgImage!, in: CGRect(origin: .zero, size: image.size))
+		}
+
+		// And now we just create a new UIImage from the drawing context
+		guard let CGImage = context.makeImage() else {
+			return nil
+		}
+
+		return UIImage(cgImage: CGImage)
+	}
     
     override func loadView() {
         self.view = UIView(frame: UIScreen.main.bounds)
@@ -127,9 +184,17 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
     }
 
     func takePicture() {
-        print("delegate")
-        let settings = AVCapturePhotoSettings()
-        output.capturePhoto(with: settings, delegate: self)
+        print("delegate");
+		// if I leave the next 4 lines commented, the intented orientation of the image on display will be 6 (right top) - kCGImagePropertyOrientation
+		let deviceOrientation = UIDevice.current.orientation // retrieve current orientation from the device
+		guard let photoOutputConnection = capturePhotoOutput.connection(with: AVMediaType.video) else {fatalError("Unable to establish input>output connection")}// setup a connection that manages input > output
+		guard let videoOrientation = deviceOrientation.getAVCaptureVideoOrientationFromDevice() else {return}
+		photoOutputConnection.videoOrientation = videoOrientation // update photo's output connection to match device's orientation
+        let settings = AVCapturePhotoSettings();
+		photoSettings.isAutoStillImageStabilizationEnabled = true
+		photoSettings.isHighResolutionPhotoEnabled = true
+		photoSettings.flashMode = .auto
+        output.capturePhoto(with: settings, delegate: self);
     }
 
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
@@ -138,7 +203,10 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
 				if let appDirectory = FileManager.default.urls(for: .applicationDirectory, in: .userDomainMask).last {
 					let fileName = NSUUID().uuidString;
 					let fileURL = appDirectory.appendingPathComponent(fileName+".jpg");
-					try? imageData.write(to: fileURL, options: .atomic);
+					var imageUIImage: UIImage = UIImage(data: imageData);
+					imageUIImage = fixOrientationOfImage(imageUIImage);
+					var imageData2: Data = UIImagePNGRepresentation(imageUIImage);
+					try? imageData2.write(to: fileURL, options: .atomic);
 					photos.append(fileURL.absoluteString);
 					print("photoOutput() 1");
 					if(photos.count == 3){
