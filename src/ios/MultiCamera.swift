@@ -10,10 +10,10 @@ protocol ModalHandler {
         let cameraVC = CameraViewController();
 		cameraVC.finish = {(photos: [String]) -> () in
 			print("Chegou aqui");
-			print("Recebi "+photos.count+" foto(s).");
+			print("Recebi "+String(photos.count)+" foto(s).");
 			let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: photos);
 			for photo in photos {
-				println("foto: "+photo);
+				print("foto: "+photo);
 			}
 			print("command.callbackId: "+String(command.callbackId));
 			self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
