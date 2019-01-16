@@ -137,7 +137,7 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
 			if let imageData = photo.fileDataRepresentation() {
 				if let appDirectory = FileManager.default.urls(for: .applicationDirectory, in: .userDomainMask).last {
 					let fileName = NSUUID().uuidString;
-					let fileURL = appDirectory.appendingPathComponent(fileName);
+					let fileURL = appDirectory.appendingPathComponent(fileName+".jpg");
 					try? imageData.write(to: fileURL, options: .atomic);
 					photos.append(fileURL.absoluteString);
 					print("photoOutput() 1");
