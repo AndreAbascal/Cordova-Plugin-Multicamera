@@ -84,6 +84,29 @@ class CameraViewController: UIViewController {
         activityIndicator.startAnimating()
         statusAuthorize()
     }
+
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (context) -> Void in
+            cameraPreview.previewLayer.connection?.videoOrientation = self.transformOrientation(orientation: UIInterfaceOrientation(rawValue: UIApplication.shared.statusBarOrientation.rawValue)!)
+            cameraPreview.previewLayer.frame.size = cameraPreview.frame.size
+        }, completion: { (context) -> Void in
+            
+        })
+        super.viewWillTransition(to: size, with: coordinator)
+    }
+    
+    func transformOrientation(orientation: UIInterfaceOrientation) -> AVCaptureVideoOrientation {
+        switch orientation {
+        case .landscapeLeft:
+            return .landscapeLeft
+        case .landscapeRight:
+            return .landscapeRight
+        case .portraitUpsideDown:
+            return .portraitUpsideDown
+        default:
+            return .portrait
+        }
+    }
     
     override func viewDidLoad() {
         DispatchQueue.global().async {
@@ -192,13 +215,13 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
 		do {
 			if let imageData = photo.fileDataRepresentation() {
-				let shutterView = UIView(frame: cameraView.frame)
-				shutterView.backgroundColor = UIColor.black
-				view.addSubview(shutterView)
+				let shutterView = UIView(frame: cameraPreview.frame);
+				shutterView.backgroundColor = UIColor.black;
+				view.addSubview(shutterView);
 				UIView.animate(withDuration: 0.3, animations: {
-					shutterView.alpha = 0
+					shutterView.alpha = 0;
 				}, completion: { (_) in
-					shutterView.removeFromSuperview()
+					shutterView.removeFromSuperview();
 				});
 				let tempDirectory = FileManager.default.temporaryDirectory;
 				let fileName = NSUUID().uuidString;
