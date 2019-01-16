@@ -15,9 +15,11 @@ protocol ModalHandler {
 			for photo in photos {
 				println("foto: "+photo);
 			}
+			print("command.callbackId: "+String(command.callbackId));
 			self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
-        	self.viewController.present(cameraVC, animated: true, completion: nil);
 		}
+		print("command.callbackId inicio: "+String(command.callbackId));
+		self.viewController.present(cameraVC, animated: true, completion: nil);
         // self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
         // self.viewController.present(cameraVC, animated: true, completion: nil);
     }
