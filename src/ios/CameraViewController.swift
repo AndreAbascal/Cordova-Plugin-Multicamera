@@ -185,37 +185,28 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
 
     func takePicture() {
         print("delegate");
-		// if I leave the next 4 lines commented, the intented orientation of the image on display will be 6 (right top) - kCGImagePropertyOrientation
-		let deviceOrientation = UIDevice.current.orientation // retrieve current orientation from the device
-		guard let photoOutputConnection = capturePhotoOutput.connection(with: AVMediaType.video) else {fatalError("Unable to establish input>output connection")}// setup a connection that manages input > output
-		guard let videoOrientation = deviceOrientation.getAVCaptureVideoOrientationFromDevice() else {return}
-		photoOutputConnection.videoOrientation = videoOrientation // update photo's output connection to match device's orientation
         let settings = AVCapturePhotoSettings();
-		photoSettings.isAutoStillImageStabilizationEnabled = true
-		photoSettings.isHighResolutionPhotoEnabled = true
-		photoSettings.flashMode = .auto
         output.capturePhoto(with: settings, delegate: self);
     }
 
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
 		do {
 			if let imageData = photo.fileDataRepresentation() {
-				if let appDirectory = FileManager.default.urls(for: .applicationDirectory, in: .userDomainMask).last {
-					let fileName = NSUUID().uuidString;
-					let fileURL = appDirectory.appendingPathComponent(fileName+".jpg");
-					var imageUIImage: UIImage = UIImage(data: imageData);
-					imageUIImage = fixOrientationOfImage(imageUIImage);
-					var imageData2: Data = UIImagePNGRepresentation(imageUIImage);
-					try? imageData2.write(to: fileURL, options: .atomic);
-					photos.append(fileURL.absoluteString);
-					print("photoOutput() 1");
-					if(photos.count == 3){
-						print("photoOutput() 2");
-						dismiss(animated: true) {
-							print("photoOutput() 3");
-							print("photoOutput() 4");
-							self.finish?(self.photos);
-						}
+				let tempDirectory = FileManager.default.temporaryDirectory;
+				let fileName = NSUUID().uuidString;
+				let fileURL = tempDirectory.appendingPathComponent(fileName+".jpg");
+				var imageUIImage: UIImage = UIImage(data: imageData)!;
+				imageUIImage = fixOrientationOfImage(image: imageUIImage)!;
+				var imageData2: Data = UIImagePNGRepresentation(imageUIImage)!;
+				try? imageData2.write(to: fileURL, options: .atomic);
+				photos.append(fileURL.absoluteString);
+				print("photoOutput() 1");
+				if(photos.count == 3){
+					print("photoOutput() 2");
+					dismiss(animated: true) {
+						print("photoOutput() 3");
+						print("photoOutput() 4");
+						self.finish?(self.photos);
 					}
 				}
 			}else{
