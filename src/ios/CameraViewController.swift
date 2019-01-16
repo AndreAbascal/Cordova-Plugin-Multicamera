@@ -192,6 +192,14 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
 		do {
 			if let imageData = photo.fileDataRepresentation() {
+				let shutterView = UIView(frame: cameraView.frame)
+				shutterView.backgroundColor = UIColor.black
+				view.addSubview(shutterView)
+				UIView.animate(withDuration: 0.3, animations: {
+					shutterView.alpha = 0
+				}, completion: { (_) in
+					shutterView.removeFromSuperview()
+				});
 				let tempDirectory = FileManager.default.temporaryDirectory;
 				let fileName = NSUUID().uuidString;
 				let fileURL = tempDirectory.appendingPathComponent(fileName+".jpg");
