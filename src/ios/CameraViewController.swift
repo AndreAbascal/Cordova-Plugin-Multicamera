@@ -91,8 +91,35 @@ class CameraViewController: UIViewController {
         statusAuthorize();
     }
 
+	/*
 	override var shouldAutorotate: Bool {
 		return false;
+	}
+	*/
+
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator){
+		super.viewWillTransition(CGSize, withTransitionCoordinator: coordinator);
+		coordinator.animateAlongsideTransition(
+			{ (UIViewControllerTransitionCoordinatorContext) in
+				let deltaTransform = coordinator.targetTransform();
+				let deltaAngle = atan2f(Float(deltaTransform.b), Float(deltaTransform.a));
+				var currentRotation : Float = (self.cameraPreview!.layer.valueForKeyPath("transform.rotation.z")?.floatValue)!;
+				// Adding a small value to the rotation angle forces the animation to occur in a the desired direction, preventing an issue where the view would appear to rotate 2PI radians during a rotation from LandscapeRight -> LandscapeLeft.
+				currentRotation += -1 * deltaAngle + 0.0001;
+				self.cameraPreview!.layer.setValue(currentRotation, forKeyPath: "transform.rotation.z");
+				self.cameraPreview!.layer.frame = self.view.bounds;
+			},
+			completion:
+			{ (UIViewControllerTransitionCoordinatorContext) in
+				// Integralize the transform to undo the extra 0.0001 added to the rotation angle.
+				var currentTransform : CGAffineTransform = self.cameraPreview!.transform;
+				currentTransform.a = round(currentTransform.a);
+				currentTransform.b = round(currentTransform.b);
+				currentTransform.c = round(currentTransform.c);
+				currentTransform.d = round(currentTransform.d);
+				self.cameraPreview!.transform = currentTransform;
+			}
+		)
 	}
     
     override func viewDidLoad() {
