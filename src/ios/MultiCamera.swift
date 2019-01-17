@@ -1,10 +1,6 @@
 import Foundation;
 
-protocol ModalHandler { 
-	func modalDismissed() 
-}
-
-@objc(MultiCamera) class MultiCamera: CDVPlugin, ModalHandler {
+@objc(MultiCamera) class MultiCamera: CDVPlugin {
 	@objc(open:)
     func open(_ command: CDVInvokedUrlCommand) {
         let cameraVC = CameraViewController();
