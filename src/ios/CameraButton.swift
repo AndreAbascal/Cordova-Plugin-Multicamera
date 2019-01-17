@@ -21,7 +21,6 @@ class CaptureButton: UIButton {
     }
     
     @objc func tappedButton(_ sender: UIButton) {
-        print("button tapped");
         delegate?.takePicture();
     }
     

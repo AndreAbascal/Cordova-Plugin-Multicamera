@@ -3,7 +3,7 @@ import AVFoundation;
 
 class CameraViewController: UIViewController {
     let captureSession = AVCaptureSession()
-    var activityIndicator: UIActivityIndicatorView!
+    // var activityIndicator: UIActivityIndicatorView!
     var device: AVCaptureDevice!
     var cameraPreview: PreviewView!
     var captureButton: CaptureButton!
@@ -78,48 +78,31 @@ class CameraViewController: UIViewController {
         self.view.addSubview(cameraPreview);
         captureButton = CaptureButton(frame: UIScreen.main.bounds);
         self.view.addSubview(captureButton);
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge);
-        activityIndicator.center = self.view.center;
-        self.view.addSubview(activityIndicator);
-        activityIndicator.startAnimating();
+        // activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge);
+        // activityIndicator.center = self.view.center;
+        // self.view.addSubview(activityIndicator); 
+        // activityIndicator.startAnimating();
         statusAuthorize();
     }
 
-	override func shouldAutorotate() -> Bool {
+	override var shouldAutorotate: Bool {
 		return false;
-	}
-
-	override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-		return UIInterfaceOrientationMask.landscape;
 	}
     
     override func viewDidLoad() {
         DispatchQueue.global().async {
-            self.sessionConfigure()
-            DispatchQueue.main.async {
-                self.activityIndicator.stopAnimating()
-            }
+            self.sessionConfigure();
+            /*DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating();
+            }*/
         }
     }
-
-	
-	/*
-	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator){
-		if UIDevice.current.orientation.isLandscape {
-			print("will turn to landscape");
-		}else{
-			print("will turn to portrait");
-			UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation");
-		}
-	}
-	*/
 }
 
 extension CameraViewController {
     func statusAuthorize() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
-            print("authorize")
             break
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted) in
@@ -158,7 +141,6 @@ extension CameraViewController {
         let input = try! AVCaptureDeviceInput(device: self.device)
         if self.captureSession.canAddInput(input) {
             self.captureSession.addInput(input)
-            print("add input")
         }
         output.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey : AVVideoCodecType.jpeg])], completionHandler: nil)
         self.captureSession.addOutput(output)
@@ -204,7 +186,6 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
     }
 
     func takePicture() {
-        print("delegate");
         let settings = AVCapturePhotoSettings();
         output.capturePhoto(with: settings, delegate: self);
     }
@@ -228,17 +209,11 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
 				var imageData2: Data = UIImagePNGRepresentation(imageUIImage)!;
 				try? imageData2.write(to: fileURL, options: .atomic);
 				photos.append(fileURL.absoluteString);
-				print("photoOutput() 1");
 				if(photos.count == 3){
-					print("photoOutput() 2");
 					dismiss(animated: true) {
-						print("photoOutput() 3");
-						print("photoOutput() 4");
 						self.finish?(self.photos);
 					}
 				}
-			}else{
-				print("photoOutput() erro 1");
 			}
 		}catch let error {
 			print("error: "+error.localizedDescription);
@@ -247,6 +222,5 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
 
     func changeEnabledButton() {
         self.captureButton.isEnabled = false
-        print("button is not enable")
     }
 }
