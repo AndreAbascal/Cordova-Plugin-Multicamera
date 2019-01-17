@@ -84,6 +84,14 @@ class CameraViewController: UIViewController {
         activityIndicator.startAnimating();
         statusAuthorize();
     }
+
+	override func shouldAutorotate() -> Bool {
+		return false;
+	}
+
+	override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+		return UIInterfaceOrientationMask.landscape;
+	}
     
     override func viewDidLoad() {
         DispatchQueue.global().async {
@@ -94,6 +102,8 @@ class CameraViewController: UIViewController {
         }
     }
 
+	
+	/*
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator){
 		if UIDevice.current.orientation.isLandscape {
 			print("will turn to landscape");
@@ -102,6 +112,7 @@ class CameraViewController: UIViewController {
 			UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation");
 		}
 	}
+	*/
 }
 
 extension CameraViewController {
