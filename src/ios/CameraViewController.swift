@@ -15,6 +15,7 @@ class CameraViewController: UIViewController {
 	public var finish: (([String]) -> ())?
 
 	func fixOrientationOfImage(image: UIImage) -> UIImage? {
+		print("image.imageOrientation: "+String(image.imageOrientation));
 		if image.imageOrientation == .up {
 			return image
 		}
@@ -24,28 +25,33 @@ class CameraViewController: UIViewController {
 		var transform = CGAffineTransform.identity
 
 		switch image.imageOrientation {
-		case .down, .downMirrored:
-			transform = transform.translatedBy(x: image.size.width, y: image.size.height)
-			transform = transform.rotated(by: CGFloat(Double.pi))
-		case .left, .leftMirrored:
-			transform = transform.translatedBy(x: image.size.width, y: 0)
-			transform = transform.rotated(by:  CGFloat(Double.pi / 2))
-		case .right, .rightMirrored:
-			transform = transform.translatedBy(x: 0, y: image.size.height)
-			transform = transform.rotated(by:  -CGFloat(Double.pi / 2))
-		default:
-			break
+			case .down, .downMirrored:
+				transform = transform.translatedBy(x: image.size.width, y: image.size.height);
+				transform = transform.rotated(by: CGFloat(Double.pi));
+				break;
+			case .left, .leftMirrored:
+				transform = transform.translatedBy(x: image.size.width, y: 0);
+				transform = transform.rotated(by:  CGFloat(Double.pi / 2));
+				break;
+			case .right, .rightMirrored:
+				transform = transform.translatedBy(x: 0, y: image.size.height);
+				transform = transform.rotated(by:  -CGFloat(Double.pi / 2));
+				break;
+			default:
+				break
 		}
 
 		switch image.imageOrientation {
-		case .upMirrored, .downMirrored:
-			transform = transform.translatedBy(x: image.size.width, y: 0)
-			transform = transform.scaledBy(x: -1, y: 1)
-		case .leftMirrored, .rightMirrored:
-			transform = transform.translatedBy(x: image.size.height, y: 0)
-			transform = transform.scaledBy(x: -1, y: 1)
-		default:
-			break
+			case .upMirrored, .downMirrored:
+				transform = transform.translatedBy(x: image.size.width, y: 0);
+				transform = transform.scaledBy(x: -1, y: 1);
+				break;
+			case .leftMirrored, .rightMirrored:
+				transform = transform.translatedBy(x: image.size.height, y: 0);
+				transform = transform.scaledBy(x: -1, y: 1);
+				break;
+			default:
+				break
 		}
 
 		// Now we draw the underlying CGImage into a new context, applying the transform
