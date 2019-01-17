@@ -72,40 +72,17 @@ class CameraViewController: UIViewController {
 	}
     
     override func loadView() {
-        self.view = UIView(frame: UIScreen.main.bounds)
-        self.view.backgroundColor = UIColor.black
-        cameraPreview = PreviewView(frame: UIScreen.main.bounds, session: captureSession, videoGravity: gravity)
-        self.view.addSubview(cameraPreview)
-        captureButton = CaptureButton(frame: UIScreen.main.bounds)
-        self.view.addSubview(captureButton)
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
-        activityIndicator.center = self.view.center
-        self.view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-        statusAuthorize()
-    }
-
-	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { (context) -> Void in
-            cameraPreview.previewLayer.connection?.videoOrientation = self.transformOrientation(orientation: UIInterfaceOrientation(rawValue: UIApplication.shared.statusBarOrientation.rawValue)!)
-            cameraPreview.previewLayer.frame.size = cameraPreview.frame.size
-        }, completion: { (context) -> Void in
-            
-        })
-        super.viewWillTransition(to: size, with: coordinator)
-    }
-    
-    func transformOrientation(orientation: UIInterfaceOrientation) -> AVCaptureVideoOrientation {
-        switch orientation {
-        case .landscapeLeft:
-            return .landscapeLeft
-        case .landscapeRight:
-            return .landscapeRight
-        case .portraitUpsideDown:
-            return .portraitUpsideDown
-        default:
-            return .portrait
-        }
+        self.view = UIView(frame: UIScreen.main.bounds);
+        self.view.backgroundColor = UIColor.black;
+        cameraPreview = PreviewView(frame: UIScreen.main.bounds, session: captureSession, videoGravity: gravity);
+        self.view.addSubview(cameraPreview);
+        captureButton = CaptureButton(frame: UIScreen.main.bounds);
+        self.view.addSubview(captureButton);
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge);
+        activityIndicator.center = self.view.center;
+        self.view.addSubview(activityIndicator);
+        activityIndicator.startAnimating();
+        statusAuthorize();
     }
     
     override func viewDidLoad() {
@@ -116,6 +93,15 @@ class CameraViewController: UIViewController {
             }
         }
     }
+
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator){
+		if UIDevice.current.orientation.isLandscape {
+			print("will turn to landscape");
+		}else{
+			print("will turn to portrait");
+			UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation");
+		}
+	}
 }
 
 extension CameraViewController {
