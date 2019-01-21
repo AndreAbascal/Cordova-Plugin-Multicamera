@@ -37,8 +37,8 @@ class PreviewView: UIView {
     
     init(frame: CGRect, session: AVCaptureSession, videoGravity: CameraVideoGravity) {
         previewLayer = AVCaptureVideoPreviewLayer(session: session);
-        previewLayer.frame = frame;
         super.init(frame: frame);
+        previewLayer.frame = self.bounds;
         decideVideoGravity(previewLayer, videoGravity);
         self.layer.addSublayer(previewLayer);
     }
