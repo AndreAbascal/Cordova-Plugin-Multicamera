@@ -43,8 +43,9 @@ class CameraViewController: UIViewController {
     var captureButton: CaptureButton!
     var output = AVCapturePhotoOutput()
     var gravity = CameraVideoGravity.resizeAspect;
-    var captureVideoQuality = AVCaptureSession.Preset.high
+    var captureVideoQuality = AVCaptureSession.Preset.high;
 	var photos = [String]();
+    var photoLabel = UILabel();
 
     public var finish: (([String]) -> ())?;
     
@@ -85,16 +86,12 @@ class CameraViewController: UIViewController {
     func findEquivalentImageOrientation(orientation: UIInterfaceOrientation) -> UIImageOrientation{
         switch orientation {
             case .portrait, .unknown:
-                print("up");
                 return UIImageOrientation.up;
             case .portraitUpsideDown:
-                print("down");
                 return UIImageOrientation.down;
             case .landscapeLeft:
-                print("left");
                 return UIImageOrientation.left;
             case .landscapeRight:
-                print("right");
                 return UIImageOrientation.right;
         }
     }
@@ -102,16 +99,12 @@ class CameraViewController: UIViewController {
     func findEquivalentInterfaceOrientation(orientation: UIImageOrientation) -> UIInterfaceOrientation{
         switch orientation {
             case .up, .upMirrored:
-                print("up");
                 return UIInterfaceOrientation.portrait;
             case .down, .downMirrored:
-                print("down");
                 return UIInterfaceOrientation.portraitUpsideDown;
             case .left, .leftMirrored:
-                print("left");
                 return UIInterfaceOrientation.landscapeLeft;
             case .right, .rightMirrored:
-                print("right");
                 return UIInterfaceOrientation.landscapeRight;
         }
     }
@@ -125,7 +118,6 @@ class CameraViewController: UIViewController {
             case .landscapeLeft:
                 return 270;
             case .landscapeRight:
-                print("right");
                 return 90;
             case .unknown:
                 return 0;
@@ -133,7 +125,6 @@ class CameraViewController: UIViewController {
     }
 
 	func fixOrientationOfImage(image: UIImage) -> UIImage? {
-		print("image.imageOrientation: "+String(image.imageOrientation.rawValue));
 		if image.imageOrientation == .up {
 			return image
 		}
@@ -198,32 +189,26 @@ class CameraViewController: UIViewController {
     func fixOrientationOfImageAccordingToDevice(image: UIImage, deviceOrientation: UIInterfaceOrientation) -> UIImage? {
         let equivalentOrientation = findEquivalentInterfaceOrientation(orientation: image.imageOrientation);
         if equivalentOrientation == deviceOrientation {
-            print("SAME ORIENTATION: ",equivalentOrientation.rawValue);
             return image;
         }
         
         // We need to calculate the proper transformation to make the image upright.
         // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
         var transform = CGAffineTransform.identity;
-        print("deviceOrientation: ",deviceOrientation.rawValue);
         switch deviceOrientation {
             case .unknown:
-                print("unknown... nao mexer");
                 return image;
             case .landscapeRight:
-                print("resto... nao mexer");
                 return image;
             case .landscapeLeft:
                 transform = transform.translatedBy(x: image.size.width, y: image.size.height);
                 transform = transform.rotated(by: CGFloat(Double.pi));
                 break;
             case .portrait:
-                print("portrait... +90deg clock");
                 transform = transform.translatedBy(x: 0, y: image.size.height);
                 transform = transform.rotated(by:  -CGFloat(Double.pi / 2));
                 break;
             case .portraitUpsideDown:
-                print("portrait... -90deg clock");
                 transform = transform.translatedBy(x: 0, y: image.size.height);
                 transform = transform.rotated(by:  CGFloat(Double.pi / 2));
                 break;
@@ -274,13 +259,21 @@ class CameraViewController: UIViewController {
         cameraPreview = PreviewView(frame: frame, session: captureSession, videoGravity: gravity);
         self.view.addSubview(cameraPreview);
         let header = UIView();
+//        header.backgroundColor = UIColor.red;
         header.translatesAutoresizingMaskIntoConstraints = false;
         self.view.addSubview(header);
-        let headerHeight: CGFloat = 80;
+        let headerHeight: CGFloat = 64;
+        let labelFrame = CGRect(x: 0, y: 0, width: 80, height: Int(headerHeight));
+        photoLabel.frame = labelFrame;
+        photoLabel.center = CGPoint(x: Int(UIScreen.main.bounds.width)/2, y: Int(headerHeight)/2);
+        photoLabel.font = UIFont.preferredFont(forTextStyle: .body);
+        photoLabel.textColor = UIColor.white;
+        photoLabel.textAlignment  = .center;
+        header.addSubview(photoLabel);
         NSLayoutConstraint(item: header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: headerHeight).isActive = true;
         NSLayoutConstraint(item: header, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0).isActive = true;
         NSLayoutConstraint(item: header, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0).isActive = true;
-        NSLayoutConstraint(item: header, attribute: .top, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0).isActive = true;
+        NSLayoutConstraint(item: header, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0).isActive = true;
         let footer = UIView();
         footer.translatesAutoresizingMaskIntoConstraints = false;
         self.view.addSubview(footer);
@@ -292,7 +285,6 @@ class CameraViewController: UIViewController {
         captureButton = CaptureButton(frame: footer.frame);
         captureButton.center = CGPoint(x: Int(UIScreen.main.bounds.width)/2, y: Int(footerHeight)/2);
         let cancelButton = UIButton(type: .system);
-//        cancelButton.backgroundColor = UIColor.red;
         cancelButton.frame = CGRect(x: 0, y: 0, width: 80, height: Int(footerHeight));
         cancelButton.setTitle("Cancelar", for: .normal);
         cancelButton.setTitleColor(UIColor.white, for: UIControlState.normal);
@@ -300,7 +292,6 @@ class CameraViewController: UIViewController {
         cancelButton.addTarget(self, action: #selector(self.cancel(sender:)), for: UIControlEvents.touchUpInside);
         footer.addSubview(cancelButton);
         let okButton = UIButton(type: .system);
-        //        cancelButton.backgroundColor = UIColor.red;
         okButton.frame = CGRect(x: 0, y: 0, width: 40, height: Int(footerHeight));
         okButton.setTitle("OK", for: .normal);
         okButton.setTitleColor(UIColor.white, for: UIControlState.normal);
@@ -309,8 +300,6 @@ class CameraViewController: UIViewController {
         footer.addSubview(okButton);
         okButton.center = CGPoint(x: Int(UIScreen.main.bounds.width)-40, y: Int(footerHeight)/2);
         footer.addSubview(captureButton);
-        print("cancelButton.center: "+cancelButton.center.debugDescription);
-        print("okButton.center: "+okButton.center.debugDescription);
         statusAuthorize();
     }
     
@@ -343,7 +332,6 @@ class CameraViewController: UIViewController {
         if orientationNew == orientationLast {
             return;
         }
-        print("new orientation: ",orientationNew.rawValue);
         orientationLast = orientationNew;
     }
     
@@ -477,22 +465,11 @@ extension CameraViewController: CameraButtonDelegate, AVCapturePhotoCaptureDeleg
                 let fileURL = tempDirectory.appendingPathComponent(fileName+".jpg");
                 var imageUIImage: UIImage = UIImage(data: imageData)!;
                 var degrees: Int = findInterfaceOrientationDegrees(orientation: deviceOrientation);
-                print("GIRAR "+String(degrees)+" graus.");
                 imageUIImage = imageUIImage.rotate(radians: Float(Int(degrees).degreesToRadians))!;
                 let imageData2: Data = UIImageJPEGRepresentation(imageUIImage,0.7)!;
                 try? imageData2.write(to: fileURL, options: .atomic);
-                /*
-                var degs: [Int] = [0,90,180,270];
-                for deg in degs {
-                    var newURL = tempDirectory.appendingPathComponent(NSUUID().uuidString+".jpg");
-                    var img: UIImage = UIImage(data: imageData)!;
-                    img = img.rotate(radians: Float(Int(deg).degreesToRadians))!;
-                    var imgData: Data = UIImageJPEGRepresentation(img,0.7)!;
-                    try? imgData.write(to: newURL, options: .atomic);
-                    photos.append(newURL.absoluteString);
-                }
- */
                 photos.append(fileURL.absoluteString);
+                photoLabel.text = photos.count > 1 ? String(photos.count)+" fotos" : "1 foto"
 			}
 		}catch let error {
 			print("error: "+error.localizedDescription);
