@@ -546,9 +546,9 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-					Camera2BasicFragment.this.countFotos++;
-					TextView text1 = (TextView) activity.findViewById(activity.getResources().getIdentifier("text1", "id", activity.getPackageName()));
-					text1.setText(Camera2BasicFragment.this.countFotos == 1 ? "1 foto" : Camera2BasicFragment.this.countFotos+" fotos");
+					// Camera2BasicFragment.this.countFotos++;
+					// TextView text1 = (TextView) activity.findViewById(activity.getResources().getIdentifier("text1", "id", activity.getPackageName()));
+					// text1.setText(Camera2BasicFragment.this.countFotos == 1 ? "1 foto" : Camera2BasicFragment.this.countFotos+" fotos");
 					Context ctx = getContext();
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = true;
@@ -1268,10 +1268,13 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 	public void addFile(String absolutePath){
 		CameraActivity ca = ((CameraActivity) getActivity());
 		ca.adicionarArquivo(absolutePath);
+		this.countFotos++;
 		ca.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				// Stuff that updates the UI
+				TextView text1 = (TextView) ca.findViewById(ca.getResources().getIdentifier("text1", "id", ca.getPackageName()));
+				text1.setText(Camera2BasicFragment.this.countFotos == 1 ? "1 foto" : Camera2BasicFragment.this.countFotos+" fotos");
 				Button confirm = ca.findViewById(ca.getResources().getIdentifier("confirm", "id", ca.getPackageName()));
 				confirm.setClickable(true);
 				confirm.setEnabled(true);
